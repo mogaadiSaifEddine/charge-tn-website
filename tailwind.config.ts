@@ -23,14 +23,14 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#0f0f0f",
+        background: "#0C1426",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#00f5d4",
+          DEFAULT: "#F59E0B",
           foreground: "#000000",
         },
         secondary: {
-          DEFAULT: "#fee715",
+          DEFAULT: "#84CC16",
           foreground: "#000000",
         },
         destructive: {
@@ -54,10 +54,10 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         chargetn: {
-          purple: "#1a0d2e",
-          teal: "#00f5d4",
-          amber: "#fee715",
-          dark: "#0f0f0f",
+          amber: "#F59E0B",
+          midnight: "#0C1426",
+          lime: "#84CC16",
+          dark: "#0A0F1C",
         },
       },
       borderRadius: {
@@ -74,10 +74,30 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "gradient-x": {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
+        "pulse-amber": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.5",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gradient-x": "gradient-x 3s ease infinite",
+        "pulse-amber": "pulse-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       backdropBlur: {
         xs: "2px",

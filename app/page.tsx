@@ -1,11 +1,11 @@
-
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import type React from "react"
+
+import { useState, useEffect, useRef, useCallback } from "react"
+import { motion, useScroll, useTransform, useSpring, useInView, useMotionValue } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
+import { CardContent } from "@/components/ui/card"
 import {
   Zap,
   MapPin,
@@ -13,548 +13,1268 @@ import {
   Clock,
   DollarSign,
   Shield,
-  Smartphone,
-  Car,
-  Building,
-  Home,
   ArrowRight,
-  Star,
   CheckCircle,
-  Globe,
-  TrendingUp,
   Search,
   Link,
   BatteryCharging,
+  Star,
+  Globe,
+  TrendingUp,
+  Smartphone,
+  Play,
 } from "lucide-react"
 import Image from "next/image"
 
-// A custom hook for a subtle shimmering text effect
-const useShimmer = () => {
-  const [style, setStyle] = useState({});
+// Enhanced design tokens with modern animations
+const SECTION_PADDING = "py-24 lg:py-32"
+const CONTAINER_CLASS = "max-w-7xl mx-auto px-6 lg:px-8"
+const GLASS_CARD =
+  "backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl hover:bg-white/10 transition-all duration-500 hover:border-[#F59E0B]/30 hover:shadow-[#F59E0B]/10"
+const GRADIENT_TEXT =
+  "bg-gradient-to-r from-[#F59E0B] via-[#84CC16] to-[#F59E0B] bg-clip-text text-transparent animate-gradient-x"
+const GRADIENT_BUTTON =
+  "bg-gradient-to-r from-[#F59E0B] to-[#84CC16] text-black font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-[#F59E0B]/25"
+
+// Particle System Component
+const ParticleSystem = () => {
+  const [particles, setParticles] = useState<
+    Array<{
+      id: number
+      x: number
+      y: number
+      size: number
+      color: string
+      velocity: { x: number; y: number }
+      life: number
+    }>
+  >([])
+
   useEffect(() => {
-    const shimmerInterval = setInterval(() => {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      setStyle({
-        background: `radial-gradient(circle at ${x}% ${y}%, hsla(0, 0%, 100%, 0.4), transparent 20%)`,
-        WebkitBackgroundClip: 'text',
-        backgroundClip: 'text',
-        color: 'transparent',
-        transition: 'background 2s ease',
-      });
-    }, 2000);
-    return () => clearInterval(shimmerInterval);
-  }, []);
-  return style;
-};
+    const createParticle = (id: number) => ({
+      id,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      size: Math.random() * 4 + 1,
+      color: Math.random() > 0.5 ? "#F59E0B" : "#84CC16",
+      velocity: {
+        x: (Math.random() - 0.5) * 0.5,
+        y: (Math.random() - 0.5) * 0.5,
+      },
+      life: Math.random() * 100 + 50,
+    })
 
-// 1. Add utility for glassmorphism and gradients
-const glassClass = "backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl";
-const gradientBtn =
-  "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg hover:from-pink-500 hover:to-blue-500 transition-all duration-300 hover:scale-105 focus:ring-2 focus:ring-pink-400 focus:outline-none";
-const glowAnim = {
-  boxShadow: [
-    "0 0 0px #fff, 0 0 0px #a78bfa",
-    "0 0 16px #fff, 0 0 32px #a78bfa",
-    "0 0 0px #fff, 0 0 0px #a78bfa",
-  ],
-  transition: { duration: 2, repeat: Infinity, repeatType: 'loop' as const },
-};
+    const initialParticles = Array.from({ length: 50 }, (_, i) => createParticle(i))
+    setParticles(initialParticles)
 
+    const interval = setInterval(() => {
+      setParticles((prev) =>
+        prev
+          .map((particle) => ({
+            ...particle,
+            x: particle.x + particle.velocity.x,
+            y: particle.y + particle.velocity.y,
+            life: particle.life - 1,
+          }))
+          .filter((particle) => particle.life > 0)
+          .concat(Math.random() > 0.7 ? [createParticle(Date.now())] : []),
+      )
+    }, 50)
 
-export default function ChargeTNLandingV2() {
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0">
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute rounded-full"
+          style={{
+            left: particle.x,
+            top: particle.y,
+            width: particle.size,
+            height: particle.size,
+            backgroundColor: particle.color,
+            opacity: particle.life / 100,
+          }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.8, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// Morphing Shape Component
+const MorphingShape = ({ className }: { className?: string }) => {
+  return (
+    <motion.div
+      className={`absolute ${className}`}
+      animate={{
+        borderRadius: [
+          "60% 40% 30% 70%/60% 30% 70% 40%",
+          "30% 60% 70% 40%/50% 60% 30% 60%",
+          "50% 40% 60% 30%/70% 50% 40% 60%",
+          "60% 40% 30% 70%/60% 30% 70% 40%",
+        ],
+        rotate: [0, 90, 180, 270, 360],
+        scale: [1, 1.1, 0.9, 1.05, 1],
+      }}
+      transition={{
+        duration: 20,
+        repeat: Number.POSITIVE_INFINITY,
+        ease: "easeInOut",
+      }}
+    />
+  )
+}
+
+// Advanced Counter with spring animation
+const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true })
+
+  const springValue = useSpring(0, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
+
+  useEffect(() => {
+    if (isInView) {
+      springValue.set(end)
+    }
+  }, [isInView, end, springValue])
+
+  useEffect(() => {
+    return springValue.on("change", (latest) => {
+      setCount(Math.floor(latest))
+    })
+  }, [springValue])
+
+  return <div ref={ref}>{count.toLocaleString()}</div>
+}
+
+// Magnetic Button Component
+const MagneticButton = ({ children, className, ...props }: any) => {
+  const ref = useRef<HTMLButtonElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!ref.current) return
+      const rect = ref.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      x.set((e.clientX - centerX) * 0.1)
+      y.set((e.clientY - centerY) * 0.1)
+    },
+    [x, y],
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    x.set(0)
+    y.set(0)
+  }, [x, y])
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ x, y }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="inline-block"
+    >
+      <Button className={className} {...props}>
+        {children}
+      </Button>
+    </motion.div>
+  )
+}
+
+// Text reveal animation
+const TextReveal = ({ children, className }: { children: string; className?: string }) => {
+  const words = children.split(" ")
+
+  return (
+    <div className={className}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 50, rotateX: -90 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: i * 0.1,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className="inline-block mr-2"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  )
+}
+
+// Scroll-triggered reveal animation
+const ScrollReveal = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 100, scale: 0.8, rotateX: -15 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1, rotateX: 0 } : {}}
+      transition={{
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+// Floating elements
+const FloatingElement = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
+  return (
+    <motion.div
+      animate={{
+        y: [-10, 10, -10],
+        rotate: [-2, 2, -2],
+      }}
+      transition={{
+        duration: 6,
+        repeat: Number.POSITIVE_INFINITY,
+        ease: "easeInOut",
+        delay,
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export default function ChargeTNLanding() {
   const [userCount, setUserCount] = useState(0)
   const [stationCount, setStationCount] = useState(0)
   const [energyDelivered, setEnergyDelivered] = useState(0)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   const { scrollYProgress } = useScroll()
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"])
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const shimmerStyle = useShimmer();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+  const scaleProgress = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+  const opacityProgress = useTransform(scrollYProgress, [0, 0.3], [1, 0])
 
-
-  // Animated counters for a more subtle feel
+  // Mouse tracking for interactive elements
   useEffect(() => {
-    const animateValue = (setter: any, endValue: any, duration: any) => {
-      let start = 0
-      const increment = endValue / (duration / 16)
-      const timer = setInterval(() => {
-        start += increment
-        if (start >= endValue) {
-          start = endValue
-          clearInterval(timer)
-        }
-        setter(Math.floor(start))
-      }, 16)
-      return timer
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
     }
-
-    const userTimer = animateValue(setUserCount, 12500, 2500)
-    const stationTimer = animateValue(setStationCount, 850, 2800)
-    const energyTimer = animateValue(setEnergyDelivered, 2400, 2000)
-
-    return () => {
-      clearInterval(userTimer)
-      clearInterval(stationTimer)
-      clearInterval(energyTimer)
-    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   const features = [
     {
-      icon: <MapPin className="w-5 h-5" />,
-      title: " Predictive Route Planning",
-      description: "Our intelligent routing anticipates your needs, ensuring a seamless journey across Tunisia's network.",
+      icon: <MapPin className="w-6 h-6" />,
+      title: "Predictive Route Planning",
+      description:
+        "AI-powered routing that anticipates your needs and optimizes your journey across Tunisia's charging network.",
     },
     {
-      icon: <Clock className="w-5 h-5" />,
-      title: "Live Network Status",
-      description: "Access real-time data on station availability, preventing unnecessary stops and delays.",
+      icon: <Clock className="w-6 h-6" />,
+      title: "Real-time Network Status",
+      description: "Live data on station availability, queue times, and charging speeds to eliminate uncertainty.",
     },
     {
-      icon: <Users className="w-5 h-5" />,
-      title: "Unified Access Protocol",
-      description: "A single, secure platform that integrates all charging providers into one cohesive ecosystem.",
+      icon: <Users className="w-6 h-6" />,
+      title: "Universal Access Protocol",
+      description: "One platform connecting all charging providers into a seamless, integrated ecosystem.",
     },
     {
-      icon: <Shield className="w-5 h-5" />,
+      icon: <Shield className="w-6 h-6" />,
       title: "Guaranteed Reservations",
-      description: "Secure your charging slot in advance, guaranteeing power is available the moment you arrive.",
+      description: "Reserve your charging slot in advance with guaranteed availability when you arrive.",
     },
     {
-      icon: <DollarSign className="w-5 h-5" />,
-      title: "Transparent Pricing",
-      description: "A clear and dynamic pricing model ensures fairness for both drivers and providers.",
+      icon: <DollarSign className="w-6 h-6" />,
+      title: "Dynamic Pricing",
+      description: "Transparent, fair pricing that adapts to demand while benefiting both users and providers.",
     },
     {
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="w-6 h-6" />,
       title: "Universal Compatibility",
-      description: "Our system is engineered to work flawlessly with every type of EV and charging standard.",
+      description: "Works seamlessly with all EV models and charging standards across the market.",
     },
   ]
 
   const steps = [
-    { title: "Discover", description: "Find optimal charging points", icon: <Search /> },
-    { title: "Connect", description: "Interface with any provider", icon: <Link /> },
-    { title: "Charge", description: "Monitor and manage your session", icon: <BatteryCharging /> },
+    {
+      title: "Discover",
+      description: "Find optimal charging points along your route",
+      icon: <Search className="w-8 h-8" />,
+    },
+    {
+      title: "Connect",
+      description: "Seamlessly interface with any provider",
+      icon: <Link className="w-8 h-8" />,
+    },
+    {
+      title: "Charge",
+      description: "Monitor and manage your charging session",
+      icon: <BatteryCharging className="w-8 h-8" />,
+    },
   ]
 
   const testimonials = [
     {
-      name: "Karim L.",
-      role: "EV Enthusiast, Tunis",
-      content: "ChargeTN isn't just an app; it's the nervous system for the country's EV grid. Truly revolutionary.",
+      name: "Ahmed Ben Salem",
+      role: "Tesla Owner, Tunis",
+      content: "ChargeTN transformed my daily commute. I never worry about finding charging stations anymore.",
+      rating: 5,
     },
     {
-      name: "Amina K.",
-      role: "Boutique Hotel Owner, Sousse",
-      content: "Integrating into the ChargeTN network was seamless. It has attracted a new, premium clientele to my business.",
+      name: "Fatima Khelifi",
+      role: "Business Owner, Sfax",
+      content: "Installing charging points through ChargeTN brought new customers and additional revenue to my café.",
+      rating: 5,
     },
     {
-      name: "Youssef B.",
-      role: "Logistics Manager, Sfax",
-      content: "The platform's efficiency in managing our electric fleet is unparalleled. It's a critical component of our operations.",
+      name: "Mohamed Trabelsi",
+      role: "Fleet Manager, Sousse",
+      content: "Managing our electric delivery fleet became effortless with ChargeTN's business solutions.",
+      rating: 5,
+    },
+  ]
+
+  const providerBenefits = [
+    {
+      title: "Zero Investment Required",
+      description: "We handle all hardware, installation, and maintenance costs",
+      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+    },
+    {
+      title: "24/7 Technical Support",
+      description: "Round-the-clock assistance and monitoring for all providers",
+      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+    },
+    {
+      title: "Advanced Analytics",
+      description: "Real-time insights into usage patterns and revenue optimization",
+      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+    },
+    {
+      title: "Flexible Partnership",
+      description: "No long-term contracts, scale up or down as needed",
+      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
     },
   ]
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 font-sans overflow-x-hidden">
-      {/* Mysterious Animated Background */}
-      <motion.div
-        className="fixed inset-0 z-0"
-        style={{ y: backgroundY }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#020024] via-[#090979] to-[#000000]" />
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url(/noise.png)' }} />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900 rounded-full filter blur-3xl opacity-20 animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-900 rounded-full filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }} />
+    <div className="min-h-screen bg-[#0C1426] text-white overflow-x-hidden">
+      {/* Particle System */}
+      <ParticleSystem />
+
+      {/* Enhanced Animated Background */}
+      <motion.div className="fixed inset-0 z-0" style={{ y: backgroundY }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1C] via-[#0C1426] to-[#1E293B]" />
+
+        {/* Morphing shapes */}
+        <MorphingShape className="top-1/4 left-1/4 w-96 h-96 bg-[#F59E0B] opacity-20 blur-3xl" />
+        <MorphingShape className="bottom-1/4 right-1/4 w-96 h-96 bg-[#84CC16] opacity-15 blur-3xl" />
+
+        {/* Interactive cursor glow */}
+        <motion.div
+          className="fixed w-96 h-96 bg-gradient-radial from-[#F59E0B]/20 to-transparent rounded-full pointer-events-none z-10"
+          animate={{
+            x: mousePosition.x - 192,
+            y: mousePosition.y - 192,
+          }}
+          transition={{ type: "spring", stiffness: 500, damping: 28 }}
+        />
       </motion.div>
 
       <div className="relative z-10">
-        {/* Navigation */}
-        <nav className="fixed top-0 w-full z-50 bg-black/30 backdrop-blur-lg border-b border-gray-800/50 shadow-2xl">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-3">
-                <Image src="/chargetn-logo.png" alt="ChargeTN Logo" width={54} height={54} />
-                <span className="text-xl font-semibold text-gray-200" style={shimmerStyle}>
+        {/* Enhanced Navigation */}
+        <motion.nav
+          className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#0C1426]/80 border-b border-white/10"
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div className={CONTAINER_CLASS}>
+            <div className="flex justify-between items-center h-20">
+              <motion.div
+                className="flex items-center space-x-4"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <FloatingElement>
+                  <Image src="/chargetn-logo.png" alt="ChargeTN Logo" width={48} height={48} className="rounded-xl" />
+                </FloatingElement>
+                <motion.span
+                  className="text-2xl font-bold bg-gradient-to-r from-[#F59E0B] to-[#84CC16] bg-clip-text text-transparent"
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                >
                   ChargeTN
-                </span>
-              </div>
-              <div className="hidden md:flex items-center space-x-8 text-sm">
-                {["Features", "Process", "Providers"].map((item, i) => (
+                </motion.span>
+              </motion.div>
+
+              <div className="hidden md:flex items-center space-x-8">
+                {["Features", "How It Works", "Providers", "About"].map((item, index) => (
                   <motion.a
                     key={item}
                     href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                    className="hover:text-white transition-colors relative px-2"
-                    whileHover={{ scale: 1.08 }}
+                    className="text-gray-300 hover:text-[#F59E0B] transition-colors duration-300 font-medium relative"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 + 0.5 }}
                   >
-                    <span>{item}</span>
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-blue-400 to-pink-400 rounded-full opacity-0 group-hover:opacity-100"
-                      whileHover={{ opacity: 1 }}
+                    {item}
+                    <motion.div
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#F59E0B] origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}
                     />
                   </motion.a>
                 ))}
               </div>
-              <div className="flex items-center space-x-4">
-                <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                  <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-gray-800/50">
-                    Sign In
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                  <Button className={gradientBtn}>
-                    Get Started
-                  </Button>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </nav>
 
-        {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center pt-16 px-4">
-          <motion.div className="text-center" style={{ y: heroY }}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter drop-shadow-[0_2px_24px_rgba(99,102,241,0.25)]"
-            >
-              <span className="text-gray-400">The Network That Powers </span>
-              <br />
-              <span className="text-white bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">Tunisia's Ascent</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeInOut" }}
-              className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10"
-            >
-              An interconnected, all-to-all EV charging ecosystem. A new infrastructure for a new era.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeInOut" }}
-              className="flex gap-4 justify-center"
-            >
-              <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                <Button size="lg" className={gradientBtn + " px-6"}>
-                  Join The Network
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                <Button size="lg" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-white hover:bg-white/10 px-6">
-                  Become a Provider <ArrowRight className="ml-2 w-4 h-4 animate-bounce inline-block" />
-                </Button>
-              </motion.div>
-            </motion.div>
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="flex justify-center gap-8 md:gap-16 mt-20 text-center"
-            >
-              <motion.div animate={glowAnim}>
-                <p className="text-3xl md:text-4xl font-semibold text-white">{userCount.toLocaleString()}+</p>
-                <p className="text-sm text-gray-500">Active Users</p>
-              </motion.div>
-              <motion.div animate={glowAnim} transition={{ delay: 0.2 }}>
-                <p className="text-3xl md:text-4xl font-semibold text-white">{stationCount}+</p>
-                <p className="text-sm text-gray-500">Connected Stations</p>
-              </motion.div>
-              <motion.div animate={glowAnim} transition={{ delay: 0.4 }}>
-                <p className="text-3xl md:text-4xl font-semibold text-white">{energyDelivered.toLocaleString()} MWh</p>
-                <p className="text-sm text-gray-500">Energy Delivered</p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Features Section */}
-        <section id="features" className="py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">
-                A More Intelligent Grid
-              </h2>
-              <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-                Our platform is built on a foundation of cutting-edge technology designed for reliability and seamless integration.
-              </p>
-            </div>
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.15 } },
-              }}
-            >
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className={glassClass + " p-6 rounded-lg border border-gray-800/80 hover:scale-105 hover:shadow-2xl transition-transform duration-300"}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div whileHover={{ rotate: 12, scale: 1.2 }} className="text-gray-400 inline-block">
-                    {feature.icon}
-                  </motion.div>
-                  <h3 className="text-lg font-semibold text-white mt-2">{feature.title}</h3>
-                  <p className="mt-3 text-gray-500 text-sm leading-relaxed">{feature.description}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section id="how-it-works" className="py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">
-                A Seamless Protocol
-              </h2>
-              <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-                From discovery to payment, our process is optimized for simplicity and efficiency.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-pink-500/40 to-transparent -translate-y-1/2 animate-pulse" />
               <motion.div
-                className="grid md:grid-cols-3 gap-8 text-center"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  hidden: {},
-                  visible: { transition: { staggerChildren: 0.2 } },
-                }}
+                className="flex items-center space-x-4"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
               >
-                {steps.map((step, index) => (
+                <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/10">
+                  Sign In
+                </Button>
+                <MagneticButton className={GRADIENT_BUTTON}>Get Started</MagneticButton>
+              </motion.div>
+            </div>
+          </div>
+        </motion.nav>
+
+        {/* Enhanced Hero Section with Advanced Animations */}
+        <section className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+          <div className={CONTAINER_CLASS}>
+            <motion.div
+              className="text-center max-w-5xl mx-auto relative z-10"
+              style={{ y: heroY, scale: scaleProgress, opacity: opacityProgress }}
+            >
+              {/* Animated Background Elements */}
+              <motion.div
+                className="absolute -top-20 -left-20 w-40 h-40 bg-[#F59E0B]/20 rounded-full blur-xl"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  rotate: [0, 180, 360],
+                  x: [0, 50, 0],
+                  y: [0, -30, 0],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-20 -right-20 w-60 h-60 bg-[#84CC16]/15 rounded-full blur-2xl"
+                animate={{
+                  scale: [1, 0.8, 1.2, 1],
+                  rotate: [360, 180, 0],
+                  x: [0, -40, 0],
+                  y: [0, 20, 0],
+                }}
+                transition={{
+                  duration: 12,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
+
+              {/* Main Title with Complex Animation */}
+              <motion.div
+                className="text-6xl md:text-8xl font-bold mb-8 leading-tight relative"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                {/* First Line - Letter by Letter Animation */}
+                <motion.div className="text-gray-300 block mb-4 overflow-hidden">
+                  {"Power Tunisia's".split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{
+                        opacity: 0,
+                        y: 100,
+                        rotateX: -90,
+                        scale: 0.5,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        rotateX: 0,
+                        scale: 1,
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        delay: i * 0.05,
+                        ease: [0.25, 0.46, 0.45, 0.94],
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 20,
+                      }}
+                      className="inline-block"
+                      style={{ transformOrigin: "bottom" }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </motion.div>
+
+                {/* Second Line - Word Morphing Effect */}
+                <motion.div className="relative">
+                  <motion.span
+                    className="bg-gradient-to-r from-[#F59E0B] via-[#84CC16] to-[#F59E0B] bg-clip-text text-transparent"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.3,
+                      rotateY: -180,
+                      filter: "blur(20px)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      rotateY: 0,
+                      filter: "blur(0px)",
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      delay: 1.2,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                      backgroundPosition: {
+                        duration: 4,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "linear",
+                      },
+                    }}
+                    style={{
+                      transformStyle: "preserve-3d",
+                      backgroundSize: "200% 200%",
+                    }}
+                  >
+                    Electric Future
+                  </motion.span>
+
+                  {/* Glowing Effect Behind Text */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-[#F59E0B] to-[#84CC16] opacity-30 blur-2xl"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{
+                      scale: [0, 1.2, 1],
+                      opacity: [0, 0.5, 0.3],
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: 1.5,
+                      ease: "easeOut",
+                    }}
+                  />
+                </motion.div>
+
+                {/* Floating Decorative Elements */}
+                <motion.div
+                  className="absolute top-0 right-0 w-4 h-4 bg-[#F59E0B] rounded-full"
+                  animate={{
+                    y: [0, -20, 0],
+                    x: [0, 10, 0],
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: 2,
+                  }}
+                />
+                <motion.div
+                  className="absolute bottom-0 left-0 w-6 h-6 bg-[#84CC16] rounded-full"
+                  animate={{
+                    y: [0, 15, 0],
+                    x: [0, -15, 0],
+                    scale: [1, 0.8, 1],
+                    opacity: [0.3, 0.8, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: 2.5,
+                  }}
+                />
+              </motion.div>
+
+              {/* Subtitle with Typewriter Effect */}
+              <motion.div
+                className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed overflow-hidden"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.8, delay: 2.5 }}
+              >
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.1, delay: 2.8 }}>
+                  {"The all-to-all EV charging platform where everyone can provide and access charging solutions"
+                    .split("")
+                    .map((char, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          duration: 0.05,
+                          delay: 2.8 + i * 0.02,
+                        }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                </motion.p>
+              </motion.div>
+
+              {/* Buttons with Staggered Entrance */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-6 justify-center mb-20"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 4 }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, x: -50, rotateY: -45 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 4.2,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  <MagneticButton size="lg" className={GRADIENT_BUTTON + " px-8 py-4 text-lg"}>
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      Start Your Journey
+                    </motion.span>
+                    <motion.div
+                      animate={{
+                        x: [0, 5, 0],
+                        rotate: [0, 15, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Number.POSITIVE_INFINITY,
+                        delay: 0.1,
+                      }}
+                    >
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </motion.div>
+                  </MagneticButton>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 50, rotateY: 45 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 4.4,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  <MagneticButton
+                    size="lg"
+                    variant="outline"
+                    className="border-[#F59E0B] text-[#F59E0B] hover:bg-[#F59E0B]/10 px-8 py-4 text-lg bg-transparent"
+                  >
+                    Become a Provider
+                  </MagneticButton>
+                </motion.div>
+              </motion.div>
+
+              {/* Enhanced Stats with Complex Animations */}
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 4.8 }}
+              >
+                {[
+                  { value: 12500, label: "Active Users", color: "text-[#F59E0B]", suffix: "+", icon: "👥" },
+                  { value: 850, label: "Charging Stations", color: "text-[#84CC16]", suffix: "+", icon: "⚡" },
+                  { value: 2400, label: "Energy Delivered", color: "text-[#F59E0B]", suffix: " kWh", icon: "🔋" },
+                ].map((stat, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                    viewport={{ once: true }}
-                    className={glassClass + " hover:scale-105 transition-transform duration-300"}
+                    initial={{
+                      opacity: 0,
+                      y: 100,
+                      rotateX: -90,
+                      scale: 0.5,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      rotateX: 0,
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 5 + index * 0.2,
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15,
+                    }}
                   >
-                    <motion.div whileHover={{ rotate: 8, scale: 1.15 }} className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 border border-gray-700 rounded-full mb-4 text-white shadow-lg">
-                      {step.icon}
-                    </motion.div>
-                    <h3 className="text-xl font-semibold text-white">{step.title}</h3>
-                    <p className="mt-2 text-gray-500">{step.description}</p>
+                    <FloatingElement delay={index * 0.2}>
+                      <motion.div
+                        whileHover={{
+                          scale: 1.05,
+                          rotateY: 10,
+                          boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.25)",
+                        }}
+                        className={GLASS_CARD + " group cursor-pointer relative overflow-hidden"}
+                      >
+                        {/* Card Background Animation */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-br from-[#F59E0B]/5 to-[#84CC16]/5"
+                          initial={{ scale: 0, rotate: 45 }}
+                          whileHover={{ scale: 1, rotate: 0 }}
+                          transition={{ duration: 0.6 }}
+                        />
+
+                        <CardContent className="p-8 text-center relative z-10">
+                          {/* Floating Icon */}
+                          <motion.div
+                            className="text-2xl mb-4"
+                            animate={{
+                              y: [0, -5, 0],
+                              rotate: [0, 5, 0],
+                            }}
+                            transition={{
+                              duration: 3,
+                              repeat: Number.POSITIVE_INFINITY,
+                              ease: "easeInOut",
+                              delay: index * 0.5,
+                            }}
+                          >
+                            {stat.icon}
+                          </motion.div>
+
+                          {/* Animated Counter */}
+                          <motion.div className={`text-4xl font-bold mb-2 ${stat.color}`} whileHover={{ scale: 1.1 }}>
+                            <AnimatedCounter end={stat.value} />
+                            <motion.span
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: 6 + index * 0.2 }}
+                            >
+                              {stat.suffix}
+                            </motion.span>
+                          </motion.div>
+
+                          {/* Label with Slide-in Effect */}
+                          <motion.div
+                            className="text-gray-400 text-lg"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 6.2 + index * 0.2 }}
+                          >
+                            {stat.label}
+                          </motion.div>
+
+                          {/* Hover Glow Effect */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-[#F59E0B]/20 to-[#84CC16]/20 rounded-2xl opacity-0"
+                            whileHover={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </CardContent>
+                      </motion.div>
+                    </FloatingElement>
                   </motion.div>
                 ))}
               </motion.div>
-            </div>
-          </div>
-        </section>
 
-        {/* Providers Section */}
-        <section id="providers" className="py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">
-                Transform Your Assets into Revenue
-              </h2>
-              <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-                Join the network as a provider and unlock new income streams by supplying power to the grid.
-              </p>
-            </div>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Scroll Indicator */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 6.5, duration: 0.8 }}
               >
-                <div className="flex items-start space-x-4">
-                  <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="inline-block">
-                    <CheckCircle className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
-                  </motion.div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-1">Effortless Monetization</h4>
-                    <p className="text-gray-500">Convert parking spaces or home chargers into consistent, passive revenue generators.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="inline-block">
-                    <CheckCircle className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
-                  </motion.div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-1">Zero Upfront Investment</h4>
-                    <p className="text-gray-500">We provide the hardware, installation, and maintenance at no cost to you.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <motion.div whileHover={{ scale: 1.2, rotate: 10 }} className="inline-block">
-                    <CheckCircle className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
-                  </motion.div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-1">Powerful Analytics</h4>
-                    <p className="text-gray-500">Gain real-time insights into usage patterns and earnings through our provider dashboard.</p>
-                  </div>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <Card className={glassClass + " p-8 shadow-2xl"}>
-                  <h3 className="text-xl font-semibold mb-6 text-white">Potential Earnings Calculator</h3>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center text-gray-400">
-                      <span>Average Daily Sessions:</span>
-                      <span className="text-white font-semibold">12</span>
-                    </div>
-                    <div className="flex justify-between items-center text-gray-400">
-                      <span>Average Session Revenue:</span>
-                      <span className="text-white font-semibold">€8.50</span>
-                    </div>
-                    <div className="border-t border-gray-700 pt-4 mt-4">
-                      <div className="flex justify-between items-center text-xl font-bold">
-                        <span className="text-gray-300">Potential Monthly Earnings:</span>
-                        <span className="text-blue-400">~€3,060</span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-
-        {/* Social Proof */}
-        <section className="py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">
-                Validated by the Vanguard
-              </h2>
-              <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-                Hear from the pioneers, innovators, and business leaders who are building the future with ChargeTN.
-              </p>
-            </div>
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.15 } },
-              }}
-            >
-              {testimonials.map((testimonial, index) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
-                  viewport={{ once: true }}
-                  className={glassClass + " p-6 rounded-lg border border-gray-800/80 flex flex-col hover:scale-105 hover:shadow-2xl transition-transform duration-300"}
-                  whileHover={{ scale: 1.05 }}
+                  className="w-6 h-10 border-2 border-[#F59E0B]/50 rounded-full flex justify-center"
+                  whileHover={{ borderColor: "rgba(245, 158, 11, 1)" }}
                 >
-                  <p className="text-gray-400 mb-6 flex-grow">"{testimonial.content}"</p>
-                  <div>
-                    <div className="font-semibold text-white">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
-                  </div>
+                  <motion.div
+                    className="w-1 h-3 bg-[#F59E0B] rounded-full mt-2"
+                    animate={{
+                      y: [0, 12, 0],
+                      opacity: [1, 0.3, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "easeInOut",
+                    }}
+                  />
                 </motion.div>
-              ))}
+              </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 sm:py-32">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className={glassClass + " py-12"}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-6">
-                Initiate Your Connection
+        {/* Enhanced Features Section */}
+        <section id="features" className={SECTION_PADDING}>
+          <div className={CONTAINER_CLASS}>
+            <ScrollReveal className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                Revolutionary <span className={GRADIENT_TEXT}>Features</span>
               </h2>
-              <p className="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
-                The future of mobility in Tunisia is being built today. Join us at the forefront of the revolution.
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Advanced technology meets user-friendly design for the ultimate EV charging experience
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                  <Button size="lg" className={gradientBtn + " px-8 py-3 text-base"}>
-                    Access the Network
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.97 }}>
-                  <Button size="lg" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-white hover:bg-white/10 px-8 py-3 text-base">
-                    Provide Power
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.div>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {features.map((feature, index) => (
+                <ScrollReveal key={index}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      rotateY: 5,
+                      z: 50,
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className={GLASS_CARD + " group cursor-pointer h-full"}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <CardContent className="p-8 h-full flex flex-col">
+                      <motion.div
+                        className="text-[#F59E0B] mb-6 group-hover:text-[#84CC16] transition-colors duration-300"
+                        whileHover={{
+                          scale: 1.2,
+                          rotate: 360,
+                        }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        {feature.icon}
+                      </motion.div>
+                      <h3 className="text-xl font-semibold mb-4 text-white">{feature.title}</h3>
+                      <p className="text-gray-400 leading-relaxed flex-grow">{feature.description}</p>
+                    </CardContent>
+                  </motion.div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t border-gray-800/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-              <div className="col-span-2 md:col-span-1">
-                <div className="flex items-center space-x-3 mb-4">
-                  <Image src="/chargetn-logo.png" alt="ChargeTN Logo" width={54} height={54} />
-                  <span className="font-semibold text-gray-300">ChargeTN</span>
-                </div>
-                <p className="text-gray-500">Engineering the future of energy mobility.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-400 mb-4">Platform</h4>
-                <ul className="space-y-3 text-gray-500">
-                  <li><a href="#" className="hover:text-white transition-colors">For Users</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">For Providers</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Mobile App</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-400 mb-4">Company</h4>
-                <ul className="space-y-3 text-gray-500">
-                  <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-400 mb-4">Legal</h4>
-                <ul className="space-y-3 text-gray-500">
-                  <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                </ul>
+        {/* Enhanced How It Works */}
+        <section id="how-it-works" className={SECTION_PADDING}>
+          <div className={CONTAINER_CLASS}>
+            <ScrollReveal className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                How <span className={GRADIENT_TEXT}>It Works</span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Three simple steps to revolutionize your EV charging experience
+              </p>
+            </ScrollReveal>
+
+            <div className="relative">
+              {/* Animated Connection Line */}
+              <motion.div
+                className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F59E0B] to-[#84CC16] opacity-30 transform -translate-y-1/2"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                viewport={{ once: true }}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                {steps.map((step, index) => (
+                  <ScrollReveal key={index}>
+                    <motion.div
+                      className="text-center relative"
+                      whileHover={{ y: -10 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <motion.div
+                        className={GLASS_CARD + " group hover:scale-105 transition-all duration-500"}
+                        whileHover={{
+                          boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.25)",
+                          borderColor: "rgba(245, 158, 11, 0.5)",
+                        }}
+                      >
+                        <CardContent className="p-10">
+                          <motion.div
+                            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#F59E0B] to-[#84CC16] rounded-2xl mb-8 text-black shadow-lg group-hover:shadow-xl group-hover:shadow-[#F59E0B]/25 transition-all duration-300"
+                            whileHover={{
+                              scale: 1.1,
+                              rotate: [0, -10, 10, 0],
+                            }}
+                            transition={{ duration: 0.6 }}
+                          >
+                            {step.icon}
+                          </motion.div>
+                          <h3 className="text-2xl font-semibold mb-4 text-white">{step.title}</h3>
+                          <p className="text-gray-400 leading-relaxed">{step.description}</p>
+                        </CardContent>
+                      </motion.div>
+                    </motion.div>
+                  </ScrollReveal>
+                ))}
               </div>
             </div>
-            <div className="mt-8 pt-8 border-t border-gray-800/50 text-center text-xs text-gray-600">
-              <p>&copy; {new Date().getFullYear()} ChargeTN. All rights reserved.</p>
+          </div>
+        </section>
+
+        {/* Enhanced Providers Section */}
+        <section id="providers" className={SECTION_PADDING}>
+          <div className={CONTAINER_CLASS}>
+            <ScrollReveal className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                Turn Your Space into <span className={GRADIENT_TEXT}>Income</span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Join thousands of providers earning passive income while supporting Tunisia's electric future
+              </p>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <ScrollReveal>
+                <div className="space-y-8">
+                  {providerBenefits.map((benefit, index) => (
+                    <motion.div
+                      key={index}
+                      className="flex items-start space-x-6"
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.2 }}
+                      viewport={{ once: true }}
+                      whileHover={{ x: 10 }}
+                    >
+                      <motion.div
+                        className="flex-shrink-0"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        {benefit.icon}
+                      </motion.div>
+                      <div>
+                        <h4 className="text-xl font-semibold text-white mb-2">{benefit.title}</h4>
+                        <p className="text-gray-400 leading-relaxed">{benefit.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal>
+                <motion.div
+                  whileHover={{
+                    scale: 1.02,
+                    rotateY: 5,
+                  }}
+                  className={GLASS_CARD}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <CardContent className="p-10">
+                    <h3 className="text-2xl font-semibold mb-8 text-[#F59E0B]">Earnings Calculator</h3>
+                    <div className="space-y-6">
+                      {[
+                        { label: "Average daily sessions:", value: "12", color: "text-[#84CC16]" },
+                        { label: "Average session value:", value: "TND 8.50", color: "text-[#84CC16]" },
+                        { label: "Your commission (15%):", value: "TND 1.28", color: "text-[#84CC16]" },
+                      ].map((item, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex justify-between items-center"
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          viewport={{ once: true }}
+                        >
+                          <span className="text-gray-400">{item.label}</span>
+                          <motion.span className={`${item.color} font-semibold text-lg`} whileHover={{ scale: 1.1 }}>
+                            {item.value}
+                          </motion.span>
+                        </motion.div>
+                      ))}
+                      <motion.div
+                        className="border-t border-white/20 pt-6"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.5 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className="flex justify-between items-center text-2xl font-bold">
+                          <span className="text-white">Monthly potential:</span>
+                          <motion.span
+                            className={GRADIENT_TEXT}
+                            animate={{
+                              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                            }}
+                            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                          >
+                            TND 461
+                          </motion.span>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </CardContent>
+                </motion.div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Enhanced Social Proof */}
+        <section className={SECTION_PADDING}>
+          <div className={CONTAINER_CLASS}>
+            <ScrollReveal className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                Trusted by <span className={GRADIENT_TEXT}>Thousands</span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Join the growing community of satisfied users and providers across Tunisia
+              </p>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <ScrollReveal key={index}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      rotateY: 5,
+                      z: 50,
+                    }}
+                    className={GLASS_CARD + " group cursor-pointer h-full"}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <CardContent className="p-8 h-full flex flex-col">
+                      <motion.div
+                        className="flex mb-6"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ scale: 0, rotate: -180 }}
+                            whileInView={{ scale: 1, rotate: 0 }}
+                            transition={{ delay: i * 0.1 + 0.5 }}
+                            viewport={{ once: true }}
+                          >
+                            <Star className="w-5 h-5 text-[#F59E0B] fill-current" />
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                      <p className="text-gray-400 mb-8 leading-relaxed text-lg flex-grow">"{testimonial.content}"</p>
+                      <div>
+                        <div className="font-semibold text-white text-lg">{testimonial.name}</div>
+                        <div className="text-gray-500">{testimonial.role}</div>
+                      </div>
+                    </CardContent>
+                  </motion.div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Enhanced CTA Section */}
+        <section className={SECTION_PADDING}>
+          <div className="max-w-5xl mx-auto px-6 lg:px-8">
+            <ScrollReveal>
+              <motion.div whileHover={{ scale: 1.02 }} className={GLASS_CARD + " text-center"}>
+                <CardContent className="p-16">
+                  <motion.h2
+                    className="text-5xl md:text-6xl font-bold mb-8"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    Ready to <span className={GRADIENT_TEXT}>Electrify</span> Tunisia?
+                  </motion.h2>
+                  <motion.p
+                    className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    Join ChargeTN today and be part of the sustainable transportation revolution
+                  </motion.p>
+
+                  <motion.div
+                    className="flex flex-col sm:flex-row gap-6 justify-center mb-12"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    viewport={{ once: true }}
+                  >
+                    <MagneticButton size="lg" className={GRADIENT_BUTTON + " px-10 py-4 text-lg"}>
+                      Join ChargeTN Today
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </MagneticButton>
+                    <MagneticButton
+                      size="lg"
+                      variant="outline"
+                      className="border-[#F59E0B] text-[#F59E0B] hover:bg-[#F59E0B]/10 px-10 py-4 text-lg bg-transparent"
+                    >
+                      Become a Provider
+                    </MagneticButton>
+                  </motion.div>
+
+                  <motion.div
+                    className="flex flex-col sm:flex-row items-center justify-center gap-8"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <FloatingElement>
+                        <div className="w-12 h-12 bg-[#0A0F1C] rounded-xl flex items-center justify-center border border-[#F59E0B]/30">
+                          <Smartphone className="w-6 h-6 text-[#F59E0B]" />
+                        </div>
+                      </FloatingElement>
+                      <FloatingElement delay={0.2}>
+                        <div className="w-12 h-12 bg-[#0A0F1C] rounded-xl flex items-center justify-center border border-[#F59E0B]/30">
+                          <Play className="w-6 h-6 text-[#F59E0B]" />
+                        </div>
+                      </FloatingElement>
+                    </div>
+                    <div className="text-gray-400">
+                      <p>Download our mobile app</p>
+                    </div>
+                  </motion.div>
+                </CardContent>
+              </motion.div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Enhanced Footer */}
+        <footer className="border-t border-white/10 bg-[#0A0F1C]/50">
+          <div className={CONTAINER_CLASS}>
+            <div className="py-16">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <ScrollReveal>
+                  <div className="md:col-span-1">
+                    <motion.div className="flex items-center space-x-4 mb-6" whileHover={{ scale: 1.05 }}>
+                      <FloatingElement>
+                        <Image
+                          src="/chargetn-logo.png"
+                          alt="ChargeTN Logo"
+                          width={40}
+                          height={40}
+                          className="rounded-lg"
+                        />
+                      </FloatingElement>
+                      <span className="text-xl font-bold text-white">ChargeTN</span>
+                    </motion.div>
+                    <p className="text-gray-400 mb-6 leading-relaxed">
+                      Powering Tunisia's electric future through innovative charging solutions.
+                    </p>
+                    <div className="flex space-x-4">
+                      <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ duration: 0.6 }}>
+                        <Globe className="w-5 h-5 text-[#F59E0B]" />
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ duration: 0.6 }}>
+                        <TrendingUp className="w-5 h-5 text-[#84CC16]" />
+                      </motion.div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+
+                {[
+                  {
+                    title: "Platform",
+                    links: ["For Users", "For Providers", "Route Planner", "Mobile App"],
+                  },
+                  {
+                    title: "Company",
+                    links: ["About Us", "Careers", "Press", "Contact"],
+                  },
+                  {
+                    title: "Support",
+                    links: ["Help Center", "Privacy Policy", "Terms of Service", "API Docs"],
+                  },
+                ].map((section, sectionIndex) => (
+                  <ScrollReveal key={sectionIndex}>
+                    <div>
+                      <h4 className="font-semibold text-white mb-6 text-lg">{section.title}</h4>
+                      <ul className="space-y-4">
+                        {section.links.map((link, linkIndex) => (
+                          <motion.li
+                            key={link}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: linkIndex * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.a
+                              href="#"
+                              className="text-gray-400 hover:text-[#F59E0B] transition-colors duration-300"
+                              whileHover={{ x: 5 }}
+                            >
+                              {link}
+                            </motion.a>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+
+              <motion.div
+                className="border-t border-white/10 mt-16 pt-8 text-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                <p className="text-gray-400">&copy; 2024 ChargeTN. All rights reserved. Made with ⚡ in Tunisia.</p>
+              </motion.div>
             </div>
           </div>
         </footer>
