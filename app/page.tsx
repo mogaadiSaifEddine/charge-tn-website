@@ -30,11 +30,11 @@ import Image from "next/image"
 const SECTION_PADDING = "py-24 lg:py-32"
 const CONTAINER_CLASS = "max-w-7xl mx-auto px-6 lg:px-8"
 const GLASS_CARD =
-  "backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl hover:bg-white/10 transition-all duration-500 hover:border-[#F59E0B]/30 hover:shadow-[#F59E0B]/10"
+  "backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl hover:bg-white/10 transition-all duration-500 hover:border-primary/30 hover:shadow-primary/10"
 const GRADIENT_TEXT =
-  "bg-gradient-to-r from-[#F59E0B] via-[#84CC16] to-[#F59E0B] bg-clip-text text-transparent animate-gradient-x"
+  "bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient-x"
 const GRADIENT_BUTTON =
-  "bg-gradient-to-r from-[#F59E0B] to-[#84CC16] text-black font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-[#F59E0B]/25"
+  "bg-gradient-to-r from-primary to-secondary text-black font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-primary/25"
 
 // Particle System Component
 const ParticleSystem = () => {
@@ -56,7 +56,7 @@ const ParticleSystem = () => {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       size: Math.random() * 4 + 1,
-      color: Math.random() > 0.5 ? "#F59E0B" : "#84CC16",
+      color: Math.random() > 0.5 ? "#FCA311" : "#E5E5E5", // Using specific HEX for particles for distinct visual
       velocity: {
         x: (Math.random() - 0.5) * 0.5,
         y: (Math.random() - 0.5) * 0.5,
@@ -347,19 +347,19 @@ export default function ChargeTNLanding() {
     {
       name: "Ahmed Ben Salem",
       role: "Tesla Owner, Tunis",
-      content: "ChargeTN transformed my daily commute. I never worry about finding charging stations anymore.",
+      content: "PowerMaps transformed my daily commute. I never worry about finding charging stations anymore.",
       rating: 5,
     },
     {
       name: "Fatima Khelifi",
       role: "Business Owner, Sfax",
-      content: "Installing charging points through ChargeTN brought new customers and additional revenue to my café.",
+      content: "Installing charging points through PowerMaps brought new customers and additional revenue to my café.",
       rating: 5,
     },
     {
       name: "Mohamed Trabelsi",
       role: "Fleet Manager, Sousse",
-      content: "Managing our electric delivery fleet became effortless with ChargeTN's business solutions.",
+      content: "Managing our electric delivery fleet became effortless with PowerMaps's business solutions.",
       rating: 5,
     },
   ]
@@ -368,41 +368,41 @@ export default function ChargeTNLanding() {
     {
       title: "Zero Investment Required",
       description: "We handle all hardware, installation, and maintenance costs",
-      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+      icon: <CheckCircle className="w-6 h-6 text-primary" />,
     },
     {
       title: "24/7 Technical Support",
       description: "Round-the-clock assistance and monitoring for all providers",
-      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+      icon: <CheckCircle className="w-6 h-6 text-primary" />,
     },
     {
       title: "Advanced Analytics",
       description: "Real-time insights into usage patterns and revenue optimization",
-      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+      icon: <CheckCircle className="w-6 h-6 text-primary" />,
     },
     {
       title: "Flexible Partnership",
       description: "No long-term contracts, scale up or down as needed",
-      icon: <CheckCircle className="w-6 h-6 text-[#84CC16]" />,
+      icon: <CheckCircle className="w-6 h-6 text-primary" />,
     },
   ]
 
   return (
-    <div className="min-h-screen bg-[#0C1426] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-oxford-blue text-white overflow-x-hidden">
       {/* Particle System */}
       <ParticleSystem />
 
       {/* Enhanced Animated Background */}
       <motion.div className="fixed inset-0 z-0" style={{ y: backgroundY }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1C] via-[#0C1426] to-[#1E293B]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-oxford-blue to-oxford-blue" />
 
         {/* Morphing shapes */}
-        <MorphingShape className="top-1/4 left-1/4 w-96 h-96 bg-[#F59E0B] opacity-20 blur-3xl" />
-        <MorphingShape className="bottom-1/4 right-1/4 w-96 h-96 bg-[#84CC16] opacity-15 blur-3xl" />
+        <MorphingShape className="top-1/4 left-1/4 w-96 h-96 bg-primary opacity-20 blur-3xl" />
+        <MorphingShape className="bottom-1/4 right-1/4 w-96 h-96 bg-secondary opacity-15 blur-3xl" />
 
         {/* Interactive cursor glow */}
         <motion.div
-          className="fixed w-96 h-96 bg-gradient-radial from-[#F59E0B]/20 to-transparent rounded-full pointer-events-none z-10"
+          className="fixed w-96 h-96 bg-gradient-radial from-primary/20 to-transparent rounded-full pointer-events-none z-10"
           animate={{
             x: mousePosition.x - 192,
             y: mousePosition.y - 192,
@@ -414,7 +414,7 @@ export default function ChargeTNLanding() {
       <div className="relative z-10">
         {/* Enhanced Navigation */}
         <motion.nav
-          className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#0C1426]/80 border-b border-white/10"
+          className="fixed top-0 w-full z-50 backdrop-blur-xl bg-oxford-blue/80 border-b border-white/10"
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -427,16 +427,16 @@ export default function ChargeTNLanding() {
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <FloatingElement>
-                  <Image src="/chargetn-logo.png" alt="ChargeTN Logo" width={48} height={48} className="rounded-xl" />
+                  <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={48} height={48} className="rounded-xl" />
                 </FloatingElement>
                 <motion.span
-                  className="text-2xl font-bold bg-gradient-to-r from-[#F59E0B] to-[#84CC16] bg-clip-text text-transparent"
+                  className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
                   animate={{
                     backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                   }}
                   transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                 >
-                  ChargeTN
+                  PowerMaps
                 </motion.span>
               </motion.div>
 
@@ -445,7 +445,7 @@ export default function ChargeTNLanding() {
                   <motion.a
                     key={item}
                     href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                    className="text-gray-300 hover:text-[#F59E0B] transition-colors duration-300 font-medium relative"
+                    className="text-gray-300 hover:text-primary transition-colors duration-300 font-medium relative"
                     whileHover={{ scale: 1.1, y: -2 }}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -453,7 +453,7 @@ export default function ChargeTNLanding() {
                   >
                     {item}
                     <motion.div
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#F59E0B] origin-left"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary origin-left"
                       initial={{ scaleX: 0 }}
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}
@@ -486,7 +486,7 @@ export default function ChargeTNLanding() {
             >
               {/* Animated Background Elements */}
               <motion.div
-                className="absolute -top-20 -left-20 w-40 h-40 bg-[#F59E0B]/20 rounded-full blur-xl"
+                className="absolute -top-20 -left-20 w-40 h-40 bg-primary/20 rounded-full blur-xl"
                 animate={{
                   scale: [1, 1.5, 1],
                   rotate: [0, 180, 360],
@@ -500,7 +500,7 @@ export default function ChargeTNLanding() {
                 }}
               />
               <motion.div
-                className="absolute -bottom-20 -right-20 w-60 h-60 bg-[#84CC16]/15 rounded-full blur-2xl"
+                className="absolute -bottom-20 -right-20 w-60 h-60 bg-secondary/15 rounded-full blur-2xl"
                 animate={{
                   scale: [1, 0.8, 1.2, 1],
                   rotate: [360, 180, 0],
@@ -522,7 +522,7 @@ export default function ChargeTNLanding() {
                 transition={{ duration: 1 }}
               >
                 {/* First Line - Letter by Letter Animation */}
-                <motion.div className="text-gray-300 block mb-4 overflow-hidden">
+                <motion.div className="text-platinum block mb-4 overflow-hidden">
                   {"Power Tunisia's".split("").map((char, i) => (
                     <motion.span
                       key={i}
@@ -557,7 +557,7 @@ export default function ChargeTNLanding() {
                 {/* Second Line - Word Morphing Effect */}
                 <motion.div className="relative">
                   <motion.span
-                    className="bg-gradient-to-r from-[#F59E0B] via-[#84CC16] to-[#F59E0B] bg-clip-text text-transparent"
+                    className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent"
                     initial={{
                       opacity: 0,
                       scale: 0.3,
@@ -591,7 +591,7 @@ export default function ChargeTNLanding() {
 
                   {/* Glowing Effect Behind Text */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#F59E0B] to-[#84CC16] opacity-30 blur-2xl"
+                    className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-30 blur-2xl"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{
                       scale: [0, 1.2, 1],
@@ -607,7 +607,7 @@ export default function ChargeTNLanding() {
 
                 {/* Floating Decorative Elements */}
                 <motion.div
-                  className="absolute top-0 right-0 w-4 h-4 bg-[#F59E0B] rounded-full"
+                  className="absolute top-0 right-0 w-4 h-4 bg-primary rounded-full"
                   animate={{
                     y: [0, -20, 0],
                     x: [0, 10, 0],
@@ -622,7 +622,7 @@ export default function ChargeTNLanding() {
                   }}
                 />
                 <motion.div
-                  className="absolute bottom-0 left-0 w-6 h-6 bg-[#84CC16] rounded-full"
+                  className="absolute bottom-0 left-0 w-6 h-6 bg-secondary rounded-full"
                   animate={{
                     y: [0, 15, 0],
                     x: [0, -15, 0],
@@ -717,7 +717,7 @@ export default function ChargeTNLanding() {
                   <MagneticButton
                     size="lg"
                     variant="outline"
-                    className="border-[#F59E0B] text-[#F59E0B] hover:bg-[#F59E0B]/10 px-8 py-4 text-lg bg-transparent"
+                    className="border-primary text-primary hover:bg-primary/10 px-8 py-4 text-lg bg-transparent"
                   >
                     Become a Provider
                   </MagneticButton>
@@ -732,9 +732,9 @@ export default function ChargeTNLanding() {
                 transition={{ duration: 1, delay: 4.8 }}
               >
                 {[
-                  { value: 12500, label: "Active Users", color: "text-[#F59E0B]", suffix: "+", icon: "👥" },
-                  { value: 850, label: "Charging Stations", color: "text-[#84CC16]", suffix: "+", icon: "⚡" },
-                  { value: 2400, label: "Energy Delivered", color: "text-[#F59E0B]", suffix: " kWh", icon: "🔋" },
+                  { value: 12500, label: "Active Users", color: "text-primary", suffix: "+", icon: "👥" },
+                  { value: 850, label: "Charging Stations", color: "text-secondary", suffix: "+", icon: "⚡" },
+                  { value: 2400, label: "Energy Delivered", color: "text-primary", suffix: " kWh", icon: "🔋" },
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
@@ -763,13 +763,13 @@ export default function ChargeTNLanding() {
                         whileHover={{
                           scale: 1.05,
                           rotateY: 10,
-                          boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(252, 163, 17, 0.25)",
                         }}
                         className={GLASS_CARD + " group cursor-pointer relative overflow-hidden"}
                       >
                         {/* Card Background Animation */}
                         <motion.div
-                          className="absolute inset-0 bg-gradient-to-br from-[#F59E0B]/5 to-[#84CC16]/5"
+                          className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"
                           initial={{ scale: 0, rotate: 45 }}
                           whileHover={{ scale: 1, rotate: 0 }}
                           transition={{ duration: 0.6 }}
@@ -817,7 +817,7 @@ export default function ChargeTNLanding() {
 
                           {/* Hover Glow Effect */}
                           <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-[#F59E0B]/20 to-[#84CC16]/20 rounded-2xl opacity-0"
+                            className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl opacity-0"
                             whileHover={{ opacity: 1 }}
                             transition={{ duration: 0.3 }}
                           />
@@ -836,11 +836,11 @@ export default function ChargeTNLanding() {
                 transition={{ delay: 6.5, duration: 0.8 }}
               >
                 <motion.div
-                  className="w-6 h-10 border-2 border-[#F59E0B]/50 rounded-full flex justify-center"
-                  whileHover={{ borderColor: "rgba(245, 158, 11, 1)" }}
+                  className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center"
+                  whileHover={{ borderColor: "rgba(252, 163, 17, 1)" }}
                 >
                   <motion.div
-                    className="w-1 h-3 bg-[#F59E0B] rounded-full mt-2"
+                    className="w-1 h-3 bg-primary rounded-full mt-2"
                     animate={{
                       y: [0, 12, 0],
                       opacity: [1, 0.3, 1],
@@ -884,7 +884,7 @@ export default function ChargeTNLanding() {
                   >
                     <CardContent className="p-8 h-full flex flex-col">
                       <motion.div
-                        className="text-[#F59E0B] mb-6 group-hover:text-[#84CC16] transition-colors duration-300"
+                        className="text-primary mb-6 group-hover:text-secondary transition-colors duration-300"
                         whileHover={{
                           scale: 1.2,
                           rotate: 360,
@@ -918,7 +918,7 @@ export default function ChargeTNLanding() {
             <div className="relative">
               {/* Animated Connection Line */}
               <motion.div
-                className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F59E0B] to-[#84CC16] opacity-30 transform -translate-y-1/2"
+                className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary opacity-30 transform -translate-y-1/2"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 transition={{ duration: 2, ease: "easeInOut" }}
@@ -936,13 +936,13 @@ export default function ChargeTNLanding() {
                       <motion.div
                         className={GLASS_CARD + " group hover:scale-105 transition-all duration-500"}
                         whileHover={{
-                          boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.25)",
-                          borderColor: "rgba(245, 158, 11, 0.5)",
+                          boxShadow: "0 25px 50px -12px rgba(252, 163, 17, 0.25)",
+                          borderColor: "rgba(252, 163, 17, 0.5)",
                         }}
                       >
                         <CardContent className="p-10">
                           <motion.div
-                            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#F59E0B] to-[#84CC16] rounded-2xl mb-8 text-black shadow-lg group-hover:shadow-xl group-hover:shadow-[#F59E0B]/25 transition-all duration-300"
+                            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-2xl mb-8 text-black shadow-lg group-hover:shadow-xl group-hover:shadow-primary/25 transition-all duration-300"
                             whileHover={{
                               scale: 1.1,
                               rotate: [0, -10, 10, 0],
@@ -1014,12 +1014,12 @@ export default function ChargeTNLanding() {
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <CardContent className="p-10">
-                    <h3 className="text-2xl font-semibold mb-8 text-[#F59E0B]">Earnings Calculator</h3>
+                    <h3 className="text-2xl font-semibold mb-8 text-primary">Earnings Calculator</h3>
                     <div className="space-y-6">
                       {[
-                        { label: "Average daily sessions:", value: "12", color: "text-[#84CC16]" },
-                        { label: "Average session value:", value: "TND 8.50", color: "text-[#84CC16]" },
-                        { label: "Your commission (15%):", value: "TND 1.28", color: "text-[#84CC16]" },
+                        { label: "Average daily sessions:", value: "12", color: "text-secondary" },
+                        { label: "Average session value:", value: "TND 8.50", color: "text-secondary" },
+                        { label: "Your commission (15%):", value: "TND 1.28", color: "text-secondary" },
                       ].map((item, index) => (
                         <motion.div
                           key={index}
@@ -1103,7 +1103,7 @@ export default function ChargeTNLanding() {
                             transition={{ delay: i * 0.1 + 0.5 }}
                             viewport={{ once: true }}
                           >
-                            <Star className="w-5 h-5 text-[#F59E0B] fill-current" />
+                            <Star className="w-5 h-5 text-primary fill-current" />
                           </motion.div>
                         ))}
                       </motion.div>
@@ -1141,7 +1141,7 @@ export default function ChargeTNLanding() {
                     transition={{ delay: 0.2 }}
                     viewport={{ once: true }}
                   >
-                    Join ChargeTN today and be part of the sustainable transportation revolution
+                    Join PowerMaps today and be part of the sustainable transportation revolution
                   </motion.p>
 
                   <motion.div
@@ -1152,13 +1152,13 @@ export default function ChargeTNLanding() {
                     viewport={{ once: true }}
                   >
                     <MagneticButton size="lg" className={GRADIENT_BUTTON + " px-10 py-4 text-lg"}>
-                      Join ChargeTN Today
+                      Join PowerMaps Today
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </MagneticButton>
                     <MagneticButton
                       size="lg"
                       variant="outline"
-                      className="border-[#F59E0B] text-[#F59E0B] hover:bg-[#F59E0B]/10 px-10 py-4 text-lg bg-transparent"
+                      className="border-primary text-primary hover:bg-primary/10 px-10 py-4 text-lg bg-transparent"
                     >
                       Become a Provider
                     </MagneticButton>
@@ -1173,13 +1173,13 @@ export default function ChargeTNLanding() {
                   >
                     <div className="flex items-center space-x-4">
                       <FloatingElement>
-                        <div className="w-12 h-12 bg-[#0A0F1C] rounded-xl flex items-center justify-center border border-[#F59E0B]/30">
-                          <Smartphone className="w-6 h-6 text-[#F59E0B]" />
+                        <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center border border-primary/30">
+                          <Smartphone className="w-6 h-6 text-primary" />
                         </div>
                       </FloatingElement>
                       <FloatingElement delay={0.2}>
-                        <div className="w-12 h-12 bg-[#0A0F1C] rounded-xl flex items-center justify-center border border-[#F59E0B]/30">
-                          <Play className="w-6 h-6 text-[#F59E0B]" />
+                        <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center border border-primary/30">
+                          <Play className="w-6 h-6 text-primary" />
                         </div>
                       </FloatingElement>
                     </div>
@@ -1194,7 +1194,7 @@ export default function ChargeTNLanding() {
         </section>
 
         {/* Enhanced Footer */}
-        <footer className="border-t border-white/10 bg-[#0A0F1C]/50">
+        <footer className="border-t border-platinum/10 bg-black/50">
           <div className={CONTAINER_CLASS}>
             <div className="py-16">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -1203,24 +1203,24 @@ export default function ChargeTNLanding() {
                     <motion.div className="flex items-center space-x-4 mb-6" whileHover={{ scale: 1.05 }}>
                       <FloatingElement>
                         <Image
-                          src="/chargetn-logo.png"
-                          alt="ChargeTN Logo"
+                          src="/powermaps-logo.png"
+                          alt="PowerMaps Logo"
                           width={40}
                           height={40}
                           className="rounded-lg"
                         />
                       </FloatingElement>
-                      <span className="text-xl font-bold text-white">ChargeTN</span>
+                      <span className="text-xl font-bold text-white">PowerMaps</span>
                     </motion.div>
                     <p className="text-gray-400 mb-6 leading-relaxed">
                       Powering Tunisia's electric future through innovative charging solutions.
                     </p>
                     <div className="flex space-x-4">
                       <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ duration: 0.6 }}>
-                        <Globe className="w-5 h-5 text-[#F59E0B]" />
+                        <Globe className="w-5 h-5 text-primary" />
                       </motion.div>
                       <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ duration: 0.6 }}>
-                        <TrendingUp className="w-5 h-5 text-[#84CC16]" />
+                        <TrendingUp className="w-5 h-5 text-secondary" />
                       </motion.div>
                     </div>
                   </div>
@@ -1254,7 +1254,7 @@ export default function ChargeTNLanding() {
                           >
                             <motion.a
                               href="#"
-                              className="text-gray-400 hover:text-[#F59E0B] transition-colors duration-300"
+                              className="text-gray-400 hover:text-primary transition-colors duration-300"
                               whileHover={{ x: 5 }}
                             >
                               {link}
@@ -1268,12 +1268,12 @@ export default function ChargeTNLanding() {
               </div>
 
               <motion.div
-                className="border-t border-white/10 mt-16 pt-8 text-center"
+                className="border-t border-platinum/10 mt-16 pt-8 text-center"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
               >
-                <p className="text-gray-400">&copy; 2024 ChargeTN. All rights reserved. Made with ⚡ in Tunisia.</p>
+                <p className="text-gray-400">&copy; 2024 PowerMaps. All rights reserved. Made with ⚡ in Tunisia.</p>
               </motion.div>
             </div>
           </div>
