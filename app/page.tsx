@@ -233,7 +233,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl text-white md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl text-black md:text-5xl font-bold mb-4">
               Benefits for <span className={GRADIENT_TEXT}>Operators</span>
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
