@@ -1,101 +1,33 @@
 import type { Config } from "tailwindcss"
+import defaultConfig from "shadcn/ui/tailwind.config"
 
 const config: Config = {
-  darkMode: ["class"],
+  ...defaultConfig,
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    ...defaultConfig.content,
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
-  prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
+    ...defaultConfig.theme,
     extend: {
+      ...defaultConfig.theme.extend,
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "#14213D", // Oxford Blue
-        foreground: "#E5E5E5", // Platinum
-        primary: {
-          DEFAULT: "#FCA311", // Orange Web
-          50: "#eff6ff",
-          100: "#dbeafe",
-          200: "#bfdbfe",
-          300: "#93c5fd",
-          400: "#60a5fa",
-          500: "#fca311", // Orange Web
-          600: "#2563eb",
-          700: "#1d4ed8",
-          800: "#1e40af",
-          900: "#1e3a8a",
-          foreground: "#000000", // Black
-        },
-        secondary: {
-          DEFAULT: "#E5E5E5", // Platinum
-          50: "#ecfdf5",
-          100: "#d1fae5",
-          200: "#a7f3d0",
-          300: "#6ee7b7",
-          400: "#34d399",
-          500: "#10b981",
-          600: "#059669",
-          700: "#047857",
-          800: "#065f46",
-          900: "#064e3b",
-          foreground: "#000000", // Black
-        },
-        accent: {
-          DEFAULT: "#facc15", // Yellow from provided palette
-          50: "#fefce8",
-          100: "#fef9c3",
-          200: "#fef08a",
-          300: "#fde047",
-          400: "#facc15",
-          500: "#eab308",
-          600: "#ca8a04",
-          700: "#a16207",
-          800: "#854d0e",
-          900: "#713f12",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        success: "#10b981",
-        warning: "#f59e0b",
-        error: "#ef4444",
-        info: "#3b82f6",
-        black: "#000000",
+        ...defaultConfig.theme.extend.colors,
+        "oxford-blue": "#0A1128",
+        "electric-blue": "#007FFF",
+        "vivid-orange": "#FF6F00",
         platinum: "#E5E5E5",
-        "oxford-blue": "#14213D",
-        "orange-web": "#FCA311",
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        "dark-background": "#0A1128", // Corresponds to Oxford Blue
+        "primary-text": "#E5E5E5", // Corresponds to Platinum
+        "secondary-text": "#A0AEC0", // A lighter gray for secondary text
+        "muted-text": "#718096", // A darker gray for muted text
+        "charge-green": "#00C853", // Green for eco
+        "charge-blue": "#2196F3", // Blue for tech
+        "subtle-red": "#EF5350", // Subtle red accent
+        "pure-white": "#FFFFFF", // Pure white
       },
       keyframes: {
         "accordion-down": {
@@ -108,35 +40,21 @@ const config: Config = {
         },
         "gradient-x": {
           "0%, 100%": {
-            "background-size": "200% 200%",
-            "background-position": "left center",
+            "background-position": "0% 50%",
           },
           "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
-        "pulse-amber": {
-          "0%, 100%": {
-            opacity: "1",
-          },
-          "50%": {
-            opacity: "0.5",
+            "background-position": "100% 50%",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "gradient-x": "gradient-x 3s ease infinite",
-        "pulse-amber": "pulse-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      backdropBlur: {
-        xs: "2px",
+        "gradient-x": "gradient-x 4s ease infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [...defaultConfig.plugins, require("tailwindcss-animate")],
+}
 
 export default config
