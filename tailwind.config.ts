@@ -1,25 +1,74 @@
 import type { Config } from "tailwindcss"
-import defaultConfig from "shadcn/ui/tailwind.config"
 
 const config: Config = {
-  ...defaultConfig,
+  darkMode: ["class"],
   content: [
-    ...defaultConfig.content,
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    ...defaultConfig.theme,
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
-      ...defaultConfig.theme.extend,
       colors: {
-        ...defaultConfig.theme.extend.colors,
-        "oxford-blue": "#0A1128",
-        "electric-blue": "#007FFF",
-        "vivid-orange": "#FF6F00",
-        platinum: "#E5E5E5",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        "black": "#000000",
+        "white": "#FFFFFF",
+        "gray-50": "#F9FAFB",
+        "gray-100": "#F3F4F6",
+        "gray-200": "#E5E7EB",
+        "gray-300": "#D1D5DB",
+        "gray-400": "#9CA3AF",
+        "gray-500": "#6B7280",
+        "gray-600": "#4B5563",
+        "gray-700": "#374151",
+        "gray-800": "#1F2937",
+        "gray-900": "#0000",
+        // Legacy color names mapped to black/white/gray
+
+        "oxforrd-blue": "#0A1128",
+        "electricc-blue": "#007FFF",
+        "vivid-orangee": "#FF6F00",
+        platinume: "#E5E5E5",
         "dark-background": "#0A1128", // Corresponds to Oxford Blue
         "primary-text": "#E5E5E5", // Corresponds to Platinum
         "secondary-text": "#A0AEC0", // A lighter gray for secondary text
@@ -28,6 +77,14 @@ const config: Config = {
         "charge-blue": "#2196F3", // Blue for tech
         "subtle-red": "#EF5350", // Subtle red accent
         "pure-white": "#FFFFFF", // Pure white
+
+        
+  
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
@@ -54,7 +111,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [...defaultConfig.plugins, require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate")],
 }
 
 export default config

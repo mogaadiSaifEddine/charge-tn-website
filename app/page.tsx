@@ -31,11 +31,11 @@ import {
 const SECTION_PADDING = "py-20 md:py-28"
 const CONTAINER_CLASS = "max-w-7xl mx-auto px-6 lg:px-8"
 const GRADIENT_TEXT =
-  "bg-gradient-to-r from-electric-blue to-vivid-orange bg-clip-text text-transparent animate-gradient-x"
+  "bg-gradient-to-r from-electricc-blue to-vivid-orangee bg-clip-text text-transparent animate-gradient-x"
 const PRIMARY_BUTTON_CLASS =
-  "bg-electric-blue text-white font-semibold hover:bg-electric-blue/90 transition-colors duration-300 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl hover:shadow-electric-blue/25"
+  "bg-transparent text-black font-semibold hover:bg-electric-blue/90 transition-colors duration-300 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl hover:shadow-electric-blue/25"
 const SECONDARY_BUTTON_CLASS =
-  "border border-electric-blue text-electric-blue font-semibold hover:bg-electric-blue/10 transition-colors duration-300 rounded-full px-8 py-3 text-lg"
+  "border  font-semibold hover:bg-electric-blue/10 transition-colors duration-300 rounded-full px-8 py-3 text-lg"
 const CARD_CLASS = "bg-card border border-border rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
 
 // Animation variants
@@ -142,7 +142,7 @@ export default function PowerMapsLanding() {
             transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
           >
             <Image
-              src="/placeholder.svg?height=500&width=800"
+              src="/hero.jpeg?height=500&width=800"
               alt="PowerMaps App Mockup and Map"
               width={800}
               height={500}
@@ -233,7 +233,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl text-white md:text-5xl font-bold mb-4">
               Benefits for <span className={GRADIENT_TEXT}>Operators</span>
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
@@ -394,7 +394,7 @@ export default function PowerMapsLanding() {
             </div>
             <div className="md:w-1/2">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/Eco-friendly.jpeg?height=400&width=600"
                 alt="Eco-friendly illustration"
                 width={600}
                 height={400}
