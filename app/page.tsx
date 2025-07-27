@@ -25,6 +25,8 @@ import {
   Zap,
   Leaf,
   CheckCircle,
+  Users,
+  TrendingUp,
 } from "lucide-react"
 
 // Re-defining design tokens based on the original palette and style
@@ -77,8 +79,8 @@ export default function PowerMapsLanding() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={40} height={40} className="rounded-lg" />
-              <span className="text-2xl font-bold text-platinum">PowerMaps</span>
+              <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={200} height={200} className="rounded-lg" />
+              {/* <span className="text-2xl font-bold text-platinum">PowerMaps</span> */}
             </motion.div>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -119,10 +121,10 @@ export default function PowerMapsLanding() {
         <div className={CONTAINER_CLASS}>
           <motion.div className="max-w-4xl mx-auto" variants={fadeIn} initial="initial" animate="animate">
             <motion.h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-              Find. Reserve. Charge. <span className={GRADIENT_TEXT}>Anywhere in Tunisia.</span>
+              Find. Reserve. Charge. <span className={GRADIENT_TEXT}>Globally.</span>
             </motion.h1>
             <motion.p className="text-xl md:text-2xl text-platinum/80 mb-10 max-w-3xl mx-auto">
-              PowerMaps helps you discover and reserve EV charging stations in real-time across Tunisia.
+              PowerMaps connects EV drivers worldwide to charging stations with real-time availability, smart reservations, and seamless payments.
             </motion.p>
             <motion.div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Button className={PRIMARY_BUTTON_CLASS}>
@@ -134,7 +136,7 @@ export default function PowerMapsLanding() {
             </motion.div>
           </motion.div>
 
-          {/* Hero Image: App mockup on phone + map of Tunisia with EV stations */}
+          {/* Hero Image: App mockup on phone + global map with EV stations */}
           <motion.div
             className="relative w-full max-w-5xl mx-auto mt-16"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -143,7 +145,7 @@ export default function PowerMapsLanding() {
           >
             <Image
               src="/hero.jpeg?height=500&width=800"
-              alt="PowerMaps App Mockup and Map"
+              alt="PowerMaps App Mockup and Global Map"
               width={800}
               height={500}
               className="w-full h-auto rounded-xl shadow-2xl border border-platinum/20"
@@ -166,7 +168,7 @@ export default function PowerMapsLanding() {
               Features for <span className={GRADIENT_TEXT}>EV Users</span>
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
-              Everything you need for a seamless charging experience.
+              Everything you need for a seamless charging experience, anywhere in the world.
             </p>
           </motion.div>
 
@@ -180,33 +182,33 @@ export default function PowerMapsLanding() {
             {[
               {
                 icon: <MapPin className="w-8 h-8 text-electric-blue" />,
-                title: "Interactive Station Map",
-                description: "Easily locate available charging stations near you or along your route.",
+                title: "Global Station Network",
+                description: "Access charging stations worldwide with real-time availability updates.",
               },
               {
                 icon: <Clock className="w-8 h-8 text-vivid-orange" />,
-                title: "Real-time Availability",
-                description: "See live status updates on chargers to avoid waiting times.",
+                title: "Smart Reservations",
+                description: "Book your charging slot in advance for guaranteed access anywhere.",
               },
               {
                 icon: <Zap className="w-8 h-8 text-electric-blue" />,
-                title: "Smart Reservations",
-                description: "Book your charging slot in advance for guaranteed access.",
+                title: "Cross-Border Compatibility",
+                description: "Seamlessly charge across different networks and countries.",
               },
               {
                 icon: <CreditCard className="w-8 h-8 text-vivid-orange" />,
-                title: "Easy Payments",
-                description: "Pay securely with D17, credit cards, or other convenient methods.",
+                title: "Universal Payments",
+                description: "One app, multiple payment methods, works in any supported region.",
               },
               {
                 icon: <Route className="w-8 h-8 text-electric-blue" />,
-                title: "Route Planning",
-                description: "Plan your long journeys with integrated charging stops.",
+                title: "International Route Planning",
+                description: "Plan long journeys across borders with integrated charging stops.",
               },
               {
                 icon: <Languages className="w-8 h-8 text-vivid-orange" />,
                 title: "Multi-language Support",
-                description: "Available in Arabic, French, and English for all users.",
+                description: "Available in local languages for seamless global experience.",
               },
             ].map((feature, index) => (
               <motion.div key={index} variants={itemFadeIn}>
@@ -237,7 +239,7 @@ export default function PowerMapsLanding() {
               Benefits for <span className={GRADIENT_TEXT}>Operators</span>
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
-              Monetize your charging stations and grow your business with PowerMaps.
+              Scale your charging business globally with PowerMaps' comprehensive platform.
             </p>
           </motion.div>
 
@@ -251,23 +253,23 @@ export default function PowerMapsLanding() {
             {[
               {
                 icon: <BarChart className="w-8 h-8 text-electric-blue" />,
-                title: "Analytics & Revenue Tracking",
-                description: "Gain insights into usage patterns and track your earnings in real-time.",
+                title: "Global Analytics & Revenue Tracking",
+                description: "Comprehensive insights across all markets with real-time revenue tracking.",
               },
               {
                 icon: <DollarSign className="w-8 h-8 text-vivid-orange" />,
-                title: "Dynamic Pricing",
-                description: "Set flexible pricing based on demand, time of day, or energy costs.",
+                title: "Multi-Currency Support",
+                description: "Flexible pricing in local currencies with automatic conversion and reporting.",
               },
               {
-                icon: <Bell className="w-8 h-8 text-electric-blue" />,
-                title: "Maintenance Alerts",
-                description: "Receive instant notifications for any issues, ensuring maximum uptime.",
+                icon: <Users className="w-8 h-8 text-electric-blue" />,
+                title: "International Customer Base",
+                description: "Reach EV drivers from around the world traveling through your region.",
               },
               {
-                icon: <MessageSquare className="w-8 h-8 text-vivid-orange" />,
-                title: "Customer Feedback Tools",
-                description: "Collect valuable feedback to improve your service and user satisfaction.",
+                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" />,
+                title: "Market Expansion Tools",
+                description: "Scale your operations to new markets with localized support and insights.",
               },
             ].map((benefit, index) => (
               <motion.div key={index} variants={itemFadeIn}>
@@ -290,14 +292,14 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <Button className={PRIMARY_BUTTON_CLASS}>
-              Become a Partner <ArrowRight className="ml-2 w-5 h-5" />
+              Become a Global Partner <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Why PowerMaps? (Competitive Advantage) */}
-      <section id="why-powermaps" className={SECTION_PADDING}>
+      {/* Global Reach */}
+      <section id="global-reach" className={SECTION_PADDING}>
         <div className={CONTAINER_CLASS}>
           <motion.div
             className="text-center mb-16"
@@ -307,10 +309,10 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why <span className={GRADIENT_TEXT}>PowerMaps?</span>
+              Our <span className={GRADIENT_TEXT}>Global Reach</span>
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
-              Leading the charge for an electric future in Tunisia.
+              Expanding rapidly across regions to create the world's most comprehensive EV charging network.
             </p>
           </motion.div>
 
@@ -323,24 +325,24 @@ export default function PowerMapsLanding() {
           >
             {[
               {
-                icon: <CheckCircle className="w-8 h-8 text-electric-blue" />,
-                title: "First-Mover in Tunisia",
-                description: "Pioneering EV charging solutions across the nation.",
+                icon: <Globe className="w-8 h-8 text-electric-blue" />,
+                title: "North Africa Pioneer",
+                description: "Leading EV charging solutions across Tunisia, Morocco, and Algeria.",
               },
               {
                 icon: <Zap className="w-8 h-8 text-vivid-orange" />,
-                title: "All-in-One EV Solution",
-                description: "Comprehensive platform for all your charging needs.",
+                title: "Cross-Border Network",
+                description: "Seamless charging experience across multiple countries and regions.",
               },
               {
-                icon: <Globe className="w-8 h-8 text-electric-blue" />,
-                title: "Works with All Networks",
-                description: "Seamlessly connect to any charging network.",
+                icon: <Users className="w-8 h-8 text-electric-blue" />,
+                title: "Growing Community",
+                description: "Thousands of EV drivers and operators across expanding markets.",
               },
               {
-                icon: <Leaf className="w-8 h-8 text-vivid-orange" />,
-                title: "Supports Green Goals",
-                description: "Committed to Tunisia's sustainable development.",
+                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" />,
+                title: "Rapid Expansion",
+                description: "Continuously adding new markets and partnerships worldwide.",
               },
             ].map((advantage, index) => (
               <motion.div key={index} variants={itemFadeIn}>
@@ -368,10 +370,10 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className={GRADIENT_TEXT}>Sustainability</span> Commitment
+              Our <span className={GRADIENT_TEXT}>Sustainability</span> Mission
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
-              Driving a greener future for Tunisia, one charge at a time.
+              Driving a greener future globally, one charge at a time.
             </p>
           </motion.div>
 
@@ -384,18 +386,16 @@ export default function PowerMapsLanding() {
           >
             <div className="md:w-1/2 text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-platinum">
-                Helping Tunisia reduce carbon emissions by <span className="text-electric-blue">45% by 2030</span>
+                Supporting global carbon reduction goals through <span className="text-electric-blue">accessible EV infrastructure</span>
               </h3>
               <p className="text-lg text-platinum/80">
-                PowerMaps is dedicated to supporting Tunisia's national goals for environmental sustainability. By
-                expanding the EV charging infrastructure, we empower more individuals and businesses to switch to
-                electric vehicles, significantly contributing to a cleaner, healthier environment.
+                PowerMaps is committed to accelerating the global transition to electric vehicles by making charging infrastructure more accessible, efficient, and user-friendly. We work with governments, businesses, and communities worldwide to build a sustainable transportation future.
               </p>
             </div>
             <div className="md:w-1/2">
               <Image
                 src="/Eco-friendly.jpeg?height=400&width=600"
-                alt="Eco-friendly illustration"
+                alt="Global sustainability illustration"
                 width={600}
                 height={400}
                 className="w-full h-auto rounded-xl shadow-lg"
@@ -405,7 +405,7 @@ export default function PowerMapsLanding() {
         </div>
       </section>
 
-      {/* Testimonials (Optional) */}
+      {/* Testimonials */}
       <section className={SECTION_PADDING}>
         <div className={CONTAINER_CLASS}>
           <motion.div
@@ -416,10 +416,10 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              What Our <span className={GRADIENT_TEXT}>Users Say</span>
+              What Our <span className={GRADIENT_TEXT}>Global Users</span> Say
             </h2>
             <p className="text-lg text-platinum/80 max-w-2xl mx-auto">
-              Hear from our satisfied EV users and station operators.
+              Hear from satisfied EV users and station operators around the world.
             </p>
           </motion.div>
 
@@ -432,19 +432,19 @@ export default function PowerMapsLanding() {
           >
             {[
               {
-                quote: "PowerMaps made my EV ownership so much easier. Finding a charger is no longer a hassle!",
-                name: "Amina S.",
-                role: "EV Owner, Tunis",
+                quote: "PowerMaps made my international EV road trip seamless. Finding chargers across borders has never been easier!",
+                name: "Sarah M.",
+                role: "EV Enthusiast, Europe",
               },
               {
-                quote: "Partnering with PowerMaps boosted my business. The platform is intuitive and reliable.",
-                name: "Karim B.",
-                role: "Cafe Owner & Operator, Sfax",
+                quote: "As a multi-location operator, PowerMaps helps me manage my charging network across different countries efficiently.",
+                name: "Ahmed K.",
+                role: "Charging Network Operator, MENA",
               },
               {
-                quote: "The real-time availability feature is a game-changer. No more wasted trips!",
-                name: "Youssef M.",
-                role: "Daily Commuter, Sousse",
+                quote: "The global payment system is a game-changer. One app for all my charging needs worldwide.",
+                name: "Maria L.",
+                role: "Business Traveler, Americas",
               },
             ].map((testimonial, index) => (
               <motion.div key={index} variants={itemFadeIn}>
@@ -472,11 +472,10 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-platinum">
-              Join the <span className={GRADIENT_TEXT}>EV Revolution</span> in Tunisia
+              Join the <span className={GRADIENT_TEXT}>Global EV Revolution</span>
             </h2>
             <p className="text-lg text-platinum/80 mb-10">
-              Whether you're an EV driver or a potential charging station operator, PowerMaps is your partner for a
-              sustainable future.
+              Whether you're an EV driver or a charging station operator, PowerMaps is your partner for sustainable mobility worldwide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button className={PRIMARY_BUTTON_CLASS}>
@@ -499,7 +498,7 @@ export default function PowerMapsLanding() {
                 <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={32} height={32} className="rounded-md" />
                 <span className="text-xl font-bold text-platinum">PowerMaps</span>
               </div>
-              <p className="text-platinum/70 text-sm">Tunisia's First EV Charging Reservation App.</p>
+              <p className="text-platinum/70 text-sm">The Global EV Charging Platform.</p>
               <div className="flex space-x-4 mt-6">
                 <a
                   href="#"
@@ -523,7 +522,7 @@ export default function PowerMapsLanding() {
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/company/108263961/"
                   aria-label="LinkedIn"
                   className="text-platinum/70 hover:text-electric-blue transition-colors"
                 >
@@ -546,8 +545,8 @@ export default function PowerMapsLanding() {
                   </a>
                 </li>
                 <li>
-                  <a href="#why-powermaps" className="hover:text-electric-blue transition-colors">
-                    Why PowerMaps?
+                  <a href="#global-reach" className="hover:text-electric-blue transition-colors">
+                    Global Reach
                   </a>
                 </li>
                 <li>
@@ -578,17 +577,19 @@ export default function PowerMapsLanding() {
               </div>
             </motion.div>
 
-            <motion.div variants={itemFadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
+            {/* <motion.div variants={itemFadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
               <h4 className="font-semibold text-platinum mb-4">Contact Us</h4>
               <p className="text-platinum/70 mb-2">Email: info@powermaps.com</p>
-              <p className="text-platinum/70 mb-4">Phone: +216 71 123 456</p>
+              <p className="text-platinum/70 mb-4">Phone: +1 (555) 123-4567</p>
               <h4 className="font-semibold text-platinum mb-4">Language</h4>
               <select className="bg-card border border-platinum/20 rounded-md px-3 py-2 text-platinum/70 focus:ring-electric-blue focus:border-electric-blue">
                 <option value="en">English</option>
                 <option value="ar">العربية</option>
                 <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
               </select>
-            </motion.div>
+            </motion.div> */}
           </div>
 
           <motion.div
@@ -598,7 +599,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <p>&copy; 2024 PowerMaps. All rights reserved.</p>
+            <p>&copy; 2024 PowerMaps. All rights reserved. Connecting the world through sustainable mobility.</p>
           </motion.div>
         </div>
       </footer>
