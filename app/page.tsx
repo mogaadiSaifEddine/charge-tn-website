@@ -501,7 +501,7 @@ export default function PowerMapsLanding() {
               <p className="text-platinum/70 text-sm">The Global EV Charging Platform.</p>
               <div className="flex space-x-4 mt-6">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/profile.php?id=61578405974572"
                   aria-label="Facebook"
                   className="text-platinum/70 hover:text-electric-blue transition-colors"
                 >
