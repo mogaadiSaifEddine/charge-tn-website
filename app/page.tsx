@@ -599,7 +599,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <p>&copy; 2024 PowerMaps. All rights reserved. Connecting the world through sustainable mobility.</p>
+            <p>&copy; 2025 PowerMaps. All rights reserved. Connecting the world through sustainable mobility.</p>
           </motion.div>
         </div>
       </footer>
