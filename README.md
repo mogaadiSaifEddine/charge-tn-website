@@ -1,30 +1,50 @@
-# ChargeTN Landing Page
+# PowerMaps Landing Page
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+A modern, responsive landing page for PowerMaps - the global EV charging platform.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/mogaadisaif7-8283s-projects/v0-charge-tn-landing-page)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/e4LrVCcQhsW)
+## Features
 
-## Overview
+- 🌍 Multi-language support (English, Arabic, French, Spanish, German)
+- 🌙 Dark/Light theme toggle
+- 📱 Fully responsive design
+- ⚡ Modern animations with Framer Motion
+- 🎨 Beautiful UI with shadcn/ui components
+- 🔄 RTL support for Arabic
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## Tech Stack
 
-## Deployment
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- shadcn/ui
+- next-themes
 
-Your project is live at:
+## Getting Started
 
-**[https://vercel.com/mogaadisaif7-8283s-projects/v0-charge-tn-landing-page](https://vercel.com/mogaadisaif7-8283s-projects/v0-charge-tn-landing-page)**
+1. Install dependencies:
+\`\`\`bash
+npm install
+\`\`\`
 
-## Build your app
+2. Run the development server:
+\`\`\`bash
+npm run dev
+\`\`\`
 
-Continue building your app on:
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-**[https://v0.dev/chat/projects/e4LrVCcQhsW](https://v0.dev/chat/projects/e4LrVCcQhsW)**
+## Localization
 
-## How It Works
+The app supports 5 languages:
+- English (en)
+- Arabic (ar) - with RTL support
+- French (fr)
+- Spanish (es)
+- German (de)
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+Language preferences are saved in localStorage and persist across sessions.
+
+## Theme Support
+
+The app includes both light and dark themes with smooth transitions. Theme preference is managed by next-themes and persists across sessions.

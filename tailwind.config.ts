@@ -51,35 +51,13 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "black": "#000000",
-        "white": "#FFFFFF",
-        "gray-50": "#F9FAFB",
-        "gray-100": "#F3F4F6",
-        "gray-200": "#E5E7EB",
-        "gray-300": "#D1D5DB",
-        "gray-400": "#9CA3AF",
-        "gray-500": "#6B7280",
-        "gray-600": "#4B5563",
-        "gray-700": "#374151",
-        "gray-800": "#1F2937",
-        "gray-900": "#0000",
-        // Legacy color names mapped to black/white/gray
-
-        "oxforrd-blue": "#0A1128",
+        // Custom PowerMaps colors
+        "oxford-blue": "#0A1128",
+        "electric-blue": "#007FFF",
+        "vivid-orange": "#FF6F00",
+        platinum: "#E5E5E5",
         "electricc-blue": "#007FFF",
         "vivid-orangee": "#FF6F00",
-        platinume: "#E5E5E5",
-        "dark-background": "#0A1128", // Corresponds to Oxford Blue
-        "primary-text": "#E5E5E5", // Corresponds to Platinum
-        "secondary-text": "#A0AEC0", // A lighter gray for secondary text
-        "muted-text": "#718096", // A darker gray for muted text
-        "charge-green": "#00C853", // Green for eco
-        "charge-blue": "#2196F3", // Blue for tech
-        "subtle-red": "#EF5350", // Subtle red accent
-        "pure-white": "#FFFFFF", // Pure white
-
-        
-  
       },
       borderRadius: {
         lg: "var(--radius)",
