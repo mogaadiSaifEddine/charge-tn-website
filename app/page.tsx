@@ -160,8 +160,7 @@ export default function PowerMapsLanding() {
               <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps mobile app for EV charging">
                 {t("downloadTheApp")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
-              <Link  >
-              </Link>
+              
               <Button
               href="https://app.powermaps.tech/"
                 variant="outline"
