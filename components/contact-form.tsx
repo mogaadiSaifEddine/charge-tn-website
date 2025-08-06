@@ -131,7 +131,7 @@ export function ContactForm() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+216 53 376 XXX</p>
+                    <p className="text-muted-foreground">+216 53 376 935</p>
                   </div>
                 </div>
 
