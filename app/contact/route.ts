@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     // - AWS SES
 
     // For now, we'll simulate the email sending
-    console.log("Email would be sent to saif@powermaps.tech with:", {
+    console.log("Email would be sent to contact@powermaps.tech with:", {
       from: email,
       name,
       subject,

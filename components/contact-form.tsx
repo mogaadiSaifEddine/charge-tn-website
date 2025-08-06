@@ -117,10 +117,10 @@ export function ContactForm() {
                   <div>
                     <h3 className="font-semibold text-foreground">Email</h3>
                     <a
-                      href="mailto:saif@powermaps.tech"
+                      href="mailto:contact@powermaps.tech"
                       className="text-muted-foreground hover:text-electric-blue transition-colors"
                     >
-                      saif@powermaps.tech
+                      contact@powermaps.tech
                     </a>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export function ContactForm() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+216 XX XXX XXX</p>
+                    <p className="text-muted-foreground">+216 53 376 XXX</p>
                   </div>
                 </div>
 
