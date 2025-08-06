@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
+import { ContactForm } from "@/components/contact-form"
 import { useLanguage } from "@/hooks/use-language"
 import { useEffect } from "react"
 import {
@@ -78,6 +79,8 @@ export default function PowerMapsLanding() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
+        role="navigation"
+        aria-label="Main navigation"
       >
         <div className={CONTAINER_CLASS}>
           <div className="flex justify-between items-center h-20">
@@ -87,15 +90,23 @@ export default function PowerMapsLanding() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={200} height={200} className="rounded-lg" />
+              <Image
+                src="/powermaps-logo.png"
+                alt="PowerMaps - Global EV Charging Network Logo"
+                width={200}
+                height={200}
+                className="rounded-lg"
+                priority
+              />
             </motion.div>
 
             <div className="hidden md:flex items-center space-x-8">
               {[
-                { key: "features", href: "#features" },
-                { key: "operators", href: "#operators" },
-                { key: "whyPowerMaps", href: "#global-reach" },
-                { key: "sustainability", href: "#sustainability" },
+                { key: "features", href: "#features", label: "EV Charging Features" },
+                { key: "operators", href: "#operators", label: "For Charging Station Operators" },
+                { key: "whyPowerMaps", href: "#global-reach", label: "Global EV Network Coverage" },
+                { key: "sustainability", href: "#sustainability", label: "Sustainable Electric Mobility" },
+                { key: "contact", href: "#contact", label: "Contact PowerMaps" },
               ].map((item, index) => (
                 <motion.a
                   key={item.key}
@@ -104,8 +115,11 @@ export default function PowerMapsLanding() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
+                  aria-label={item.label}
                 >
-                  {t(item.key as keyof typeof import("@/lib/i18n").translations.en)}
+                  {item.key === "contact"
+                    ? "Contact"
+                    : t(item.key as keyof typeof import("@/lib/i18n").translations.en)}
                   <motion.div
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-electric-blue origin-left"
                     initial={{ scaleX: 0 }}
@@ -124,7 +138,9 @@ export default function PowerMapsLanding() {
             >
               <ThemeToggle />
               <LanguageSelector />
-              <Button className={PRIMARY_BUTTON_CLASS}>{t("downloadApp")}</Button>
+              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps EV Charging App">
+                {t("downloadApp")}
+              </Button>
             </motion.div>
           </div>
         </div>
@@ -141,10 +157,16 @@ export default function PowerMapsLanding() {
               {t("heroSubtitle")}
             </motion.p>
             <motion.div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button className={PRIMARY_BUTTON_CLASS}>
-                {t("downloadTheApp")} <ArrowRight className="ml-2 w-5 h-5" />
+              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps mobile app for EV charging">
+                {t("downloadTheApp")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
-              <Button variant="outline" className={SECONDARY_BUTTON_CLASS}>
+              <Link  href="https://app.powermaps.tech/">
+              </Link>
+              <Button
+                variant="outline"
+                className={SECONDARY_BUTTON_CLASS}
+                aria-label="Find EV charging stations near you"
+              >
                 {t("findAStation")}
               </Button>
             </motion.div>
@@ -158,11 +180,13 @@ export default function PowerMapsLanding() {
             transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
           >
             <Image
-              src="/hero.jpeg?height=500&width=800"
-              alt="PowerMaps App Mockup and Global Map"
+              src="/hero.jpeg"
+              alt="PowerMaps mobile app interface showing global EV charging station map with real-time availability"
               width={800}
               height={500}
               className="w-full h-auto rounded-xl shadow-2xl border border-border"
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
             />
           </motion.div>
         </div>
@@ -193,37 +217,37 @@ export default function PowerMapsLanding() {
           >
             {[
               {
-                icon: <MapPin className="w-8 h-8 text-electric-blue" />,
+                icon: <MapPin className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "globalStationNetwork",
                 descKey: "globalStationDesc",
               },
               {
-                icon: <Clock className="w-8 h-8 text-vivid-orange" />,
+                icon: <Clock className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "smartReservations",
                 descKey: "smartReservationsDesc",
               },
               {
-                icon: <Zap className="w-8 h-8 text-electric-blue" />,
+                icon: <Zap className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "crossBorderCompatibility",
                 descKey: "crossBorderDesc",
               },
               {
-                icon: <CreditCard className="w-8 h-8 text-vivid-orange" />,
+                icon: <CreditCard className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "universalPayments",
                 descKey: "universalPaymentsDesc",
               },
               {
-                icon: <Route className="w-8 h-8 text-electric-blue" />,
+                icon: <Route className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "internationalRoutePlanning",
                 descKey: "routePlanningDesc",
               },
               {
-                icon: <Languages className="w-8 h-8 text-vivid-orange" />,
+                icon: <Languages className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "multiLanguageSupport",
                 descKey: "multiLanguageDesc",
               },
             ].map((feature, index) => (
-              <motion.div key={index} variants={itemFadeIn}>
+              <motion.article key={index} variants={itemFadeIn}>
                 <Card className={CARD_CLASS}>
                   <CardContent className="p-6 flex flex-col items-center text-center">
                     <div className="mb-4">{feature.icon}</div>
@@ -235,7 +259,7 @@ export default function PowerMapsLanding() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </motion.article>
             ))}
           </motion.div>
         </div>
@@ -266,27 +290,27 @@ export default function PowerMapsLanding() {
           >
             {[
               {
-                icon: <BarChart className="w-8 h-8 text-electric-blue" />,
+                icon: <BarChart className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "globalAnalytics",
                 descKey: "globalAnalyticsDesc",
               },
               {
-                icon: <DollarSign className="w-8 h-8 text-vivid-orange" />,
+                icon: <DollarSign className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "multiCurrencySupport",
                 descKey: "multiCurrencyDesc",
               },
               {
-                icon: <Users className="w-8 h-8 text-electric-blue" />,
+                icon: <Users className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "internationalCustomerBase",
                 descKey: "internationalCustomerDesc",
               },
               {
-                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" />,
+                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "marketExpansionTools",
                 descKey: "marketExpansionDesc",
               },
             ].map((benefit, index) => (
-              <motion.div key={index} variants={itemFadeIn}>
+              <motion.article key={index} variants={itemFadeIn}>
                 <Card className={CARD_CLASS}>
                   <CardContent className="p-6 flex flex-col items-center text-center">
                     <div className="mb-4">{benefit.icon}</div>
@@ -298,7 +322,7 @@ export default function PowerMapsLanding() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </motion.article>
             ))}
           </motion.div>
 
@@ -309,8 +333,11 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Button className={PRIMARY_BUTTON_CLASS}>
-              {t("becomeAGlobalPartner")} <ArrowRight className="ml-2 w-5 h-5" />
+            <Button
+              className={PRIMARY_BUTTON_CLASS}
+              aria-label="Become a global charging station partner with PowerMaps"
+            >
+              {t("becomeAGlobalPartner")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
             </Button>
           </motion.div>
         </div>
@@ -341,27 +368,27 @@ export default function PowerMapsLanding() {
           >
             {[
               {
-                icon: <Globe className="w-8 h-8 text-electric-blue" />,
+                icon: <Globe className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "northAfricaPioneer",
                 descKey: "northAfricaDesc",
               },
               {
-                icon: <Zap className="w-8 h-8 text-vivid-orange" />,
+                icon: <Zap className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "crossBorderNetwork",
                 descKey: "crossBorderNetworkDesc",
               },
               {
-                icon: <Users className="w-8 h-8 text-electric-blue" />,
+                icon: <Users className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
                 titleKey: "growingCommunity",
                 descKey: "growingCommunityDesc",
               },
               {
-                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" />,
+                icon: <TrendingUp className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
                 titleKey: "rapidExpansion",
                 descKey: "rapidExpansionDesc",
               },
             ].map((advantage, index) => (
-              <motion.div key={index} variants={itemFadeIn} className="h-full">
+              <motion.article key={index} variants={itemFadeIn} className="h-full">
                 <Card className={`${CARD_CLASS} h-full`}>
                   <CardContent className="p-6 flex flex-col items-center text-center h-full">
                     <div className="mb-4">{advantage.icon}</div>
@@ -373,7 +400,7 @@ export default function PowerMapsLanding() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </motion.article>
             ))}
           </motion.div>
         </div>
@@ -412,80 +439,20 @@ export default function PowerMapsLanding() {
             </div>
             <div className="md:w-1/2">
               <Image
-                src="/Eco-friendly.jpeg?height=400&width=600"
-                alt="Global sustainability illustration"
+                src="/Eco-friendly.jpeg"
+                alt="Sustainable electric vehicle charging infrastructure promoting green energy and carbon neutral transportation"
                 width={600}
                 height={400}
                 className="w-full h-auto rounded-xl shadow-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      {/*<section className={SECTION_PADDING}>
-        <div className={CONTAINER_CLASS}>
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeIn}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t("testimonialsTitle")} <span className={GRADIENT_TEXT}>{t("testimonialsHighlight")}</span>{" "}
-              {t("testimonialsEnd")}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("testimonialsSubtitle")}</p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {[
-              {
-                quoteKey: "testimonial1",
-                nameKey: "testimonial1Name",
-                roleKey: "testimonial1Role",
-              },
-              {
-                quoteKey: "testimonial2",
-                nameKey: "testimonial2Name",
-                roleKey: "testimonial2Role",
-              },
-              {
-                quoteKey: "testimonial3",
-                nameKey: "testimonial3Name",
-                roleKey: "testimonial3Role",
-              },
-            ].map((testimonial, index) => (
-              <motion.div key={index} variants={itemFadeIn}>
-                <Card className={CARD_CLASS}>
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground italic mb-4">
-                      "{t(testimonial.quoteKey as keyof typeof import("@/lib/i18n").translations.en)}"
-                    </p>
-                    <div className="font-semibold text-foreground">
-                      {t(testimonial.nameKey as keyof typeof import("@/lib/i18n").translations.en)}
-                    </div>
-                    <div className="text-muted-foreground text-sm">
-                      {t(testimonial.roleKey as keyof typeof import("@/lib/i18n").translations.en)}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-       Testimonials */}
-
+      {/* Contact Form */}
+      <ContactForm />
 
       {/* Call to Action */}
       <section className={SECTION_PADDING}>
@@ -502,10 +469,14 @@ export default function PowerMapsLanding() {
             </h2>
             <p className="text-lg text-muted-foreground mb-10">{t("ctaSubtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className={PRIMARY_BUTTON_CLASS}>
-                {t("downloadApp")} <ArrowRight className="ml-2 w-5 h-5" />
+              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps app to start charging your EV">
+                {t("downloadApp")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
-              <Button variant="outline" className={SECONDARY_BUTTON_CLASS}>
+              <Button
+                variant="outline"
+                className={SECONDARY_BUTTON_CLASS}
+                aria-label="Partner with PowerMaps as a charging station operator"
+              >
                 {t("partnerWithUs")}
               </Button>
             </div>
@@ -514,7 +485,7 @@ export default function PowerMapsLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-background border-t border-border py-12">
+      <footer className="bg-background border-t border-border py-12" role="contentinfo">
         <div className={CONTAINER_CLASS}>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
             <motion.div variants={itemFadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
@@ -526,29 +497,33 @@ export default function PowerMapsLanding() {
               <div className="flex space-x-4 mt-6">
                 <a
                   href="https://www.facebook.com/profile.php?id=61578405974572"
-                  aria-label="Facebook"
+                  aria-label="Follow PowerMaps on Facebook"
                   className="text-muted-foreground hover:text-electric-blue transition-colors"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   <Facebook className="w-6 h-6" />
                 </a>
                 <a
                   href="#"
-                  aria-label="Twitter"
+                  aria-label="Follow PowerMaps on Twitter"
                   className="text-muted-foreground hover:text-electric-blue transition-colors"
                 >
                   <Twitter className="w-6 h-6" />
                 </a>
                 <a
                   href="#"
-                  aria-label="Instagram"
+                  aria-label="Follow PowerMaps on Instagram"
                   className="text-muted-foreground hover:text-electric-blue transition-colors"
                 >
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/108263961/"
-                  aria-label="LinkedIn"
+                  aria-label="Connect with PowerMaps on LinkedIn"
                   className="text-muted-foreground hover:text-electric-blue transition-colors"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   <Linkedin className="w-6 h-6" />
                 </a>
@@ -578,6 +553,11 @@ export default function PowerMapsLanding() {
                     {t("sustainability")}
                   </a>
                 </li>
+                <li>
+                  <a href="#contact" className="hover:text-electric-blue transition-colors">
+                    Contact
+                  </a>
+                </li>
               </ul>
             </motion.div>
 
@@ -587,6 +567,7 @@ export default function PowerMapsLanding() {
                 <a
                   href="#"
                   className="flex items-center space-x-2 text-muted-foreground hover:text-electric-blue transition-colors"
+                  aria-label="Download PowerMaps from App Store"
                 >
                   <Smartphone className="w-5 h-5" />
                   <span>{t("appStore")}</span>
@@ -594,6 +575,7 @@ export default function PowerMapsLanding() {
                 <a
                   href="#"
                   className="flex items-center space-x-2 text-muted-foreground hover:text-electric-blue transition-colors"
+                  aria-label="Download PowerMaps from Google Play"
                 >
                   <Play className="w-5 h-5" />
                   <span>{t("googlePlay")}</span>
