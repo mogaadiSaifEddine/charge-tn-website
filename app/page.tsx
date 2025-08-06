@@ -138,7 +138,9 @@ export default function PowerMapsLanding() {
             >
               <ThemeToggle />
               <LanguageSelector />
-              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps EV Charging App">
+              <Button
+              onClick={() => window.location.href = 'https://app.powermaps.tech/'}
+               className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps EV Charging App">
                 {t("downloadApp")}
               </Button>
             </motion.div>
@@ -157,7 +159,11 @@ export default function PowerMapsLanding() {
               {t("heroSubtitle")}
             </motion.p>
             <motion.div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps mobile app for EV charging">
+              <Button 
+              
+              
+              onClick={() => window.location.href = 'https://app.powermaps.tech/'}
+              className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps mobile app for EV charging">
                 {t("downloadTheApp")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
               
@@ -469,7 +475,10 @@ export default function PowerMapsLanding() {
             </h2>
             <p className="text-lg text-muted-foreground mb-10">{t("ctaSubtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps app to start charging your EV">
+              <Button 
+              
+              onClick={() => window.location.href = 'https://app.powermaps.tech/'}
+              className={PRIMARY_BUTTON_CLASS} aria-label="Download PowerMaps app to start charging your EV">
                 {t("downloadApp")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
               <Button
@@ -565,7 +574,7 @@ export default function PowerMapsLanding() {
               <h4 className="font-semibold text-foreground mb-4">{t("downloadApp")}</h4>
               <div className="space-y-3">
                 <a
-                  href="#"
+                  href="https://app.powermaps.tech/"
                   className="flex items-center space-x-2 text-muted-foreground hover:text-electric-blue transition-colors"
                   aria-label="Download PowerMaps from App Store"
                 >
@@ -573,7 +582,7 @@ export default function PowerMapsLanding() {
                   <span>{t("appStore")}</span>
                 </a>
                 <a
-                  href="#"
+                  href="https://app.powermaps.tech/"
                   className="flex items-center space-x-2 text-muted-foreground hover:text-electric-blue transition-colors"
                   aria-label="Download PowerMaps from Google Play"
                 >
