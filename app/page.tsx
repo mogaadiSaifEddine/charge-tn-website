@@ -162,7 +162,7 @@ export default function PowerMapsLanding() {
               </Button>
               
               <Button
-              href="https://app.powermaps.tech/"
+              onClick={() => window.location.href = 'https://app.powermaps.tech/'}
                 variant="outline"
                 className={SECONDARY_BUTTON_CLASS}
                 aria-label="Find EV charging stations near you"
