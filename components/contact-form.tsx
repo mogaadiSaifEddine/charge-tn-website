@@ -115,10 +115,10 @@ export function ContactForm() {
                     <div>
                       <p className="font-semibold text-foreground">Email</p>
                       <a
-                        href="mailto:saif@powermaps.tech"
+                        href="mailto:contact@powermaps.tech"
                         className="text-muted-foreground hover:text-electric-blue transition-colors"
                       >
-                        saif@powermaps.tech
+                        contact@powermaps.tech
                       </a>
                     </div>
                   </div>

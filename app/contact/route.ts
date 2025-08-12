@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       subject,
       message,
       timestamp: new Date().toISOString(),
-      recipient: "saif@powermaps.tech",
+      recipient: "contact@powermaps.tech",
     })
 
     // Simulate email sending delay

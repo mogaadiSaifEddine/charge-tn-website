@@ -148,7 +148,7 @@ export default function PowerMapsLanding() {
               <ThemeToggle />
               <LanguageSelector />
               <Button
-                onClick={() => (window.location.href = "https://app.powermaps.tech/")}
+                onClick={() => (window.location.href = "https://app.powermaps.tech/auth/register")}
                 className={PRIMARY_BUTTON_CLASS}
                 aria-label="Join PowerMaps P2P Charging Network"
               >
