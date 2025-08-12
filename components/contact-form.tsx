@@ -5,12 +5,23 @@ import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { useLanguage } from "@/hooks/use-language"
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Loader2, CheckCircle, AlertCircle } from "lucide-react"
+
+const SECTION_PADDING = "py-20 md:py-28"
+const CONTAINER_CLASS = "max-w-7xl mx-auto px-6 lg:px-8"
+const GRADIENT_TEXT = "bg-gradient-to-r from-electric-blue to-vivid-orange bg-clip-text text-transparent"
+const PRIMARY_BUTTON_CLASS =
+  "bg-transparent border-2 border-foreground text-foreground font-semibold hover:bg-foreground hover:text-background transition-colors duration-300 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl"
+const CARD_CLASS = "bg-card border border-border rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+}
 
 interface FormData {
   name: string
@@ -24,23 +35,14 @@ interface FormStatus {
   message: string
 }
 
-const CARD_CLASS = "bg-card border border-border rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-const PRIMARY_BUTTON_CLASS =
-  "bg-transparent border-2 border-foreground text-foreground font-semibold hover:bg-foreground hover:text-background transition-colors duration-300 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl"
-
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-}
-
 export function ContactForm() {
-  const { t } = useLanguage()
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   })
+
   const [status, setStatus] = useState<FormStatus>({
     type: "idle",
     message: "",
@@ -81,8 +83,8 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="contact" className={SECTION_PADDING}>
+      <div className={CONTAINER_CLASS}>
         <motion.div
           className="text-center mb-16"
           variants={fadeIn}
@@ -90,15 +92,12 @@ export function ContactForm() {
           whileInView="animate"
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            Get in{" "}
-            <span className="bg-gradient-to-r from-electric-blue to-vivid-orange bg-clip-text text-transparent animate-gradient-x">
-              Touch
-            </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Get in <span className={GRADIENT_TEXT}>Touch</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to join the global EV charging revolution? Contact us to learn more about PowerMaps or become a
-            partner.
+            Ready to join the P2P charging revolution? Contact us to learn more about PowerMaps or become a charging
+            host.
           </p>
         </motion.div>
 
@@ -106,59 +105,51 @@ export function ContactForm() {
           {/* Contact Information */}
           <motion.div variants={fadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
             <Card className={CARD_CLASS}>
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-foreground">Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0">
-                    <Mail className="w-6 h-6 text-electric-blue" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">Email</h3>
-                    <a
-                      href="mailto:contact@powermaps.tech"
-                      className="text-muted-foreground hover:text-electric-blue transition-colors"
-                    >
-                      contact@powermaps.tech
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0">
-                    <Phone className="w-6 h-6 text-vivid-orange" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+216 53 376 935</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-electric-blue" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">Location</h3>
-                    <p className="text-muted-foreground">Tunisia, North Africa</p>
-                  </div>
-                </div>
-
-                <div className="pt-6">
-                  <h3 className="font-semibold text-foreground mb-4">Business Hours</h3>
-                  <div className="space-y-2 text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Monday - Friday</span>
-                      <span>9:00 AM - 6:00 PM</span>
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold mb-6 text-foreground">Contact Information</h3>
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-electric-blue/10 rounded-full flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-electric-blue" />
                     </div>
-                    <div className="flex justify-between">
-                      <span>Saturday</span>
-                      <span>10:00 AM - 4:00 PM</span>
+                    <div>
+                      <p className="font-semibold text-foreground">Email</p>
+                      <a
+                        href="mailto:saif@powermaps.tech"
+                        className="text-muted-foreground hover:text-electric-blue transition-colors"
+                      >
+                        saif@powermaps.tech
+                      </a>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Sunday</span>
-                      <span>Closed</span>
+                  </div>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-vivid-orange/10 rounded-full flex items-center justify-center">
+                      <Phone className="w-6 h-6 text-vivid-orange" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Phone</p>
+                      <p className="text-muted-foreground">+216 XX XXX XXX</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-electric-blue/10 rounded-full flex items-center justify-center">
+                      <MapPin className="w-6 h-6 text-electric-blue" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Location</p>
+                      <p className="text-muted-foreground">Tunisia, North Africa</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-vivid-orange/10 rounded-full flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-vivid-orange" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Business Hours</p>
+                      <p className="text-muted-foreground">Mon-Sat: 9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                 </div>
@@ -169,13 +160,10 @@ export function ContactForm() {
           {/* Contact Form */}
           <motion.div variants={fadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
             <Card className={CARD_CLASS}>
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-foreground">Send us a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                    <div>
                       <Label htmlFor="name" className="text-foreground font-medium">
                         Full Name *
                       </Label>
@@ -186,11 +174,11 @@ export function ContactForm() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="border-border focus:border-electric-blue"
+                        className="mt-2"
                         placeholder="Your full name"
                       />
                     </div>
-                    <div className="space-y-2">
+                    <div>
                       <Label htmlFor="email" className="text-foreground font-medium">
                         Email Address *
                       </Label>
@@ -201,13 +189,13 @@ export function ContactForm() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="border-border focus:border-electric-blue"
+                        className="mt-2"
                         placeholder="your.email@example.com"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div>
                     <Label htmlFor="subject" className="text-foreground font-medium">
                       Subject *
                     </Label>
@@ -218,12 +206,12 @@ export function ContactForm() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
-                      className="border-border focus:border-electric-blue"
+                      className="mt-2"
                       placeholder="What's this about?"
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div>
                     <Label htmlFor="message" className="text-foreground font-medium">
                       Message *
                     </Label>
@@ -233,47 +221,37 @@ export function ContactForm() {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      rows={5}
-                      className="border-border focus:border-electric-blue resize-none"
+                      className="mt-2 min-h-[120px]"
                       placeholder="Tell us more about your inquiry..."
                     />
                   </div>
 
-                  {/* Status Message */}
+                  {/* Status Messages */}
                   {status.type !== "idle" && (
                     <div
-                      className={`flex items-center space-x-2 p-3 rounded-md ${
+                      className={`flex items-center space-x-2 p-4 rounded-lg ${
                         status.type === "success"
-                          ? "bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800"
+                          ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300"
                           : status.type === "error"
-                            ? "bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"
-                            : "bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800"
+                            ? "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
+                            : "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
                       }`}
                     >
+                      {status.type === "loading" && <Loader2 className="w-5 h-5 animate-spin" />}
                       {status.type === "success" && <CheckCircle className="w-5 h-5" />}
                       {status.type === "error" && <AlertCircle className="w-5 h-5" />}
-                      {status.type === "loading" && (
-                        <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      )}
                       <span>{status.message}</span>
                     </div>
                   )}
 
-                  <Button
-                    type="submit"
-                    disabled={status.type === "loading"}
-                    className={PRIMARY_BUTTON_CLASS}
-                    aria-label="Send message to PowerMaps team"
-                  >
+                  <Button type="submit" disabled={status.type === "loading"} className={PRIMARY_BUTTON_CLASS}>
                     {status.type === "loading" ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                         Sending...
                       </>
                     ) : (
-                      <>
-                        Send Message <Send className="ml-2 w-5 h-5" />
-                      </>
+                      "Send Message"
                     )}
                   </Button>
                 </form>
