@@ -680,7 +680,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <p>&copy; 2024 PowerMaps. All rights reserved. Powering the P2P EV charging revolution.</p>
+            <p>&copy; 2025 PowerMaps. All rights reserved. Powering the P2P EV charging revolution.</p>
           </motion.div>
         </div>
       </footer>
