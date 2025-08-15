@@ -105,11 +105,11 @@ export default function PowerMapsLanding() {
 
             <div className="hidden md:flex items-center space-x-8">
               {[
-                { key: "p2p-charging", href: "#p2p-charging", label: "P2P Charging Solution" },
-                { key: "for-hosts", href: "#for-hosts", label: "For Charging Hosts" },
-                { key: "for-drivers", href: "#for-drivers", label: "For EV Drivers" },
-                { key: "how-it-works", href: "#how-it-works", label: "How P2P Charging Works" },
-                { key: "contact", href: "#contact", label: "Contact PowerMaps" },
+                { key: "p2pCharging", href: "#p2p-charging" },
+                { key: "forHosts", href: "#for-hosts" },
+                { key: "forDrivers", href: "#for-drivers" },
+                { key: "howItWorks", href: "#how-it-works" },
+                { key: "contact", href: "#contact" },
               ].map((item, index) => (
                 <motion.a
                   key={item.key}
@@ -118,17 +118,8 @@ export default function PowerMapsLanding() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  aria-label={item.label}
                 >
-                  {item.key === "p2p-charging"
-                    ? "P2P Charging"
-                    : item.key === "for-hosts"
-                      ? "For Hosts"
-                      : item.key === "for-drivers"
-                        ? "For Drivers"
-                        : item.key === "how-it-works"
-                          ? "How It Works"
-                          : "Contact"}
+                  {t(item.key as keyof typeof import("@/lib/i18n").translations.en)}
                   <motion.div
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-electric-blue origin-left"
                     initial={{ scaleX: 0 }}
@@ -152,7 +143,7 @@ export default function PowerMapsLanding() {
                 className={PRIMARY_BUTTON_CLASS}
                 aria-label="Join PowerMaps P2P Charging Network"
               >
-                Join Network
+                {t("joinNetwork")}
               </Button>
             </motion.div>
           </div>
@@ -164,11 +155,10 @@ export default function PowerMapsLanding() {
         <div className={CONTAINER_CLASS}>
           <motion.div className="max-w-4xl mx-auto" variants={fadeIn} initial="initial" animate="animate">
             <motion.h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-              The Future of <span className={GRADIENT_TEXT}>P2P EV Charging</span>
+              {t("heroTitle")} <span className={GRADIENT_TEXT}>{t("heroTitleHighlight")}</span>
             </motion.h1>
             <motion.p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-              Connect EV drivers with private charging stations. Earn money by sharing your charger or find convenient,
-              affordable charging anywhere.
+              {t("heroSubtitle")}
             </motion.p>
             <motion.div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Button
@@ -176,7 +166,7 @@ export default function PowerMapsLanding() {
                 className={PRIMARY_BUTTON_CLASS}
                 aria-label="Start P2P charging with PowerMaps"
               >
-                Start Charging <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+                {t("startCharging")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
 
               <Button
@@ -185,7 +175,7 @@ export default function PowerMapsLanding() {
                 className={SECONDARY_BUTTON_CLASS}
                 aria-label="Become a charging host"
               >
-                Become a Host
+                {t("becomeAHost")}
               </Button>
             </motion.div>
           </motion.div>
@@ -221,12 +211,9 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why Choose <span className={GRADIENT_TEXT}>P2P Charging?</span>
+              {t("whyChooseP2P")} <span className={GRADIENT_TEXT}>{t("whyChooseP2PHighlight")}</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Peer-to-peer charging revolutionizes how we power electric vehicles, creating a decentralized network that
-              benefits everyone.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("p2pSubtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -239,41 +226,45 @@ export default function PowerMapsLanding() {
             {[
               {
                 icon: <DollarSign className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Lower Costs",
-                description: "Save up to 40% compared to public charging stations with competitive P2P rates.",
+                titleKey: "lowerCosts",
+                descKey: "lowerCostsDesc",
               },
               {
                 icon: <MapPin className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "More Locations",
-                description: "Access thousands of private charging points in residential areas and workplaces.",
+                titleKey: "moreLocations",
+                descKey: "moreLocationsDesc",
               },
               {
                 icon: <Clock className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "24/7 Availability",
-                description: "Find charging options anytime, anywhere with our extensive host network.",
+                titleKey: "availability247",
+                descKey: "availability247Desc",
               },
               {
                 icon: <Users className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Community Driven",
-                description: "Join a growing community of EV enthusiasts supporting sustainable transport.",
+                titleKey: "communityDriven",
+                descKey: "communityDrivenDesc",
               },
               {
                 icon: <Shield className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Secure Payments",
-                description: "Safe, automated transactions with built-in insurance and dispute resolution.",
+                titleKey: "securePayments",
+                descKey: "securePaymentsDesc",
               },
               {
                 icon: <Zap className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Smart Matching",
-                description: "AI-powered system matches you with the perfect charging solution nearby.",
+                titleKey: "smartMatching",
+                descKey: "smartMatchingDesc",
               },
             ].map((benefit, index) => (
               <motion.article key={index} variants={itemFadeIn}>
                 <Card className={CARD_CLASS}>
                   <CardContent className="p-6 flex flex-col items-center text-center">
                     <div className="mb-4">{benefit.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">{benefit.title}</h3>
-                    <p className="text-muted-foreground">{benefit.description}</p>
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                      {t(benefit.titleKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {t(benefit.descKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.article>
@@ -293,11 +284,9 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Earn Money as a <span className={GRADIENT_TEXT}>Charging Host</span>
+              {t("earnMoneyAs")} <span className={GRADIENT_TEXT}>{t("earnMoneyAsHighlight")}</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Turn your private charging station into a revenue stream. Share your charger when you're not using it.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("hostsSubtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -310,31 +299,35 @@ export default function PowerMapsLanding() {
             {[
               {
                 icon: <Home className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Home Charging Sharing",
-                description: "List your home charger and earn passive income while you sleep or work.",
+                titleKey: "homeChargingSharing",
+                descKey: "homeChargingSharingDesc",
               },
               {
                 icon: <Wallet className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Flexible Earnings",
-                description: "Set your own rates and availability. Earn $200-800+ monthly on average.",
+                titleKey: "flexibleEarnings",
+                descKey: "flexibleEarningsDesc",
               },
               {
                 icon: <BarChart className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Usage Analytics",
-                description: "Track your earnings, usage patterns, and optimize your charging schedule.",
+                titleKey: "usageAnalytics",
+                descKey: "usageAnalyticsDesc",
               },
               {
                 icon: <Shield className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Host Protection",
-                description: "Comprehensive insurance coverage and 24/7 support for all host activities.",
+                titleKey: "hostProtection",
+                descKey: "hostProtectionDesc",
               },
             ].map((benefit, index) => (
               <motion.article key={index} variants={itemFadeIn}>
                 <Card className={CARD_CLASS}>
                   <CardContent className="p-6 flex flex-col items-center text-center">
                     <div className="mb-4">{benefit.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">{benefit.title}</h3>
-                    <p className="text-muted-foreground">{benefit.description}</p>
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                      {t(benefit.titleKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {t(benefit.descKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.article>
@@ -353,7 +346,7 @@ export default function PowerMapsLanding() {
               className={PRIMARY_BUTTON_CLASS}
               aria-label="Start hosting charging sessions with PowerMaps"
             >
-              Start Hosting <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+              {t("startHosting")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
             </Button>
           </motion.div>
         </div>
@@ -370,11 +363,9 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Perfect for <span className={GRADIENT_TEXT}>EV Drivers</span>
+              {t("perfectFor")} <span className={GRADIENT_TEXT}>{t("perfectForHighlight")}</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Find convenient, affordable charging options in your neighborhood and beyond.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("driversSubtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -387,31 +378,35 @@ export default function PowerMapsLanding() {
             {[
               {
                 icon: <MapPin className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Nearby Charging",
-                description: "Find available chargers within walking distance of your location.",
+                titleKey: "nearbyCharging",
+                descKey: "nearbyChargingDesc",
               },
               {
                 icon: <Clock className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Instant Booking",
-                description: "Reserve charging slots in advance or find immediate availability.",
+                titleKey: "instantBooking",
+                descKey: "instantBookingDesc",
               },
               {
                 icon: <CreditCard className="w-8 h-8 text-electric-blue" aria-hidden="true" />,
-                title: "Easy Payments",
-                description: "Seamless in-app payments with transparent pricing and receipts.",
+                titleKey: "easyPayments",
+                descKey: "easyPaymentsDesc",
               },
               {
                 icon: <Star className="w-8 h-8 text-vivid-orange" aria-hidden="true" />,
-                title: "Rated Hosts",
-                description: "Choose from verified hosts with community ratings and reviews.",
+                titleKey: "ratedHosts",
+                descKey: "ratedHostsDesc",
               },
             ].map((advantage, index) => (
               <motion.article key={index} variants={itemFadeIn} className="h-full">
                 <Card className={`${CARD_CLASS} h-full`}>
                   <CardContent className="p-6 flex flex-col items-center text-center h-full">
                     <div className="mb-4">{advantage.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">{advantage.title}</h3>
-                    <p className="text-muted-foreground flex-grow">{advantage.description}</p>
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                      {t(advantage.titleKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </h3>
+                    <p className="text-muted-foreground flex-grow">
+                      {t(advantage.descKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.article>
@@ -431,11 +426,10 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              How <span className={GRADIENT_TEXT}>P2P Charging</span> Works
+              {t("howP2PWorks")} <span className={GRADIENT_TEXT}>{t("howP2PWorksHighlight")}</span>{" "}
+              {t("howP2PWorksEnd")}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Simple, secure, and sustainable charging in three easy steps.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("howItWorksSubtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -448,20 +442,20 @@ export default function PowerMapsLanding() {
             {[
               {
                 step: "01",
-                title: "Find & Book",
-                description: "Browse nearby charging stations, check availability, and book your slot instantly.",
+                titleKey: "step1Title",
+                descKey: "step1Desc",
                 icon: <MapPin className="w-8 h-8 text-electric-blue" />,
               },
               {
                 step: "02",
-                title: "Charge & Pay",
-                description: "Arrive at the location, plug in your EV, and let our app handle the secure payment.",
+                titleKey: "step2Title",
+                descKey: "step2Desc",
                 icon: <Battery className="w-8 h-8 text-vivid-orange" />,
               },
               {
                 step: "03",
-                title: "Rate & Go",
-                description: "Rate your experience and help build our trusted community of EV enthusiasts.",
+                titleKey: "step3Title",
+                descKey: "step3Desc",
                 icon: <CheckCircle className="w-8 h-8 text-electric-blue" />,
               },
             ].map((step, index) => (
@@ -474,8 +468,12 @@ export default function PowerMapsLanding() {
                       </div>
                       {step.icon}
                     </div>
-                    <h3 className="text-2xl font-bold mb-4 text-foreground">{step.title}</h3>
-                    <p className="text-muted-foreground">{step.description}</p>
+                    <h3 className="text-2xl font-bold mb-4 text-foreground">
+                      {t(step.titleKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {t(step.descKey as keyof typeof import("@/lib/i18n").translations.en)}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.article>
@@ -491,25 +489,21 @@ export default function PowerMapsLanding() {
           >
             <div className="md:w-1/2 text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-                Join the <span className="text-electric-blue">P2P Revolution</span>
+                {t("joinThe")} <span className="text-electric-blue">{t("joinTheHighlight")}</span>
               </h3>
-              <p className="text-lg text-muted-foreground mb-6">
-                PowerMaps is building the world's largest peer-to-peer EV charging network. By connecting private
-                charger owners with EV drivers, we're making electric vehicle adoption easier and more affordable for
-                everyone.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6">{t("p2pRevolutionDesc")}</p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-electric-blue mr-3" />
-                  Verified hosts and secure transactions
+                  {t("verifiedHosts")}
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-electric-blue mr-3" />
-                  24/7 customer support and assistance
+                  {t("customerSupport")}
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-electric-blue mr-3" />
-                  Growing network across North Africa
+                  {t("growingNetwork")}
                 </li>
               </ul>
             </div>
@@ -541,19 +535,17 @@ export default function PowerMapsLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Ready to Join the <span className={GRADIENT_TEXT}>P2P Charging</span> Network?
+              {t("readyToJoin")} <span className={GRADIENT_TEXT}>{t("readyToJoinHighlight")}</span>{" "}
+              {t("readyToJoinEnd")}
             </h2>
-            <p className="text-lg text-muted-foreground mb-10">
-              Whether you want to earn money hosting or save money charging, PowerMaps connects you to the future of EV
-              infrastructure.
-            </p>
+            <p className="text-lg text-muted-foreground mb-10">{t("ctaSubtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => (window.location.href = "https://app.powermaps.tech/")}
                 className={PRIMARY_BUTTON_CLASS}
                 aria-label="Join PowerMaps P2P charging network"
               >
-                Join Network <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+                {t("joinNetwork")} <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Button>
               <Button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
@@ -561,7 +553,7 @@ export default function PowerMapsLanding() {
                 className={SECONDARY_BUTTON_CLASS}
                 aria-label="Learn more about P2P charging"
               >
-                Learn More
+                {t("learnMore")}
               </Button>
             </div>
           </motion.div>
@@ -577,9 +569,7 @@ export default function PowerMapsLanding() {
                 <Image src="/powermaps-logo.png" alt="PowerMaps Logo" width={32} height={32} className="rounded-md" />
                 <span className="text-xl font-bold text-foreground">PowerMaps</span>
               </div>
-              <p className="text-muted-foreground text-sm">
-                The leading P2P EV charging platform connecting drivers with private charging stations.
-              </p>
+              <p className="text-muted-foreground text-sm">{t("footerTagline")}</p>
               <div className="flex space-x-4 mt-6">
                 <a
                   href="https://www.facebook.com/profile.php?id=61578405974572"
@@ -617,33 +607,33 @@ export default function PowerMapsLanding() {
             </motion.div>
 
             <motion.div variants={itemFadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
-              <h4 className="font-semibold text-foreground mb-4">P2P Charging</h4>
+              <h4 className="font-semibold text-foreground mb-4">{t("p2pChargingFooter")}</h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
                   <a href="#p2p-charging" className="hover:text-electric-blue transition-colors">
-                    How It Works
+                    {t("howItWorks")}
                   </a>
                 </li>
                 <li>
                   <a href="#for-hosts" className="hover:text-electric-blue transition-colors">
-                    Become a Host
+                    {t("forHosts")}
                   </a>
                 </li>
                 <li>
                   <a href="#for-drivers" className="hover:text-electric-blue transition-colors">
-                    For Drivers
+                    {t("forDrivers")}
                   </a>
                 </li>
                 <li>
                   <a href="#contact" className="hover:text-electric-blue transition-colors">
-                    Contact Us
+                    {t("contact")}
                   </a>
                 </li>
               </ul>
             </motion.div>
 
             <motion.div variants={itemFadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
-              <h4 className="font-semibold text-foreground mb-4">Get Started</h4>
+              <h4 className="font-semibold text-foreground mb-4">{t("getStarted")}</h4>
               <div className="space-y-3">
                 <a
                   href="https://app.powermaps.tech/"
@@ -651,7 +641,7 @@ export default function PowerMapsLanding() {
                   aria-label="Download PowerMaps from App Store"
                 >
                   <Smartphone className="w-5 h-5" />
-                  <span>iOS App</span>
+                  <span>{t("iosApp")}</span>
                 </a>
                 <a
                   href="https://app.powermaps.tech/"
@@ -659,7 +649,7 @@ export default function PowerMapsLanding() {
                   aria-label="Download PowerMaps from Google Play"
                 >
                   <Play className="w-5 h-5" />
-                  <span>Android App</span>
+                  <span>{t("androidApp")}</span>
                 </a>
                 <a
                   href="https://app.powermaps.tech/"
@@ -667,7 +657,7 @@ export default function PowerMapsLanding() {
                   aria-label="Access PowerMaps web platform"
                 >
                   <Globe className="w-5 h-5" />
-                  <span>Web Platform</span>
+                  <span>{t("webPlatform")}</span>
                 </a>
               </div>
             </motion.div>
@@ -680,7 +670,7 @@ export default function PowerMapsLanding() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <p>&copy; 2025 PowerMaps. All rights reserved. Powering the P2P EV charging revolution.</p>
+            <p>{t("footerCopyright")}</p>
           </motion.div>
         </div>
       </footer>

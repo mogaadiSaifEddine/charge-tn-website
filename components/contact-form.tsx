@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { useLanguage } from "@/hooks/use-language"
 import { Mail, Phone, MapPin, Clock, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 
 const SECTION_PADDING = "py-20 md:py-28"
@@ -36,6 +37,7 @@ interface FormStatus {
 }
 
 export function ContactForm() {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -58,7 +60,7 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus({ type: "loading", message: "Sending message..." })
+    setStatus({ type: "loading", message: t("sending") })
 
     try {
       const response = await fetch("/contact", {
@@ -93,12 +95,9 @@ export function ContactForm() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Get in <span className={GRADIENT_TEXT}>Touch</span>
+            {t("getInTouch")} <span className={GRADIENT_TEXT}>{t("getInTouchHighlight")}</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to join the P2P charging revolution? Contact us to learn more about PowerMaps or become a charging
-            host.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contactSubtitle")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -106,14 +105,14 @@ export function ContactForm() {
           <motion.div variants={fadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
             <Card className={CARD_CLASS}>
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6 text-foreground">Contact Information</h3>
+                <h3 className="text-2xl font-bold mb-6 text-foreground">{t("contactInformation")}</h3>
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-electric-blue/10 rounded-full flex items-center justify-center">
                       <Mail className="w-6 h-6 text-electric-blue" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Email</p>
+                      <p className="font-semibold text-foreground">{t("email")}</p>
                       <a
                         href="mailto:contact@powermaps.tech"
                         className="text-muted-foreground hover:text-electric-blue transition-colors"
@@ -128,7 +127,7 @@ export function ContactForm() {
                       <Phone className="w-6 h-6 text-vivid-orange" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Phone</p>
+                      <p className="font-semibold text-foreground">{t("phone")}</p>
                       <p className="text-muted-foreground">+216 53 376 935</p>
                     </div>
                   </div>
@@ -138,8 +137,8 @@ export function ContactForm() {
                       <MapPin className="w-6 h-6 text-electric-blue" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Location</p>
-                      <p className="text-muted-foreground">Tunisia, North Africa</p>
+                      <p className="font-semibold text-foreground">{t("location")}</p>
+                      <p className="text-muted-foreground">{t("locationText")}</p>
                     </div>
                   </div>
 
@@ -148,8 +147,8 @@ export function ContactForm() {
                       <Clock className="w-6 h-6 text-vivid-orange" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Business Hours</p>
-                      <p className="text-muted-foreground">Mon-Sat: 9:00 AM - 6:00 PM</p>
+                      <p className="font-semibold text-foreground">{t("businessHours")}</p>
+                      <p className="text-muted-foreground">{t("businessHoursTime")}</p>
                     </div>
                   </div>
                 </div>
@@ -165,7 +164,7 @@ export function ContactForm() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="name" className="text-foreground font-medium">
-                        Full Name *
+                        {t("fullName")} *
                       </Label>
                       <Input
                         id="name"
@@ -175,12 +174,12 @@ export function ContactForm() {
                         onChange={handleInputChange}
                         required
                         className="mt-2"
-                        placeholder="Your full name"
+                        placeholder={t("fullNamePlaceholder")}
                       />
                     </div>
                     <div>
                       <Label htmlFor="email" className="text-foreground font-medium">
-                        Email Address *
+                        {t("emailAddress")} *
                       </Label>
                       <Input
                         id="email"
@@ -190,14 +189,14 @@ export function ContactForm() {
                         onChange={handleInputChange}
                         required
                         className="mt-2"
-                        placeholder="your.email@example.com"
+                        placeholder={t("emailPlaceholder")}
                       />
                     </div>
                   </div>
 
                   <div>
                     <Label htmlFor="subject" className="text-foreground font-medium">
-                      Subject *
+                      {t("subject")} *
                     </Label>
                     <Input
                       id="subject"
@@ -207,13 +206,13 @@ export function ContactForm() {
                       onChange={handleInputChange}
                       required
                       className="mt-2"
-                      placeholder="What's this about?"
+                      placeholder={t("subjectPlaceholder")}
                     />
                   </div>
 
                   <div>
                     <Label htmlFor="message" className="text-foreground font-medium">
-                      Message *
+                      {t("message")} *
                     </Label>
                     <Textarea
                       id="message"
@@ -222,7 +221,7 @@ export function ContactForm() {
                       onChange={handleInputChange}
                       required
                       className="mt-2 min-h-[120px]"
-                      placeholder="Tell us more about your inquiry..."
+                      placeholder={t("messagePlaceholder")}
                     />
                   </div>
 
@@ -248,10 +247,10 @@ export function ContactForm() {
                     {status.type === "loading" ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Sending...
+                        {t("sending")}
                       </>
                     ) : (
-                      "Send Message"
+                      t("sendMessage")
                     )}
                   </Button>
                 </form>
