@@ -15,18 +15,25 @@ export function LanguageSelector() {
         <Button
           variant="outline"
           size="icon"
-          className="bg-transparent border-foreground/20 text-foreground hover:bg-foreground/10 hover:text-foreground"
+          className="bg-transparent border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white w-10 h-10 rounded-lg transition-all duration-200"
         >
-          <Globe className="h-[1.2rem] w-[1.2rem]" />
+          <Globe className="h-4 w-4" />
           <span className="sr-only">{t("language")}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-card border-border">
+      <DropdownMenuContent
+        align="end"
+        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg"
+      >
         {Object.entries(languages).map(([code, name]) => (
           <DropdownMenuItem
             key={code}
             onClick={() => setLanguage(code as Language)}
-            className={language === code ? "bg-accent" : ""}
+            className={`cursor-pointer transition-colors duration-200 ${
+              language === code
+                ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+            }`}
           >
             {name}
           </DropdownMenuItem>
