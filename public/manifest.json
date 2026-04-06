@@ -1,7 +1,7 @@
 {
-  "name": "PowerMaps - Global EV Charging Network",
+  "name": "PowerMaps - Recharge véhicule électrique Tunisie",
   "short_name": "PowerMaps",
-  "description": "Find, reserve, and pay for EV charging stations worldwide with real-time availability",
+  "description": "Trouvez et partagez des bornes de recharge pour véhicules électriques en Tunisie. P2P EV charging network.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -22,6 +22,8 @@
     }
   ],
   "categories": ["utilities", "travel", "navigation"],
-  "lang": "en",
-  "dir": "ltr"
+  "lang": "fr",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
 }
