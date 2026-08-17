@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
 import { ContactForm } from "@/components/contact-form"
+import { EvChargingSimulator } from "@/components/ev-charging-simulator"
 import { useLanguage } from "@/hooks/use-language"
 import { useEffect, useState } from "react"
 import {
@@ -143,6 +144,7 @@ export default function PowerMapsLanding() {
                 { key: "p2pCharging", href: "#p2p-charging" },
                 { key: "forHosts", href: "#for-hosts" },
                 { key: "forDrivers", href: "#for-drivers" },
+                { key: "simulator", href: "#simulator" },
                 { key: "howItWorks", href: "#how-it-works" },
                 { key: "contact", href: "#contact" },
               ].map((item, index) => (
@@ -201,6 +203,7 @@ export default function PowerMapsLanding() {
                   { key: "p2pCharging", href: "#p2p-charging" },
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
+                  { key: "simulator", href: "#simulator" },
                   { key: "howItWorks", href: "#how-it-works" },
                   { key: "contact", href: "#contact" },
                 ].map((item) => (
@@ -601,6 +604,9 @@ export default function PowerMapsLanding() {
         </div>
       </section>
 
+      {/* Charging Simulator */}
+      <EvChargingSimulator />
+
       {/* How It Works - Google step-by-step style */}
       <section id="how-it-works" className="py-16 md:py-24 bg-white dark:bg-black">
         <div className="max-w-7xl mx-auto px-6">
@@ -754,6 +760,7 @@ export default function PowerMapsLanding() {
                   { key: "howItWorks", href: "#how-it-works" },
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
+                  { key: "simulator", href: "#simulator" },
                   { key: "contact", href: "#contact" },
                 ].map((item) => (
                   <li key={item.key}>

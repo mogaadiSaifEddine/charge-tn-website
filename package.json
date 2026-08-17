@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:ev-data": "node scripts/build-ev-dataset.mjs",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
