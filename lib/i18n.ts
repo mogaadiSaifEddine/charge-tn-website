@@ -141,7 +141,7 @@ export const translations = {
     iosApp: "iOS App",
     androidApp: "Android App",
     webPlatform: "Web Platform",
-    footerCopyright: "© 2025 PowerMaps. All rights reserved. Powering the P2P EV charging revolution.",
+    footerCopyright: "© 2026 PowerMaps. All rights reserved. Powering the P2P EV charging revolution.",
 
     // Charging Simulator
     simulator: "Simulator",
@@ -258,6 +258,29 @@ export const translations = {
     co2BackToSim: "Back to charging time",
     co2Note:
       "Combustion factors: 2.31 kg CO₂ per litre of petrol, 2.68 for diesel. Battery manufacturing is counted at {battery} kg CO₂ per kWh of capacity, the middle of published estimates. The Tunisian grid factor is an estimate for a gas-dominated mix and is editable, as are all the assumptions above.",
+
+    // FAQ
+    faqBadge: "FAQ",
+    faqTitle: "Questions about",
+    faqTitleHighlight: "charging in Tunisia",
+    faqQ1: "How long does it take to charge an electric car in Tunisia?",
+    faqA1:
+      "It depends on the charging point and the car, not just on the battery size. A 75 kWh Tesla Model 3 Long Range charged from 20% to 80% takes about 6 h 50 on a 7.4 kW single-phase home wallbox, about 4 h 30 on an 11 kW three-phase wallbox, and about 57 minutes on a 50 kW DC fast charger. Our simulator models the real charge curve, the taper, temperature and charging losses for 527 vehicles.",
+    faqQ2: "How much does it cost to charge an electric car at home in Tunisia?",
+    faqA2:
+      "On the STEG low-voltage residential tariff the all-in price depends on your monthly consumption bracket: roughly 0.219 TND/kWh in the 101-200 kWh tranche, 0.264 in 201-300, 0.402 in 301-500 and 0.482 above 500 kWh, VAT and levies included. Charging a 75 kWh car from 20% to 80% draws about 49 kWh from the plug.",
+    faqQ3: "Can charging an EV at home push me into a higher STEG tranche?",
+    faqA3:
+      "Yes, and it matters more than most people expect. STEG applies a single rate to the entire month based on total consumption, so crossing a tranche re-prices every kWh of that month. A 49 kWh charge added to a 270 kWh month costs about 57 TND \u2014 roughly 1.17 TND/kWh instead of 0.40 \u2014 because the whole month is re-billed at the higher rate. Charging at a host keeps your own bill inside its tranche.",
+    faqQ4: "How much CO\u2082 does an electric car actually save in Tunisia?",
+    faqA4:
+      "Tunisian electricity is about 97% natural gas, so an EV here is not zero emission. A Tesla Model 3 emits around 71 g CO\u2082 per km on grid electricity against about 150 g/km for an equivalent petrol car \u2014 roughly 53% less, or 1.2 tonnes a year at 15 000 km. Charging from a host's rooftop solar instead drops it to about 6 g/km.",
+    faqQ5: "Does making the battery cancel out the CO\u2082 savings?",
+    faqA5:
+      "No, but it delays them. Building a 75 kWh battery emits roughly 5.3 tonnes of CO\u2082 up front. On the Tunisian grid the electric car repays that after about 66 000 km \u2014 around 4.4 years at 15 000 km a year \u2014 and sooner on solar or with a smaller battery. Against a very frugal diesel the payback stretches to about 106 000 km.",
+    faqQ6: "Which electric cars does the simulator cover?",
+    faqA6:
+      "527 versions from 63 manufacturers, using real battery capacity, AC and DC charging limits, pack voltage and cell chemistry from the Open EV Data catalogue \u2014 including models common in Tunisia such as the Dacia Spring, Renault 5 E-Tech, Peugeot e-208, BYD Dolphin and Tesla Model 3. Any car not listed can be simulated by entering its specifications manually.",
     simFindCharger: "Find a charger nearby",
     simHostCta: "Share your charger",
     simHour: "h",
@@ -398,7 +421,7 @@ export const translations = {
     iosApp: "تطبيق iOS",
     androidApp: "تطبيق Android",
     webPlatform: "منصة الويب",
-    footerCopyright: "© 2025 PowerMaps. جميع الحقوق محفوظة. تشغيل ثورة شحن السيارات الكهربائية P2P.",
+    footerCopyright: "© 2026 PowerMaps. جميع الحقوق محفوظة. تشغيل ثورة شحن السيارات الكهربائية P2P.",
 
     // Charging Simulator
     simulator: "المحاكي",
@@ -515,6 +538,29 @@ export const translations = {
     co2BackToSim: "العودة إلى زمن الشحن",
     co2Note:
       "معاملات الاحتراق: 2.31 كغ كربون لكل لتر بنزين و2.68 للديزل. يُحتسب تصنيع البطارية بـ {battery} كغ كربون لكل ك.و.س من السعة، وهو وسط التقديرات المنشورة. معامل الشبكة التونسية تقدير لمزيج يغلب عليه الغاز، وهو قابل للتعديل مثل بقية الفرضيات.",
+
+    // FAQ
+    faqBadge: "\u0623\u0633\u0626\u0644\u0629 \u0634\u0627\u0626\u0639\u0629",
+    faqTitle: "\u0623\u0633\u0626\u0644\u0629 \u062d\u0648\u0644",
+    faqTitleHighlight: "\u0627\u0644\u0634\u062d\u0646 \u0641\u064a \u062a\u0648\u0646\u0633",
+    faqQ1: "\u0643\u0645 \u0645\u0646 \u0627\u0644\u0648\u0642\u062a \u064a\u0633\u062a\u063a\u0631\u0642 \u0634\u062d\u0646 \u0633\u064a\u0627\u0631\u0629 \u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0641\u064a \u062a\u0648\u0646\u0633\u061f",
+    faqA1:
+      "\u0630\u0644\u0643 \u064a\u0639\u062a\u0645\u062f \u0639\u0644\u0649 \u0646\u0642\u0637\u0629 \u0627\u0644\u0634\u062d\u0646 \u0648\u0639\u0644\u0649 \u0627\u0644\u0633\u064a\u0627\u0631\u0629\u060c \u0648\u0644\u064a\u0633 \u0639\u0644\u0649 \u0633\u0639\u0629 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0641\u0642\u0637. \u0633\u064a\u0627\u0631\u0629 \u062a\u0633\u0644\u0627 \u0645\u0648\u062f\u064a\u0644 3 \u0644\u0648\u0646\u063a \u0631\u0627\u0646\u062c \u0628\u0633\u0639\u0629 75 \u0643.\u0648.\u0633 \u062a\u062d\u062a\u0627\u062c \u0645\u0646 20% \u0625\u0644\u0649 80% \u0646\u062d\u0648 6 \u0633\u0627\u0639\u0627\u062a \u064860 \u062f\u0642\u064a\u0642\u0629 \u0639\u0644\u0649 \u0634\u0627\u062d\u0646 \u0645\u0646\u0632\u0644\u064a 7.4 \u0643.\u0648\u060c \u0648\u0646\u062d\u0648 4 \u0633\u0627\u0639\u0627\u062a \u064830 \u062f\u0642\u064a\u0642\u0629 \u0639\u0644\u0649 \u0634\u0627\u062d\u0646 11 \u0643.\u0648 \u062b\u0644\u0627\u062b\u064a \u0627\u0644\u0623\u0637\u0648\u0627\u0631\u060c \u0648\u0646\u062d\u0648 57 \u062f\u0642\u064a\u0642\u0629 \u0639\u0644\u0649 \u0634\u0627\u062d\u0646 \u0633\u0631\u064a\u0639 50 \u0643.\u0648. \u064a\u062d\u0627\u0643\u064a \u0645\u062d\u0627\u0643\u064a\u0646\u0627 \u0645\u0646\u062d\u0646\u0649 \u0627\u0644\u0634\u062d\u0646 \u0627\u0644\u062d\u0642\u064a\u0642\u064a \u0648\u0627\u0644\u062a\u0628\u0627\u0637\u0624 \u0648\u062f\u0631\u062c\u0629 \u0627\u0644\u062d\u0631\u0627\u0631\u0629 \u0648\u0627\u0644\u062e\u0633\u0627\u0626\u0631 \u0644\u0640 527 \u0637\u0631\u0627\u0632\u0627\u064b.",
+    faqQ2: "\u0643\u0645 \u062a\u0643\u0644\u0641\u0629 \u0634\u062d\u0646 \u0633\u064a\u0627\u0631\u0629 \u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0641\u064a \u0627\u0644\u0645\u0646\u0632\u0644 \u0628\u062a\u0648\u0646\u0633\u061f",
+    faqA2:
+      "\u0648\u0641\u0642 \u062a\u0639\u0631\u064a\u0641\u0629 \u0627\u0644\u0633\u062a\u0627\u063a \u0627\u0644\u0633\u0643\u0646\u064a\u0629 \u0644\u0644\u062c\u0647\u062f \u0627\u0644\u0645\u0646\u062e\u0641\u0636\u060c \u064a\u062a\u0648\u0642\u0641 \u0627\u0644\u0633\u0639\u0631 \u0627\u0644\u0634\u0627\u0645\u0644 \u0639\u0644\u0649 \u0634\u0631\u064a\u062d\u0629 \u0627\u0633\u062a\u0647\u0644\u0627\u0643\u0643 \u0627\u0644\u0634\u0647\u0631\u064a: \u0646\u062d\u0648 0.219 \u062f\u064a\u0646\u0627\u0631/\u0643.\u0648.\u0633 \u0641\u064a \u0634\u0631\u064a\u062d\u0629 101-200 \u0643.\u0648.\u0633\u060c \u06480.264 \u0641\u064a 201-300\u060c \u06480.402 \u0641\u064a 301-500\u060c \u06480.482 \u0641\u0648\u0642 500 \u0643.\u0648.\u0633\u060c \u0634\u0627\u0645\u0644\u0629 \u0627\u0644\u0623\u062f\u0627\u0621 \u0648\u0627\u0644\u0645\u0639\u0627\u0644\u064a\u0645. \u0634\u062d\u0646 \u0633\u064a\u0627\u0631\u0629 75 \u0643.\u0648.\u0633 \u0645\u0646 20% \u0625\u0644\u0649 80% \u064a\u0633\u062d\u0628 \u0646\u062d\u0648 49 \u0643.\u0648.\u0633 \u0645\u0646 \u0627\u0644\u0645\u0642\u0628\u0633.",
+    faqQ3: "\u0647\u0644 \u064a\u0645\u0643\u0646 \u0644\u0644\u0634\u062d\u0646 \u0627\u0644\u0645\u0646\u0632\u0644\u064a \u0623\u0646 \u064a\u0646\u0642\u0644\u0646\u064a \u0625\u0644\u0649 \u0634\u0631\u064a\u062d\u0629 \u0623\u0639\u0644\u0649\u061f",
+    faqA3:
+      "\u0646\u0639\u0645\u060c \u0648\u0627\u0644\u0623\u062b\u0631 \u0623\u0643\u0628\u0631 \u0645\u0645\u0627 \u064a\u062a\u0648\u0642\u0639 \u0627\u0644\u0643\u062b\u064a\u0631\u0648\u0646. \u062a\u0637\u0628\u0651\u0642 \u0627\u0644\u0633\u062a\u0627\u063a \u0633\u0639\u0631\u0627\u064b \u0648\u0627\u062d\u062f\u0627\u064b \u0639\u0644\u0649 \u0643\u0627\u0645\u0644 \u0627\u0644\u0634\u0647\u0631 \u062d\u0633\u0628 \u0627\u0644\u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0627\u0644\u062c\u0645\u0644\u064a\u060c \u0641\u062a\u062c\u0627\u0648\u0632 \u0627\u0644\u0634\u0631\u064a\u062d\u0629 \u064a\u0639\u064a\u062f \u062a\u0633\u0639\u064a\u0631 \u0643\u0644 \u0643\u064a\u0644\u0648\u0648\u0627\u0637 \u0633\u0627\u0639\u0629 \u0641\u064a \u0627\u0644\u0634\u0647\u0631. \u0634\u062d\u0646\u0629 \u0628\u0640 49 \u0643.\u0648.\u0633 \u062a\u064f\u0636\u0627\u0641 \u0625\u0644\u0649 \u0634\u0647\u0631 \u0627\u0633\u062a\u0647\u0644\u0627\u0643\u0647 270 \u0643.\u0648.\u0633 \u062a\u0643\u0644\u0641 \u0646\u062d\u0648 57 \u062f\u064a\u0646\u0627\u0631\u0627\u064b\u060c \u0623\u064a \u0646\u062d\u0648 1.17 \u062f\u064a\u0646\u0627\u0631/\u0643.\u0648.\u0633 \u0628\u062f\u0644 0.40. \u0627\u0644\u0634\u062d\u0646 \u0644\u062f\u0649 \u0645\u0636\u064a\u0641 \u064a\u064f\u0628\u0642\u064a \u0641\u0627\u062a\u0648\u0631\u062a\u0643 \u062f\u0627\u062e\u0644 \u0634\u0631\u064a\u062d\u062a\u0647\u0627.",
+    faqQ4: "\u0643\u0645 \u062a\u0648\u0641\u0651\u0631 \u0627\u0644\u0633\u064a\u0627\u0631\u0629 \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0645\u0646 \u0627\u0644\u0643\u0631\u0628\u0648\u0646 \u0641\u0639\u0644\u064a\u0627\u064b \u0641\u064a \u062a\u0648\u0646\u0633\u061f",
+    faqA4:
+      "\u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0621 \u0641\u064a \u062a\u0648\u0646\u0633 \u0645\u0635\u062f\u0631\u0647\u0627 \u0646\u062d\u0648 97% \u063a\u0627\u0632 \u0637\u0628\u064a\u0639\u064a\u060c \u0644\u0630\u0627 \u0641\u0627\u0644\u0633\u064a\u0627\u0631\u0629 \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0644\u064a\u0633\u062a \u062e\u0627\u0644\u064a\u0629 \u0645\u0646 \u0627\u0644\u0627\u0646\u0628\u0639\u0627\u062b\u0627\u062a \u0647\u0646\u0627. \u062a\u0633\u0644\u0627 \u0645\u0648\u062f\u064a\u0644 3 \u062a\u0637\u0644\u0642 \u0646\u062d\u0648 71 \u063a\u0631\u0627\u0645 \u0643\u0631\u0628\u0648\u0646 \u0644\u0643\u0644 \u0643\u0645 \u0645\u0646 \u0643\u0647\u0631\u0628\u0627\u0621 \u0627\u0644\u0634\u0628\u0643\u0629 \u0645\u0642\u0627\u0628\u0644 \u0646\u062d\u0648 150 \u063a/\u0643\u0645 \u0644\u0633\u064a\u0627\u0631\u0629 \u0628\u0646\u0632\u064a\u0646 \u0645\u0643\u0627\u0641\u0626\u0629\u060c \u0623\u064a \u0623\u0642\u0644 \u0628\u0646\u062d\u0648 53%\u060c \u0623\u0648 1.2 \u0637\u0646 \u0633\u0646\u0648\u064a\u0627\u064b \u0639\u0646\u062f 15000 \u0643\u0645. \u0627\u0644\u0634\u062d\u0646 \u0645\u0646 \u0623\u0644\u0648\u0627\u062d \u0634\u0645\u0633\u064a\u0629 \u064a\u062e\u0641\u0636\u0647\u0627 \u0625\u0644\u0649 \u0646\u062d\u0648 6 \u063a/\u0643\u0645.",
+    faqQ5: "\u0647\u0644 \u064a\u0644\u063a\u064a \u062a\u0635\u0646\u064a\u0639 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0647\u0630\u0627 \u0627\u0644\u062a\u0648\u0641\u064a\u0631\u061f",
+    faqA5:
+      "\u0644\u0627\u060c \u0644\u0643\u0646\u0647 \u064a\u0624\u062e\u0651\u0631\u0647. \u062a\u0635\u0646\u064a\u0639 \u0628\u0637\u0627\u0631\u064a\u0629 75 \u0643.\u0648.\u0633 \u064a\u0637\u0644\u0642 \u0646\u062d\u0648 5.3 \u0623\u0637\u0646\u0627\u0646 \u0645\u0646 \u0627\u0644\u0643\u0631\u0628\u0648\u0646 \u0645\u0633\u0628\u0642\u0627\u064b. \u0639\u0644\u0649 \u0627\u0644\u0634\u0628\u0643\u0629 \u0627\u0644\u062a\u0648\u0646\u0633\u064a\u0629 \u062a\u0639\u0648\u0651\u0636 \u0627\u0644\u0633\u064a\u0627\u0631\u0629 \u0630\u0644\u0643 \u0628\u0639\u062f \u0646\u062d\u0648 66000 \u0643\u0645\u060c \u0623\u064a \u0646\u062d\u0648 4.4 \u0633\u0646\u0648\u0627\u062a \u0639\u0646\u062f 15000 \u0643\u0645 \u0633\u0646\u0648\u064a\u0627\u064b\u060c \u0648\u0623\u0633\u0631\u0639 \u0645\u0639 \u0627\u0644\u0637\u0627\u0642\u0629 \u0627\u0644\u0634\u0645\u0633\u064a\u0629 \u0623\u0648 \u0628\u0637\u0627\u0631\u064a\u0629 \u0623\u0635\u063a\u0631.",
+    faqQ6: "\u0645\u0627 \u0627\u0644\u0633\u064a\u0627\u0631\u0627\u062a \u0627\u0644\u062a\u064a \u064a\u063a\u0637\u064a\u0647\u0627 \u0627\u0644\u0645\u062d\u0627\u0643\u064a\u061f",
+    faqA6:
+      "527 \u0625\u0635\u062f\u0627\u0631\u0627\u064b \u0645\u0646 63 \u0635\u0627\u0646\u0639\u0627\u064b\u060c \u0628\u0633\u0639\u0629 \u0628\u0637\u0627\u0631\u064a\u0629 \u062d\u0642\u064a\u0642\u064a\u0629 \u0648\u062d\u062f\u0648\u062f \u0634\u062d\u0646 \u0645\u062a\u0631\u062f\u062f \u0648\u0645\u0633\u062a\u0645\u0631 \u0648\u062c\u0647\u062f \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0648\u0643\u064a\u0645\u064a\u0627\u0621 \u0627\u0644\u062e\u0644\u0627\u064a\u0627 \u0645\u0646 \u0642\u0627\u0639\u062f\u0629 Open EV Data \u2014 \u0645\u0646\u0647\u0627 \u0637\u0631\u0627\u0632\u0627\u062a \u0634\u0627\u0626\u0639\u0629 \u0641\u064a \u062a\u0648\u0646\u0633 \u0645\u062b\u0644 \u062f\u0627\u0686\u064a\u0627 \u0633\u0628\u0631\u064a\u0646\u063a \u0648\u0631\u064a\u0646\u0648 5 \u0648\u0628\u0698\u0648 e-208 \u0648BYD Dolphin \u0648\u062a\u0633\u0644\u0627 \u0645\u0648\u062f\u064a\u0644 3. \u0648\u064a\u0645\u0643\u0646 \u0645\u062d\u0627\u0643\u0627\u0629 \u0623\u064a \u0633\u064a\u0627\u0631\u0629 \u063a\u064a\u0631 \u0645\u062f\u0631\u062c\u0629 \u0628\u0625\u062f\u062e\u0627\u0644 \u0645\u0648\u0627\u0635\u0641\u0627\u062a\u0647\u0627 \u064a\u062f\u0648\u064a\u0627\u064b.",
     simFindCharger: "ابحث عن شاحن قريب",
     simHostCta: "شارك شاحنك",
     simHour: "س",
@@ -662,7 +708,7 @@ export const translations = {
     iosApp: "App iOS",
     androidApp: "App Android",
     webPlatform: "Plateforme Web",
-    footerCopyright: "© 2025 PowerMaps. Tous droits réservés. Alimenter la révolution de la recharge P2P de VE.",
+    footerCopyright: "© 2026 PowerMaps. Tous droits réservés. Alimenter la révolution de la recharge P2P de VE.",
 
     // Charging Simulator
     simulator: "Simulateur",
@@ -782,6 +828,29 @@ export const translations = {
     co2BackToSim: "Retour au temps de recharge",
     co2Note:
       "Facteurs de combustion : 2,31 kg de CO₂ par litre d'essence, 2,68 pour le gazole. La fabrication de la batterie est comptée à {battery} kg de CO₂ par kWh de capacité, milieu des estimations publiées. Le facteur du réseau tunisien est une estimation pour un mix dominé par le gaz ; il reste modifiable, comme toutes les hypothèses ci-dessus.",
+
+    // FAQ
+    faqBadge: "FAQ",
+    faqTitle: "Questions sur",
+    faqTitleHighlight: "la recharge en Tunisie",
+    faqQ1: "Combien de temps faut-il pour recharger une voiture \u00e9lectrique en Tunisie ?",
+    faqA1:
+      "Cela d\u00e9pend de la borne et de la voiture, pas seulement de la taille de la batterie. Une Tesla Model 3 Long Range de 75 kWh charg\u00e9e de 20 % \u00e0 80 % demande environ 6 h 50 sur une borne domestique monophas\u00e9e de 7,4 kW, environ 4 h 30 sur une borne triphas\u00e9e de 11 kW et environ 57 minutes sur une borne rapide DC de 50 kW. Notre simulateur mod\u00e9lise la courbe de charge r\u00e9elle, le palier de ralentissement, la temp\u00e9rature et les pertes pour 527 v\u00e9hicules.",
+    faqQ2: "Combien co\u00fbte la recharge d'une voiture \u00e9lectrique \u00e0 domicile en Tunisie ?",
+    faqA2:
+      "Au tarif STEG basse tension r\u00e9sidentiel, le prix tout compris d\u00e9pend de votre tranche de consommation mensuelle : environ 0,219 TND/kWh dans la tranche 101-200 kWh, 0,264 en 201-300, 0,402 en 301-500 et 0,482 au-del\u00e0 de 500 kWh, TVA et taxes comprises. Recharger une voiture de 75 kWh de 20 % \u00e0 80 % consomme environ 49 kWh \u00e0 la prise.",
+    faqQ3: "Recharger chez soi peut-il faire changer de tranche STEG ?",
+    faqA3:
+      "Oui, et l'effet est plus important qu'on ne le croit. La STEG applique un seul prix \u00e0 tout le mois selon la consommation totale : franchir une tranche refacture donc chaque kWh du mois. Une recharge de 49 kWh ajout\u00e9e \u00e0 un mois de 270 kWh co\u00fbte environ 57 TND, soit \u00e0 peu pr\u00e8s 1,17 TND/kWh au lieu de 0,40, parce que tout le mois est refactur\u00e9 au tarif sup\u00e9rieur. Recharger chez un h\u00f4te garde votre facture dans sa tranche.",
+    faqQ4: "Combien de CO\u2082 une voiture \u00e9lectrique \u00e9vite-t-elle vraiment en Tunisie ?",
+    faqA4:
+      "L'\u00e9lectricit\u00e9 tunisienne provient \u00e0 environ 97 % du gaz naturel : un VE n'y est donc pas z\u00e9ro \u00e9mission. Une Tesla Model 3 \u00e9met environ 71 g de CO\u2082 par km sur le r\u00e9seau contre environ 150 g/km pour une thermique \u00e9quivalente, soit environ 53 % de moins, ou 1,2 tonne par an sur 15 000 km. Recharger sur le solaire en toiture d'un h\u00f4te ram\u00e8ne ce chiffre \u00e0 environ 6 g/km.",
+    faqQ5: "La fabrication de la batterie annule-t-elle le gain de CO\u2082 ?",
+    faqA5:
+      "Non, mais elle le retarde. Fabriquer une batterie de 75 kWh \u00e9met environ 5,3 tonnes de CO\u2082 au d\u00e9part. Sur le r\u00e9seau tunisien, la voiture \u00e9lectrique rembourse cette dette apr\u00e8s environ 66 000 km, soit \u00e0 peu pr\u00e8s 4,4 ans \u00e0 raison de 15 000 km par an, et plus t\u00f4t en solaire ou avec une plus petite batterie. Face \u00e0 un diesel tr\u00e8s sobre, il faut environ 106 000 km.",
+    faqQ6: "Quels v\u00e9hicules \u00e9lectriques le simulateur couvre-t-il ?",
+    faqA6:
+      "527 versions de 63 constructeurs, avec la capacit\u00e9 batterie r\u00e9elle, les limites de charge AC et DC, la tension du pack et la chimie des cellules issues du catalogue Open EV Data \u2014 dont des mod\u00e8les courants en Tunisie comme la Dacia Spring, la Renault 5 E-Tech, la Peugeot e-208, la BYD Dolphin et la Tesla Model 3. Tout v\u00e9hicule absent peut \u00eatre simul\u00e9 en saisissant ses caract\u00e9ristiques manuellement.",
     simFindCharger: "Trouver une borne à proximité",
     simHostCta: "Partager votre borne",
     simHour: "h",
@@ -925,7 +994,7 @@ export const translations = {
     iosApp: "App iOS",
     androidApp: "App Android",
     webPlatform: "Plataforma Web",
-    footerCopyright: "© 2025 PowerMaps. Todos los derechos reservados. Impulsando la revolución de carga P2P de VE.",
+    footerCopyright: "© 2026 PowerMaps. Todos los derechos reservados. Impulsando la revolución de carga P2P de VE.",
 
     // Charging Simulator
     simulator: "Simulador",
@@ -1045,6 +1114,29 @@ export const translations = {
     co2BackToSim: "Volver al tiempo de carga",
     co2Note:
       "Factores de combustión: 2,31 kg de CO₂ por litro de gasolina y 2,68 para el diésel. La fabricación de la batería se cuenta a {battery} kg de CO₂ por kWh de capacidad, el punto medio de las estimaciones publicadas. El factor de la red tunecina es una estimación para un mix dominado por el gas y es editable, como todas las hipótesis anteriores.",
+
+    // FAQ
+    faqBadge: "Preguntas frecuentes",
+    faqTitle: "Preguntas sobre",
+    faqTitleHighlight: "la carga en T\u00fanez",
+    faqQ1: "\u00bfCu\u00e1nto tarda en cargar un coche el\u00e9ctrico en T\u00fanez?",
+    faqA1:
+      "Depende del punto de carga y del coche, no s\u00f3lo del tama\u00f1o de la bater\u00eda. Un Tesla Model 3 Long Range de 75 kWh cargado del 20 % al 80 % tarda unas 6 h 50 en un wallbox dom\u00e9stico monof\u00e1sico de 7,4 kW, unas 4 h 30 en uno trif\u00e1sico de 11 kW y unos 57 minutos en un cargador r\u00e1pido DC de 50 kW. Nuestro simulador modela la curva de carga real, la reducci\u00f3n de potencia, la temperatura y las p\u00e9rdidas para 527 veh\u00edculos.",
+    faqQ2: "\u00bfCu\u00e1nto cuesta cargar un coche el\u00e9ctrico en casa en T\u00fanez?",
+    faqA2:
+      "Con la tarifa residencial de baja tensi\u00f3n de STEG el precio final depende de tu tramo de consumo mensual: unos 0,219 TND/kWh en el tramo 101-200 kWh, 0,264 en 201-300, 0,402 en 301-500 y 0,482 por encima de 500 kWh, IVA y tasas incluidos. Cargar un coche de 75 kWh del 20 % al 80 % consume unos 49 kWh del enchufe.",
+    faqQ3: "\u00bfCargar en casa puede subirme de tramo en STEG?",
+    faqA3:
+      "S\u00ed, y el efecto es mayor de lo que suele pensarse. STEG aplica un \u00fanico precio a todo el mes seg\u00fan el consumo total, as\u00ed que cruzar un tramo revaloriza cada kWh del mes. Una carga de 49 kWh sumada a un mes de 270 kWh cuesta unos 57 TND, es decir alrededor de 1,17 TND/kWh en vez de 0,40, porque se refactura el mes entero. Cargar en casa de un anfitri\u00f3n mantiene tu factura en su tramo.",
+    faqQ4: "\u00bfCu\u00e1nto CO\u2082 ahorra realmente un coche el\u00e9ctrico en T\u00fanez?",
+    faqA4:
+      "La electricidad tunecina procede en un 97 % del gas natural, as\u00ed que aqu\u00ed un el\u00e9ctrico no es cero emisiones. Un Tesla Model 3 emite unos 71 g de CO\u2082 por km con electricidad de red frente a unos 150 g/km de un gasolina equivalente: alrededor de un 53 % menos, o 1,2 toneladas al a\u00f1o con 15 000 km. Cargar con la solar de un anfitri\u00f3n lo baja a unos 6 g/km.",
+    faqQ5: "\u00bfLa fabricaci\u00f3n de la bater\u00eda anula el ahorro de CO\u2082?",
+    faqA5:
+      "No, pero lo retrasa. Fabricar una bater\u00eda de 75 kWh emite unas 5,3 toneladas de CO\u2082 por adelantado. Con la red tunecina el coche el\u00e9ctrico lo devuelve tras unos 66 000 km, unos 4,4 a\u00f1os a raz\u00f3n de 15 000 km al a\u00f1o, y antes con solar o con una bater\u00eda m\u00e1s peque\u00f1a. Frente a un di\u00e9sel muy sobrio hacen falta unos 106 000 km.",
+    faqQ6: "\u00bfQu\u00e9 coches el\u00e9ctricos cubre el simulador?",
+    faqA6:
+      "527 versiones de 63 fabricantes, con capacidad de bater\u00eda real, l\u00edmites de carga AC y DC, tensi\u00f3n del pack y qu\u00edmica de las celdas del cat\u00e1logo Open EV Data, incluidos modelos habituales en T\u00fanez como el Dacia Spring, el Renault 5 E-Tech, el Peugeot e-208, el BYD Dolphin y el Tesla Model 3. Cualquier coche que no est\u00e9 en la lista puede simularse introduciendo sus datos a mano.",
     simFindCharger: "Buscar un cargador cerca",
     simHostCta: "Comparte tu cargador",
     simHour: "h",
@@ -1194,7 +1286,7 @@ export const translations = {
     iosApp: "iOS App",
     androidApp: "Android App",
     webPlatform: "Web-Plattform",
-    footerCopyright: "© 2025 PowerMaps. Alle Rechte vorbehalten. Die P2P-EV-Laderevolution antreiben.",
+    footerCopyright: "© 2026 PowerMaps. Alle Rechte vorbehalten. Die P2P-EV-Laderevolution antreiben.",
 
     // Charging Simulator
     simulator: "Simulator",
@@ -1314,6 +1406,29 @@ export const translations = {
     co2BackToSim: "Zurück zur Ladezeit",
     co2Note:
       "Verbrennungsfaktoren: 2,31 kg CO₂ je Liter Benzin, 2,68 für Diesel. Die Batteriefertigung wird mit {battery} kg CO₂ je kWh Kapazität angesetzt, der Mitte der veröffentlichten Schätzungen. Der Faktor des tunesischen Netzes ist eine Schätzung für einen gasdominierten Mix und wie alle Annahmen oben editierbar.",
+
+    // FAQ
+    faqBadge: "H\u00e4ufige Fragen",
+    faqTitle: "Fragen zum",
+    faqTitleHighlight: "Laden in Tunesien",
+    faqQ1: "Wie lange dauert das Laden eines E-Autos in Tunesien?",
+    faqA1:
+      "Das h\u00e4ngt vom Ladepunkt und vom Auto ab, nicht nur von der Batteriegr\u00f6\u00dfe. Ein Tesla Model 3 Long Range mit 75 kWh braucht von 20 % auf 80 % rund 6 Std 50 an einer einphasigen 7,4-kW-Wallbox, etwa 4 Std 30 an einer dreiphasigen 11-kW-Wallbox und rund 57 Minuten an einem 50-kW-DC-Schnelllader. Unser Simulator bildet die echte Ladekurve, den Leistungsabfall, die Temperatur und die Ladeverluste f\u00fcr 527 Fahrzeuge ab.",
+    faqQ2: "Was kostet das Laden eines E-Autos zu Hause in Tunesien?",
+    faqA2:
+      "Im STEG-Niederspannungstarif f\u00fcr Privathaushalte h\u00e4ngt der Endpreis von Ihrer monatlichen Verbrauchsstufe ab: rund 0,219 TND/kWh in der Stufe 101-200 kWh, 0,264 in 201-300, 0,402 in 301-500 und 0,482 oberhalb von 500 kWh, inklusive MwSt. und Abgaben. Ein 75-kWh-Auto von 20 % auf 80 % zu laden zieht etwa 49 kWh aus der Steckdose.",
+    faqQ3: "Kann Laden zu Hause mich in eine h\u00f6here STEG-Stufe bringen?",
+    faqA3:
+      "Ja, und der Effekt ist gr\u00f6\u00dfer als die meisten erwarten. STEG wendet je nach Gesamtverbrauch einen einzigen Preis auf den ganzen Monat an \u2014 wer eine Stufe \u00fcberschreitet, zahlt f\u00fcr jede kWh des Monats neu. Eine Ladung von 49 kWh auf einen 270-kWh-Monat kostet rund 57 TND, also etwa 1,17 TND/kWh statt 0,40. Laden bei einem Gastgeber h\u00e4lt die eigene Rechnung in ihrer Stufe.",
+    faqQ4: "Wie viel CO\u2082 spart ein E-Auto in Tunesien wirklich?",
+    faqA4:
+      "Tunesischer Strom stammt zu rund 97 % aus Erdgas, ein E-Auto ist hier also nicht emissionsfrei. Ein Tesla Model 3 emittiert mit Netzstrom etwa 71 g CO\u2082 pro km gegen\u00fcber rund 150 g/km bei einem vergleichbaren Benziner \u2014 etwa 53 % weniger oder 1,2 Tonnen im Jahr bei 15 000 km. Mit dem Dachsolarstrom eines Gastgebers sinkt der Wert auf etwa 6 g/km.",
+    faqQ5: "Hebt die Batteriefertigung die CO\u2082-Ersparnis auf?",
+    faqA5:
+      "Nein, sie verz\u00f6gert sie. Die Fertigung eines 75-kWh-Akkus verursacht vorab rund 5,3 Tonnen CO\u2082. Im tunesischen Netz holt das E-Auto das nach etwa 66 000 km auf \u2014 rund 4,4 Jahre bei 15 000 km pro Jahr \u2014 mit Solarstrom oder kleinerem Akku fr\u00fcher. Gegen\u00fcber einem sehr sparsamen Diesel sind es etwa 106 000 km.",
+    faqQ6: "Welche E-Autos deckt der Simulator ab?",
+    faqA6:
+      "527 Versionen von 63 Herstellern, mit echter Batteriekapazit\u00e4t, AC- und DC-Ladegrenzen, Pack-Spannung und Zellchemie aus dem Open-EV-Data-Katalog \u2014 darunter in Tunesien verbreitete Modelle wie Dacia Spring, Renault 5 E-Tech, Peugeot e-208, BYD Dolphin und Tesla Model 3. Jedes nicht gelistete Auto l\u00e4sst sich durch manuelle Eingabe der Daten simulieren.",
     simFindCharger: "Ladepunkt in der Nähe finden",
     simHostCta: "Eigene Wallbox teilen",
     simHour: "Std",

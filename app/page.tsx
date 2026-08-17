@@ -10,6 +10,7 @@ import { ContactForm } from "@/components/contact-form"
 import { EvChargingSimulator } from "@/components/ev-charging-simulator"
 import { Co2SavingsSimulator } from "@/components/co2-savings-simulator"
 import { VehicleSelectionProvider } from "@/components/vehicle-picker"
+import { FaqSection } from "@/components/faq-section"
 import { useLanguage } from "@/hooks/use-language"
 import { useEffect, useState } from "react"
 import {
@@ -693,6 +694,9 @@ export default function PowerMapsLanding() {
           </motion.div>
         </div>
       </section>
+
+      {/* FAQ - also the visible source for the page's FAQ structured data */}
+      <FaqSection />
 
       {/* Contact Form */}
       <ContactForm />
