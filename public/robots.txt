@@ -10,12 +10,28 @@ Crawl-delay: 1
 # Block access to admin areas (if any)
 Disallow: /admin/
 Disallow: /api/
+Disallow: /_next/static/
 
 # Allow all major search engines
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
+Allow: /
+
+# Allow Google Images
+User-agent: Googlebot-Image
+Allow: /
+
+# Allow social media crawlers for rich previews
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
 Allow: /
 
 User-agent: Slurp
