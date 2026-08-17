@@ -8,6 +8,8 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
 import { ContactForm } from "@/components/contact-form"
 import { EvChargingSimulator } from "@/components/ev-charging-simulator"
+import { Co2SavingsSimulator } from "@/components/co2-savings-simulator"
+import { VehicleSelectionProvider } from "@/components/vehicle-picker"
 import { useLanguage } from "@/hooks/use-language"
 import { useEffect, useState } from "react"
 import {
@@ -145,6 +147,7 @@ export default function PowerMapsLanding() {
                 { key: "forHosts", href: "#for-hosts" },
                 { key: "forDrivers", href: "#for-drivers" },
                 { key: "simulator", href: "#simulator" },
+                { key: "co2Nav", href: "#co2" },
                 { key: "howItWorks", href: "#how-it-works" },
                 { key: "contact", href: "#contact" },
               ].map((item, index) => (
@@ -204,6 +207,7 @@ export default function PowerMapsLanding() {
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
                   { key: "simulator", href: "#simulator" },
+                { key: "co2Nav", href: "#co2" },
                   { key: "howItWorks", href: "#how-it-works" },
                   { key: "contact", href: "#contact" },
                 ].map((item) => (
@@ -604,8 +608,11 @@ export default function PowerMapsLanding() {
         </div>
       </section>
 
-      {/* Charging Simulator */}
-      <EvChargingSimulator />
+      {/* Simulators — one vehicle selection shared between them */}
+      <VehicleSelectionProvider>
+        <EvChargingSimulator />
+        <Co2SavingsSimulator />
+      </VehicleSelectionProvider>
 
       {/* How It Works - Google step-by-step style */}
       <section id="how-it-works" className="py-16 md:py-24 bg-white dark:bg-black">
@@ -761,6 +768,7 @@ export default function PowerMapsLanding() {
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
                   { key: "simulator", href: "#simulator" },
+                { key: "co2Nav", href: "#co2" },
                   { key: "contact", href: "#contact" },
                 ].map((item) => (
                   <li key={item.key}>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -20,17 +20,16 @@ import {
   type SimulationInput,
 } from "@/lib/charging-model"
 import { leviesMillimes, sessionPricing, vatRate, type Segment } from "@/lib/steg-tariff"
+import { useEvCatalogue } from "@/hooks/use-ev-catalogue"
+import { VehiclePicker, useVehicleSelection } from "@/components/vehicle-picker"
 import {
   AlertTriangle,
   BatteryCharging,
   Check,
-  ChevronDown,
   Gauge,
   Info,
-  Loader2,
   Plug,
   Route,
-  Search,
   Snowflake,
   Thermometer,
   Zap,
@@ -56,16 +55,6 @@ const LOCALES: Record<Language, string> = {
   de: "de-DE",
 }
 
-const CUSTOM = "__custom__"
-const DEFAULT_VEHICLE = "tesla-model-3-long-range-75-11-250"
-
-interface Catalogue {
-  count: number
-  source: string
-  sourceUrl: string
-  models: EvModel[]
-}
-
 const inputClass =
   "w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm transition-all duration-200"
 
@@ -75,12 +64,8 @@ export function EvChargingSimulator() {
   const { t, language } = useLanguage()
   const locale = LOCALES[language] ?? "en-GB"
 
-  const [catalogue, setCatalogue] = useState<Catalogue | null>(null)
-  const [loadError, setLoadError] = useState(false)
-
-  const [vehicleId, setVehicleId] = useState<string>(DEFAULT_VEHICLE)
-  const [query, setQuery] = useState("")
-  const [listOpen, setListOpen] = useState(false)
+  const { catalogue } = useEvCatalogue()
+  const { vehicleId } = useVehicleSelection()
 
   const [batteryInput, setBatteryInput] = useState<string>("")
   const [customAc, setCustomAc] = useState("11")
@@ -96,43 +81,6 @@ export function EvChargingSimulator() {
   const [pricingMode, setPricingMode] = useState<"residential" | "business" | "custom">("residential")
   const [monthlyBase, setMonthlyBase] = useState("250")
   const [price, setPrice] = useState("0.500")
-
-  const comboRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    fetch("/data/ev-models.json")
-      .then((r) => {
-        if (!r.ok) throw new Error(String(r.status))
-        return r.json()
-      })
-      .then((data: Catalogue) => {
-        if (cancelled) return
-        setCatalogue(data)
-        if (!data.models.some((m) => m.id === DEFAULT_VEHICLE)) {
-          setVehicleId(data.models[0]?.id ?? CUSTOM)
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setLoadError(true)
-          setVehicleId(CUSTOM)
-        }
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  // Close the vehicle list when clicking outside of it.
-  useEffect(() => {
-    if (!listOpen) return
-    const onClick = (e: MouseEvent) => {
-      if (comboRef.current && !comboRef.current.contains(e.target as Node)) setListOpen(false)
-    }
-    document.addEventListener("mousedown", onClick)
-    return () => document.removeEventListener("mousedown", onClick)
-  }, [listOpen])
 
   const vehicle = useMemo(
     () => catalogue?.models.find((m) => m.id === vehicleId) ?? null,
@@ -222,15 +170,6 @@ export function EvChargingSimulator() {
     return saved > 4 ? saved : null
   }, [input, result.minutes, startSoc, targetSoc])
 
-  const filtered = useMemo(() => {
-    if (!catalogue) return []
-    const q = query.trim().toLowerCase()
-    const list = q
-      ? catalogue.models.filter((m) => `${m.make} ${m.model}`.toLowerCase().includes(q))
-      : catalogue.models
-    return list.slice(0, 60)
-  }, [catalogue, query])
-
   const nf = (value: number, digits = 1) =>
     new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value)
 
@@ -302,88 +241,8 @@ export function EvChargingSimulator() {
             >
               <CardContent className="p-6 md:p-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Vehicle picker */}
-                  <div className="sm:col-span-2" ref={comboRef}>
-                    <Label className={labelClass}>{t("simVehicle")}</Label>
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setListOpen((v) => !v)}
-                        disabled={!catalogue && !loadError}
-                        className={`${inputClass} flex items-center justify-between text-start disabled:opacity-60`}
-                      >
-                        <span className="truncate font-medium">
-                          {!catalogue && !loadError ? (
-                            <span className="inline-flex items-center text-gray-500 dark:text-gray-400 font-normal">
-                              <Loader2 className="w-4 h-4 me-2 animate-spin" />
-                              {t("simLoading")}
-                            </span>
-                          ) : vehicle ? (
-                            `${vehicle.make} ${vehicle.model} — ${nf(vehicle.net)} kWh`
-                          ) : (
-                            t("simVehicleCustom")
-                          )}
-                        </span>
-                        <ChevronDown className="w-4 h-4 flex-shrink-0 text-gray-500" />
-                      </button>
-
-                      {listOpen && catalogue && (
-                        <div className="absolute z-20 mt-2 w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg overflow-hidden">
-                          <div className="p-2 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2">
-                            <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                            <input
-                              autoFocus
-                              value={query}
-                              onChange={(e) => setQuery(e.target.value)}
-                              placeholder={t("simVehiclePlaceholder")}
-                              className="w-full bg-transparent text-sm text-gray-900 dark:text-white outline-none py-1"
-                            />
-                          </div>
-                          <ul className="max-h-64 overflow-y-auto py-1 text-sm">
-                            <li>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setVehicleId(CUSTOM)
-                                  setListOpen(false)
-                                }}
-                                className="w-full text-start px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-medium"
-                              >
-                                {t("simVehicleCustom")}
-                              </button>
-                            </li>
-                            {filtered.map((m) => (
-                              <li key={m.id}>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setVehicleId(m.id)
-                                    setListOpen(false)
-                                  }}
-                                  className="w-full text-start px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between gap-3"
-                                >
-                                  <span className="text-gray-900 dark:text-white truncate">
-                                    <span className="font-medium">{m.make}</span> {m.model}
-                                  </span>
-                                  <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
-                                    {nf(m.net)} kWh · {m.dc ? `${m.dc} kW DC` : t("simNoDcPort")}
-                                  </span>
-                                </button>
-                              </li>
-                            ))}
-                            {filtered.length === 0 && (
-                              <li className="px-4 py-3 text-gray-500 dark:text-gray-400">{t("simNoMatch")}</li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                    {loadError && (
-                      <p className="mt-2 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
-                        <AlertTriangle className="w-3.5 h-3.5" />
-                        {t("simError")}
-                      </p>
-                    )}
+                  <div className="sm:col-span-2">
+                    <VehiclePicker id="sim-vehicle" />
                   </div>
 
                   {/* Battery */}
