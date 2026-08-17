@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
 import { ContactForm } from "@/components/contact-form"
 import { EvChargingSimulator } from "@/components/ev-charging-simulator"
+import { FuelSavingsSimulator } from "@/components/fuel-savings-simulator"
 import { Co2SavingsSimulator } from "@/components/co2-savings-simulator"
 import { VehicleSelectionProvider } from "@/components/vehicle-picker"
 import { FaqSection } from "@/components/faq-section"
@@ -148,6 +149,7 @@ export default function PowerMapsLanding() {
                 { key: "forHosts", href: "#for-hosts" },
                 { key: "forDrivers", href: "#for-drivers" },
                 { key: "simulator", href: "#simulator" },
+                { key: "fuelNav", href: "#fuel-savings" },
                 { key: "co2Nav", href: "#co2" },
                 { key: "howItWorks", href: "#how-it-works" },
                 { key: "contact", href: "#contact" },
@@ -208,6 +210,7 @@ export default function PowerMapsLanding() {
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
                   { key: "simulator", href: "#simulator" },
+                { key: "fuelNav", href: "#fuel-savings" },
                 { key: "co2Nav", href: "#co2" },
                   { key: "howItWorks", href: "#how-it-works" },
                   { key: "contact", href: "#contact" },
@@ -612,6 +615,7 @@ export default function PowerMapsLanding() {
       {/* Simulators — one vehicle selection shared between them */}
       <VehicleSelectionProvider>
         <EvChargingSimulator />
+        <FuelSavingsSimulator />
         <Co2SavingsSimulator />
       </VehicleSelectionProvider>
 
@@ -772,6 +776,7 @@ export default function PowerMapsLanding() {
                   { key: "forHosts", href: "#for-hosts" },
                   { key: "forDrivers", href: "#for-drivers" },
                   { key: "simulator", href: "#simulator" },
+                { key: "fuelNav", href: "#fuel-savings" },
                 { key: "co2Nav", href: "#co2" },
                   { key: "contact", href: "#contact" },
                 ].map((item) => (

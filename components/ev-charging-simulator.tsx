@@ -20,22 +20,12 @@ import {
   type SimulationInput,
 } from "@/lib/charging-model"
 import { leviesMillimes, sessionPricing, vatRate, type Segment } from "@/lib/steg-tariff"
-import { ICE_CONSUMPTION_BY_TYPE } from "@/lib/emissions"
-import {
-  FUEL_GRADES,
-  FUEL_PRICES_UPDATED,
-  REFERENCE_ANNUAL_KM,
-  compareFuelCost,
-  getFuelGrade,
-  type FuelGrade,
-} from "@/lib/fuel-prices"
 import { useEvCatalogue } from "@/hooks/use-ev-catalogue"
 import { VehiclePicker, useVehicleSelection } from "@/components/vehicle-picker"
 import {
   AlertTriangle,
   BatteryCharging,
   Check,
-  Fuel,
   Gauge,
   Info,
   Plug,
@@ -92,10 +82,6 @@ export function EvChargingSimulator() {
   const [monthlyBase, setMonthlyBase] = useState("250")
   const [price, setPrice] = useState("0.500")
 
-  const [fuelGrade, setFuelGrade] = useState<FuelGrade>("unleaded")
-  const [fuelPrice, setFuelPrice] = useState(FUEL_GRADES[0].pricePerL.toFixed(3))
-  const [iceConsumption, setIceConsumption] = useState("6.5")
-
   const vehicle = useMemo(
     () => catalogue?.models.find((m) => m.id === vehicleId) ?? null,
     [catalogue, vehicleId],
@@ -105,21 +91,6 @@ export function EvChargingSimulator() {
   useEffect(() => {
     if (vehicle) setBatteryInput(String(vehicle.net))
   }, [vehicle])
-
-  const grade = useMemo(() => getFuelGrade(fuelGrade), [fuelGrade])
-
-  // Switching grade re-quotes the pump price; the field stays editable because
-  // the regulated tariff moves faster than this constant does.
-  useEffect(() => {
-    setFuelPrice(grade.pricePerL.toFixed(3))
-  }, [grade])
-
-  // The combustion car to compare against is the one the driver would have
-  // bought instead: same body style, same fuel.
-  useEffect(() => {
-    const base = ICE_CONSUMPTION_BY_TYPE[vehicle?.type ?? ""] ?? ICE_CONSUMPTION_BY_TYPE.passenger_car
-    setIceConsumption((base * grade.consumptionFactor).toFixed(1))
-  }, [grade, vehicle])
 
   const hasDcPort = vehicle ? Boolean(vehicle.dc) : Number(customDc) > 0
 
@@ -190,18 +161,6 @@ export function EvChargingSimulator() {
 
   const costPer100km = result.kmAdded > 0 ? (pricing.cost / result.kmAdded) * 100 : 0
 
-  /** The same kilometres bought at the pump instead. */
-  const fuel = useMemo(
-    () =>
-      compareFuelCost({
-        km: result.kmAdded,
-        consumption: Math.max(0.1, Number(iceConsumption) || 6.5),
-        pricePerL: Math.max(0, Number(fuelPrice) || 0),
-        electricCost: pricing.cost,
-      }),
-    [fuelPrice, iceConsumption, pricing.cost, result.kmAdded],
-  )
-
   // How much of the session is spent on the last 20 % — the classic
   // "stop at 80 %" argument, only worth showing when the user goes past it.
   const taperSaving = useMemo(() => {
@@ -217,9 +176,6 @@ export function EvChargingSimulator() {
   const int = (value: number) => new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(value)
 
   const duration = (minutes: number) => formatDuration(minutes, t("simHour"), t("simMin"))
-
-  const fuelLabel = (id: FuelGrade) =>
-    id === "unleaded" ? t("simFuelUnleaded") : id === "diesel" ? t("simFuelDiesel") : t("simFuelDiesel50")
 
   const chargerLabel = (c: Charger) => {
     const suffix =
@@ -543,78 +499,6 @@ export function EvChargingSimulator() {
                     </label>
                   </div>
                 </div>
-
-                {/* The combustion car this session replaces */}
-                <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Fuel className="w-4 h-4 text-gray-500" />
-                    {t("simFuelTitle")}
-                  </p>
-
-                  <Label className={labelClass}>{t("simFuelGrade")}</Label>
-                  <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label={t("simFuelGrade")}>
-                    {FUEL_GRADES.map((g) => {
-                      const selected = g.id === fuelGrade
-                      return (
-                        <button
-                          key={g.id}
-                          type="button"
-                          role="radio"
-                          aria-checked={selected}
-                          onClick={() => setFuelGrade(g.id)}
-                          className={`rounded-lg border px-3 py-3 text-sm text-center transition-colors duration-150 ${
-                            selected
-                              ? "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 font-medium ring-1 ring-green-500"
-                              : "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                          }`}
-                        >
-                          <span className="block leading-tight">{fuelLabel(g.id)}</span>
-                          <span
-                            className={`block text-xs mt-1 tabular-nums ${
-                              selected ? "text-green-700 dark:text-green-400" : "text-gray-500 dark:text-gray-400"
-                            }`}
-                          >
-                            {nf(g.pricePerL, 3)} TND/L
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-                    <div>
-                      <Label htmlFor="sim-ice-cons" className={labelClass}>
-                        {t("simFuelConsumption")}
-                      </Label>
-                      <Input
-                        id="sim-ice-cons"
-                        type="number"
-                        min={2}
-                        max={25}
-                        step={0.1}
-                        value={iceConsumption}
-                        onChange={(e) => setIceConsumption(e.target.value)}
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="sim-fuel-price" className={labelClass}>
-                        {t("simFuelPrice")}
-                      </Label>
-                      <Input
-                        id="sim-fuel-price"
-                        type="number"
-                        min={0}
-                        max={20}
-                        step={0.005}
-                        value={fuelPrice}
-                        onChange={(e) => setFuelPrice(e.target.value)}
-                        className={inputClass}
-                      />
-                    </div>
-                  </div>
-                </div>
-
                 {/* Vehicle spec sheet */}
                 {vehicle && (
                   <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
@@ -704,57 +588,6 @@ export function EvChargingSimulator() {
                 {" · "}
                 {t("simEfficiency")} {nf(result.efficiency * 100, 0)} %
               </p>
-
-              {/* What the same kilometres would have cost at the pump */}
-              {result.kmAdded > 0 && (
-                <div
-                  className={`rounded-lg border p-4 mb-4 ${
-                    fuel.saved >= 0 ? "bg-green-500/10 border-green-500/40" : "bg-amber-500/10 border-amber-500/40"
-                  }`}
-                >
-                  <p
-                    className={`text-xs font-medium tracking-wide uppercase mb-2 flex items-center gap-2 ${
-                      fuel.saved >= 0 ? "text-green-400" : "text-amber-400"
-                    }`}
-                  >
-                    <Fuel className="w-3.5 h-3.5" />
-                    {fuel.saved >= 0 ? t("simFuelSavedTitle") : t("simFuelWorseTitle")}
-                  </p>
-
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span
-                      className={`text-3xl font-semibold tabular-nums ${
-                        fuel.saved >= 0 ? "text-green-300" : "text-amber-300"
-                      }`}
-                    >
-                      {nf(Math.abs(fuel.saved), 2)}
-                    </span>
-                    <span className={`text-sm ${fuel.saved >= 0 ? "text-green-200" : "text-amber-200"}`}>TND</span>
-                    <span className={`ms-auto text-xs ${fuel.saved >= 0 ? "text-green-200/80" : "text-amber-200/80"}`}>
-                      {nf(Math.abs(fuel.savedShare) * 100, 0)} %
-                    </span>
-                  </div>
-
-                  <p className={`text-sm leading-relaxed ${fuel.saved >= 0 ? "text-green-50" : "text-amber-50"}`}>
-                    {t(fuel.saved >= 0 ? "simFuelSavedLine" : "simFuelWorseLine")
-                      .replace("{km}", int(result.kmAdded))
-                      .replace("{ev}", nf(pricing.cost, 2))
-                      .replace("{fuel}", fuelLabel(fuelGrade))
-                      .replace("{litres}", nf(fuel.litres, 1))
-                      .replace("{ice}", nf(fuel.iceCost, 2))}
-                  </p>
-
-                  {fuel.saved > 0 && (
-                    <p className="mt-2 text-xs text-green-100/70 leading-relaxed">
-                      {t("simFuelPer100")
-                        .replace("{saved}", nf(fuel.savedPer100, 2))
-                        .replace("{annual}", int(fuel.savedPerYear))
-                        .replace("{km}", int(REFERENCE_ANNUAL_KM))}
-                    </p>
-                  )}
-                </div>
-              )}
-
               {pricing.steg?.crossesTranche && (
                 <div className="rounded-lg bg-amber-500/10 border border-amber-500/40 p-4 mb-4">
                   <p className="text-xs font-medium tracking-wide uppercase text-amber-400 mb-2 flex items-center gap-2">
@@ -930,15 +763,7 @@ export function EvChargingSimulator() {
             </a>
           )}
         </p>
-        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-4xl">{t("simStegNote")}</p>
-        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-4xl">
-          {t("simFuelNote")
-            .replace("{date}", new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(FUEL_PRICES_UPDATED)))
-            .replace("{unleaded}", nf(getFuelGrade("unleaded").pricePerL, 3))
-            .replace("{diesel}", nf(getFuelGrade("diesel").pricePerL, 3))
-            .replace("{diesel50}", nf(getFuelGrade("diesel50").pricePerL, 3))}
-        </p>
-      </div>
+        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-4xl">{t("simStegNote")}</p>      </div>
     </section>
   )
 }

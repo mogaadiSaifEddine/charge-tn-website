@@ -216,7 +216,7 @@ export const translations = {
     simStegNote:
       "Prices follow the STEG low-voltage tariff of 1 May 2022, plus VAT and the levies billed per kWh. STEG applies one rate to the whole month based on total consumption, so the cost shown is the difference this session makes to your bill.",
 
-    // Fuel comparison inside the charging simulator
+    // Fuel savings simulator
     simFuelTitle: "The combustion car this replaces",
     simFuelGrade: "Fuel at the pump",
     simFuelUnleaded: "Unleaded petrol",
@@ -226,13 +226,42 @@ export const translations = {
     simFuelPrice: "Pump price (TND/L)",
     simFuelSavedTitle: "Saved against fuel",
     simFuelWorseTitle: "Costlier than fuel",
-    simFuelSavedLine:
-      "The {km} km added here cost {ev} TND of electricity. The same distance burns {litres} L of {fuel}, or {ice} TND at the pump.",
-    simFuelWorseLine:
-      "The {km} km added here cost {ev} TND of electricity, against {ice} TND of {fuel} for the same distance. At this price the combustion car is the cheaper one to run.",
-    simFuelPer100: "{saved} TND saved per 100 km — about {annual} TND a year at {km} km.",
     simFuelNote:
       "Pump prices are the Tunisian regulated tariff of {date}: unleaded {unleaded}, ordinary diesel {diesel}, diesel 50 {diesel50} TND/L. They are editable, as is the combustion consumption — estimated 15% below the petrol figure when a diesel is selected.",
+
+    fuelNav: "Fuel savings",
+    fuelBadge: "Fuel savings calculator",
+    fuelTitle: "What you stop paying",
+    fuelTitleHighlight: "at the pump",
+    fuelSubtitle:
+      "Tell us how far you drive in a year. We work out what those kilometres cost as fuel, what they cost as a charge, and what the difference adds up to over the life of the car.",
+    fuelAnnualKm: "Kilometres you drive a year",
+    fuelEvConsumption: "Your EV's consumption (kWh/100 km)",
+    fuelElectricityPrice: "Electricity price (TND/kWh)",
+    fuelAssumptions: "If prices keep climbing",
+    fuelFuelRise: "Pump price rise (% a year)",
+    fuelElectricityRise: "Electricity rise (% a year)",
+    fuelPerYear: "Saved every year",
+    fuelWorsePerYear: "Extra cost every year",
+    fuelPerYearLine:
+      "{km} km a year burns {litres} L of {fuel} — {ice} TND at the pump — against {kwh} kWh on charge, or {ev} TND.",
+    fuelIceLabel: "At the pump",
+    fuelEvLabel: "On charge",
+    fuelHorizonTitle: "What that adds up to",
+    fuelHorizonSubtitle: "Every figure is the running total from today, not the amount for that year alone.",
+    fuelHDay: "A day",
+    fuelHMonth: "A month",
+    fuelHYear: "A year",
+    fuelH3: "3 years",
+    fuelH5: "5 years",
+    fuelH10: "10 years",
+    fuelH20: "20 years",
+    fuelH30: "30 years",
+    fuelHorizonDetail: "{ice} TND fuel · {ev} TND charge",
+    fuelCta: "Find a charger near you",
+    fuelBackToSim: "Back to the charging simulator",
+    fuelNote:
+      "Totals are cumulative and hold today's prices unless you set a yearly rise. Charging losses are counted: only {efficiency} % of the kWh the meter bills reaches the battery. Purchase price, insurance and servicing are not part of this comparison.",
 
     // CO2 Simulator
     co2Nav: "CO₂ saved",
@@ -514,7 +543,7 @@ export const translations = {
     simStegNote:
       "الأسعار وفق تعريفة الستاغ للجهد المنخفض بتاريخ 1 ماي 2022، مع الأداء على القيمة المضافة والمعاليم المحتسبة لكل كيلوواط ساعة. تطبّق الستاغ سعراً واحداً على كامل الشهر حسب الاستهلاك الجملي، لذلك تمثّل الكلفة المعروضة الفارق الذي تُحدثه هذه الجلسة في فاتورتك.",
 
-    // Fuel comparison inside the charging simulator
+    // Fuel savings simulator
     simFuelTitle: "السيارة الحرارية التي تعوّضها",
     simFuelGrade: "الوقود في المحطة",
     simFuelUnleaded: "بنزين بدون رصاص",
@@ -524,13 +553,42 @@ export const translations = {
     simFuelPrice: "سعر اللتر (دينار/لتر)",
     simFuelSavedTitle: "التوفير مقابل الوقود",
     simFuelWorseTitle: "أغلى من الوقود",
-    simFuelSavedLine:
-      "الـ {km} كم المضافة هنا كلّفت {ev} دينار من الكهرباء. نفس المسافة تستهلك {litres} لتر من {fuel}، أي {ice} دينار في المحطة.",
-    simFuelWorseLine:
-      "الـ {km} كم المضافة هنا كلّفت {ev} دينار من الكهرباء، مقابل {ice} دينار من {fuel} لنفس المسافة. بهذا السعر تبقى السيارة الحرارية أقل كلفة في الاستعمال.",
-    simFuelPer100: "توفير {saved} دينار لكل 100 كم — حوالي {annual} دينار في السنة عند {km} كم.",
     simFuelNote:
       "أسعار الوقود هي التعريفة التونسية المنظّمة بتاريخ {date}: بنزين بدون رصاص {unleaded}، غازوال عادي {diesel}، غازوال 50 بـ {diesel50} دينار/لتر. يمكن تعديلها، مثل استهلاك السيارة الحرارية الذي يُقدَّر أقل بـ 15٪ من قيمة البنزين عند اختيار الغازوال.",
+
+    fuelNav: "التوفير في الوقود",
+    fuelBadge: "حاسبة التوفير في الوقود",
+    fuelTitle: "ما ستتوقّف عن دفعه",
+    fuelTitleHighlight: "في محطة الوقود",
+    fuelSubtitle:
+      "أدخل المسافة التي تقطعها في السنة. نحسب لك كلفة هذه الكيلومترات بالوقود، وكلفتها بالكهرباء، وما يمثّله الفارق على امتداد عمر السيارة.",
+    fuelAnnualKm: "الكيلومترات التي تقطعها في السنة",
+    fuelEvConsumption: "استهلاك سيارتك الكهربائية (ك.و.س/100 كم)",
+    fuelElectricityPrice: "سعر الكهرباء (دينار/ك.و.س)",
+    fuelAssumptions: "إذا واصلت الأسعار الارتفاع",
+    fuelFuelRise: "ارتفاع سعر الوقود (٪ سنوياً)",
+    fuelElectricityRise: "ارتفاع سعر الكهرباء (٪ سنوياً)",
+    fuelPerYear: "التوفير في السنة",
+    fuelWorsePerYear: "الكلفة الإضافية في السنة",
+    fuelPerYearLine:
+      "{km} كم في السنة تستهلك {litres} لتر من {fuel} — أي {ice} دينار في المحطة — مقابل {kwh} ك.و.س شحناً، أي {ev} دينار.",
+    fuelIceLabel: "في المحطة",
+    fuelEvLabel: "بالشحن",
+    fuelHorizonTitle: "ما يتراكم من ذلك",
+    fuelHorizonSubtitle: "كل رقم هو المجموع المتراكم من اليوم، لا مبلغ تلك السنة وحدها.",
+    fuelHDay: "في اليوم",
+    fuelHMonth: "في الشهر",
+    fuelHYear: "في السنة",
+    fuelH3: "3 سنوات",
+    fuelH5: "5 سنوات",
+    fuelH10: "10 سنوات",
+    fuelH20: "20 سنة",
+    fuelH30: "30 سنة",
+    fuelHorizonDetail: "{ice} دينار وقوداً · {ev} دينار شحناً",
+    fuelCta: "ابحث عن شاحن قريب منك",
+    fuelBackToSim: "العودة إلى محاكي الشحن",
+    fuelNote:
+      "المبالغ متراكمة وتعتمد أسعار اليوم ما لم تُحدّد نسبة ارتفاع سنوية. خسائر الشحن محتسبة: {efficiency} ٪ فقط من الكيلوواط ساعة المفوترة تصل إلى البطارية. لا تشمل هذه المقارنة ثمن الشراء ولا التأمين ولا الصيانة.",
 
     // CO2 Simulator
     co2Nav: "توفير الكربون",
@@ -822,7 +880,7 @@ export const translations = {
     simStegNote:
       "Prix issus du tarif STEG basse tension du 1er mai 2022, TVA et taxes au kWh comprises. La STEG applique un seul prix à tout le mois selon la consommation totale : le coût affiché est donc la différence que cette session fait sur votre facture.",
 
-    // Fuel comparison inside the charging simulator
+    // Fuel savings simulator
     simFuelTitle: "La voiture thermique remplacée",
     simFuelGrade: "Carburant à la pompe",
     simFuelUnleaded: "Essence sans plomb",
@@ -832,13 +890,42 @@ export const translations = {
     simFuelPrice: "Prix à la pompe (TND/L)",
     simFuelSavedTitle: "Économie face au carburant",
     simFuelWorseTitle: "Plus cher que le carburant",
-    simFuelSavedLine:
-      "Les {km} km ajoutés ici coûtent {ev} TND d'électricité. La même distance brûle {litres} L de {fuel}, soit {ice} TND à la pompe.",
-    simFuelWorseLine:
-      "Les {km} km ajoutés ici coûtent {ev} TND d'électricité, contre {ice} TND de {fuel} pour la même distance. À ce prix, la thermique reste moins chère à l'usage.",
-    simFuelPer100: "{saved} TND économisés aux 100 km — environ {annual} TND par an pour {km} km.",
     simFuelNote:
       "Les prix à la pompe correspondent au tarif réglementé tunisien du {date} : sans plomb {unleaded}, gasoil ordinaire {diesel}, gasoil 50 {diesel50} TND/L. Ils sont modifiables, tout comme la consommation thermique, estimée 15 % sous la valeur essence lorsqu'un gasoil est choisi.",
+
+    fuelNav: "Économies carburant",
+    fuelBadge: "Calculateur d'économies carburant",
+    fuelTitle: "Ce que vous cessez de payer",
+    fuelTitleHighlight: "à la pompe",
+    fuelSubtitle:
+      "Indiquez le kilométrage que vous parcourez dans l'année. Nous calculons ce que ces kilomètres coûtent en carburant, ce qu'ils coûtent en recharge, et ce que l'écart représente sur la durée de vie de la voiture.",
+    fuelAnnualKm: "Kilomètres parcourus par an",
+    fuelEvConsumption: "Consommation de votre VE (kWh/100 km)",
+    fuelElectricityPrice: "Prix de l'électricité (TND/kWh)",
+    fuelAssumptions: "Si les prix continuent de monter",
+    fuelFuelRise: "Hausse du carburant (% par an)",
+    fuelElectricityRise: "Hausse de l'électricité (% par an)",
+    fuelPerYear: "Économisé chaque année",
+    fuelWorsePerYear: "Surcoût chaque année",
+    fuelPerYearLine:
+      "{km} km par an brûlent {litres} L de {fuel} — {ice} TND à la pompe — contre {kwh} kWh en recharge, soit {ev} TND.",
+    fuelIceLabel: "À la pompe",
+    fuelEvLabel: "En recharge",
+    fuelHorizonTitle: "Ce que cela finit par représenter",
+    fuelHorizonSubtitle: "Chaque montant est le cumul depuis aujourd'hui, et non le montant de cette seule année.",
+    fuelHDay: "Un jour",
+    fuelHMonth: "Un mois",
+    fuelHYear: "Un an",
+    fuelH3: "3 ans",
+    fuelH5: "5 ans",
+    fuelH10: "10 ans",
+    fuelH20: "20 ans",
+    fuelH30: "30 ans",
+    fuelHorizonDetail: "{ice} TND de carburant · {ev} TND de recharge",
+    fuelCta: "Trouver une borne près de chez vous",
+    fuelBackToSim: "Retour au simulateur de recharge",
+    fuelNote:
+      "Les totaux sont cumulés et retiennent les prix d'aujourd'hui tant qu'aucune hausse annuelle n'est saisie. Les pertes de recharge sont comptées : seuls {efficiency} % des kWh facturés au compteur atteignent la batterie. Prix d'achat, assurance et entretien ne font pas partie de cette comparaison.",
 
     // CO2 Simulator
     co2Nav: "CO₂ évité",
@@ -1126,7 +1213,7 @@ export const translations = {
     simStegNote:
       "Precios según la tarifa STEG de baja tensión del 1 de mayo de 2022, con IVA y tasas por kWh. STEG aplica un único precio a todo el mes según el consumo total: el coste mostrado es la diferencia que esta sesión provoca en tu factura.",
 
-    // Fuel comparison inside the charging simulator
+    // Fuel savings simulator
     simFuelTitle: "El coche de combustión al que sustituye",
     simFuelGrade: "Carburante en el surtidor",
     simFuelUnleaded: "Gasolina sin plomo",
@@ -1136,13 +1223,42 @@ export const translations = {
     simFuelPrice: "Precio en el surtidor (TND/L)",
     simFuelSavedTitle: "Ahorro frente al carburante",
     simFuelWorseTitle: "Más caro que el carburante",
-    simFuelSavedLine:
-      "Los {km} km añadidos aquí cuestan {ev} TND de electricidad. La misma distancia consume {litres} L de {fuel}, es decir {ice} TND en el surtidor.",
-    simFuelWorseLine:
-      "Los {km} km añadidos aquí cuestan {ev} TND de electricidad, frente a {ice} TND de {fuel} para la misma distancia. A este precio, el coche de combustión sale más barato de usar.",
-    simFuelPer100: "{saved} TND ahorrados cada 100 km — unos {annual} TND al año con {km} km.",
     simFuelNote:
       "Los precios corresponden a la tarifa regulada tunecina del {date}: sin plomo {unleaded}, gasóleo ordinario {diesel}, gasóleo 50 {diesel50} TND/L. Son editables, igual que el consumo de combustión, estimado un 15 % por debajo del valor de gasolina cuando se elige un gasóleo.",
+
+    fuelNav: "Ahorro en carburante",
+    fuelBadge: "Calculadora de ahorro en carburante",
+    fuelTitle: "Lo que dejas de pagar",
+    fuelTitleHighlight: "en el surtidor",
+    fuelSubtitle:
+      "Dinos cuántos kilómetros haces al año. Calculamos lo que cuestan en carburante, lo que cuestan en recarga y lo que la diferencia acaba sumando a lo largo de la vida del coche.",
+    fuelAnnualKm: "Kilómetros que recorres al año",
+    fuelEvConsumption: "Consumo de tu eléctrico (kWh/100 km)",
+    fuelElectricityPrice: "Precio de la electricidad (TND/kWh)",
+    fuelAssumptions: "Si los precios siguen subiendo",
+    fuelFuelRise: "Subida del carburante (% al año)",
+    fuelElectricityRise: "Subida de la electricidad (% al año)",
+    fuelPerYear: "Ahorrado cada año",
+    fuelWorsePerYear: "Sobrecoste cada año",
+    fuelPerYearLine:
+      "{km} km al año consumen {litres} L de {fuel} — {ice} TND en el surtidor — frente a {kwh} kWh de recarga, es decir {ev} TND.",
+    fuelIceLabel: "En el surtidor",
+    fuelEvLabel: "En recarga",
+    fuelHorizonTitle: "Lo que acaba sumando",
+    fuelHorizonSubtitle: "Cada cifra es el acumulado desde hoy, no el importe de ese año por separado.",
+    fuelHDay: "Un día",
+    fuelHMonth: "Un mes",
+    fuelHYear: "Un año",
+    fuelH3: "3 años",
+    fuelH5: "5 años",
+    fuelH10: "10 años",
+    fuelH20: "20 años",
+    fuelH30: "30 años",
+    fuelHorizonDetail: "{ice} TND de carburante · {ev} TND de recarga",
+    fuelCta: "Encuentra un cargador cerca",
+    fuelBackToSim: "Volver al simulador de recarga",
+    fuelNote:
+      "Los totales son acumulados y mantienen los precios de hoy salvo que fijes una subida anual. Se cuentan las pérdidas de recarga: solo el {efficiency} % de los kWh facturados llega a la batería. El precio de compra, el seguro y el mantenimiento quedan fuera de esta comparación.",
 
     // CO2 Simulator
     co2Nav: "CO₂ evitado",
@@ -1436,7 +1552,7 @@ export const translations = {
     simStegNote:
       "Preise nach dem STEG-Niederspannungstarif vom 1. Mai 2022, samt MwSt. und den je kWh abgerechneten Abgaben. STEG wendet je nach Gesamtverbrauch einen einzigen Preis auf den ganzen Monat an: Die angezeigten Kosten sind die Differenz, die diese Ladung auf Ihrer Rechnung ausmacht.",
 
-    // Fuel comparison inside the charging simulator
+    // Fuel savings simulator
     simFuelTitle: "Der Verbrenner, den er ersetzt",
     simFuelGrade: "Kraftstoff an der Zapfsäule",
     simFuelUnleaded: "Benzin bleifrei",
@@ -1446,13 +1562,42 @@ export const translations = {
     simFuelPrice: "Preis an der Zapfsäule (TND/L)",
     simFuelSavedTitle: "Ersparnis gegenüber Kraftstoff",
     simFuelWorseTitle: "Teurer als Kraftstoff",
-    simFuelSavedLine:
-      "Die hier gewonnenen {km} km kosten {ev} TND Strom. Dieselbe Strecke verbrennt {litres} L {fuel}, also {ice} TND an der Zapfsäule.",
-    simFuelWorseLine:
-      "Die hier gewonnenen {km} km kosten {ev} TND Strom gegenüber {ice} TND {fuel} für dieselbe Strecke. Zu diesem Preis fährt der Verbrenner günstiger.",
-    simFuelPer100: "{saved} TND Ersparnis je 100 km — rund {annual} TND im Jahr bei {km} km.",
     simFuelNote:
       "Die Kraftstoffpreise entsprechen dem tunesischen Regeltarif vom {date}: bleifrei {unleaded}, normaler Diesel {diesel}, Diesel 50 {diesel50} TND/L. Sie sind ebenso editierbar wie der Verbrauch des Verbrenners, der bei Dieselwahl 15 % unter dem Benzinwert angesetzt wird.",
+
+    fuelNav: "Kraftstoffersparnis",
+    fuelBadge: "Rechner zur Kraftstoffersparnis",
+    fuelTitle: "Was Sie nicht mehr zahlen",
+    fuelTitleHighlight: "an der Zapfsäule",
+    fuelSubtitle:
+      "Sagen Sie uns, wie viel Sie im Jahr fahren. Wir rechnen aus, was diese Kilometer an Kraftstoff kosten, was sie an Strom kosten und was die Differenz über die Lebensdauer des Autos ausmacht.",
+    fuelAnnualKm: "Kilometer pro Jahr",
+    fuelEvConsumption: "Verbrauch Ihres E-Autos (kWh/100 km)",
+    fuelElectricityPrice: "Strompreis (TND/kWh)",
+    fuelAssumptions: "Wenn die Preise weiter steigen",
+    fuelFuelRise: "Anstieg Kraftstoffpreis (% pro Jahr)",
+    fuelElectricityRise: "Anstieg Strompreis (% pro Jahr)",
+    fuelPerYear: "Ersparnis pro Jahr",
+    fuelWorsePerYear: "Mehrkosten pro Jahr",
+    fuelPerYearLine:
+      "{km} km im Jahr verbrennen {litres} L {fuel} — {ice} TND an der Zapfsäule — gegenüber {kwh} kWh Ladestrom, also {ev} TND.",
+    fuelIceLabel: "An der Zapfsäule",
+    fuelEvLabel: "Am Ladepunkt",
+    fuelHorizonTitle: "Was sich daraus summiert",
+    fuelHorizonSubtitle: "Jeder Betrag ist die Summe ab heute, nicht der Betrag dieses einen Jahres.",
+    fuelHDay: "Ein Tag",
+    fuelHMonth: "Ein Monat",
+    fuelHYear: "Ein Jahr",
+    fuelH3: "3 Jahre",
+    fuelH5: "5 Jahre",
+    fuelH10: "10 Jahre",
+    fuelH20: "20 Jahre",
+    fuelH30: "30 Jahre",
+    fuelHorizonDetail: "{ice} TND Kraftstoff · {ev} TND Strom",
+    fuelCta: "Ladepunkt in Ihrer Nähe finden",
+    fuelBackToSim: "Zurück zum Ladesimulator",
+    fuelNote:
+      "Die Summen sind kumuliert und halten die heutigen Preise, solange Sie keine jährliche Steigerung angeben. Ladeverluste sind berücksichtigt: Nur {efficiency} % der abgerechneten kWh kommen in der Batterie an. Kaufpreis, Versicherung und Wartung bleiben in diesem Vergleich außen vor.",
 
     // CO2 Simulator
     co2Nav: "CO₂-Ersparnis",

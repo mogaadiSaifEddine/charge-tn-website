@@ -8,6 +8,8 @@
  * price.
  */
 
+import { AVERAGE_CHARGING_EFFICIENCY } from "@/lib/emissions"
+
 export type FuelGrade = "unleaded" | "diesel" | "diesel50"
 
 export interface FuelGradeSpec {
@@ -35,49 +37,134 @@ export function getFuelGrade(id: FuelGrade): FuelGradeSpec {
   return FUEL_GRADES.find((g) => g.id === id) ?? FUEL_GRADES[0]
 }
 
-/** Distance used to turn a per-100 km saving into a yearly one. */
-export const REFERENCE_ANNUAL_KM = 15000
+/* ------------------------------------------------------------------ *
+ * Yearly mileage projected over the life of the car
+ * ------------------------------------------------------------------ */
 
-export interface FuelComparisonInput {
-  km: number
-  /** Combustion consumption over that distance, L/100 km. */
-  consumption: number
-  pricePerL: number
-  /** What the same distance costs on electricity, TND. */
-  electricCost: number
+export type SavingsHorizonId = "day" | "month" | "year" | "y3" | "y5" | "y10" | "y20" | "y30"
+
+export interface SavingsHorizon {
+  id: SavingsHorizonId
+  /** Length of the horizon in years; the short ones are fractions. */
+  years: number
 }
 
-export interface FuelComparison {
+/**
+ * The horizons the savings table runs over. A day and a month make the number
+ * tangible; thirty years is roughly how long the driving decision compounds.
+ */
+export const SAVINGS_HORIZONS: readonly SavingsHorizon[] = [
+  { id: "day", years: 1 / 365 },
+  { id: "month", years: 1 / 12 },
+  { id: "year", years: 1 },
+  { id: "y3", years: 3 },
+  { id: "y5", years: 5 },
+  { id: "y10", years: 10 },
+  { id: "y20", years: 20 },
+  { id: "y30", years: 30 },
+] as const
+
+export interface FuelSavingsInput {
+  /** Distance driven in a year, km. */
+  annualKm: number
+  /** Combustion consumption, L/100 km. */
+  iceConsumption: number
+  pricePerL: number
+  /** EV consumption at the battery, kWh/100 km. */
+  evConsumption: number
+  pricePerKwh: number
+  /** Yearly rise in the pump price, as a fraction: 0.05 is 5 % a year. */
+  fuelRise?: number
+  /** Yearly rise in the electricity tariff, same units. */
+  electricityRise?: number
+}
+
+export interface HorizonSaving extends SavingsHorizon {
+  km: number
   litres: number
-  /** Cost of the distance at the pump, TND. */
+  kwh: number
+  /** Cumulative cost over the horizon, TND. */
   iceCost: number
-  /** Pump cost minus electricity cost — negative when electricity is dearer. */
+  evCost: number
   saved: number
+}
+
+export interface FuelSavings {
+  annualLitres: number
+  annualKwh: number
+  iceCostPerYear: number
+  evCostPerYear: number
+  savedPerYear: number
   /** Share of the fuel bill avoided, 0-1. */
   savedShare: number
   icePer100: number
   evPer100: number
   savedPer100: number
-  savedPerYear: number
+  horizons: HorizonSaving[]
 }
 
-export function compareFuelCost({ km, consumption, pricePerL, electricCost }: FuelComparisonInput): FuelComparison {
-  const litres = (km / 100) * consumption
-  const iceCost = litres * pricePerL
-  const saved = iceCost - electricCost
+/**
+ * Sum of a yearly amount over `years`, with the amount growing by `rate` at
+ * the start of every year after the first. A partial year is charged pro rata
+ * at the rate the year it falls in.
+ */
+function accumulate(perYear: number, rate: number, years: number): number {
+  const whole = Math.floor(years)
+  const frac = years - whole
+  const wholeSum = rate === 0 ? whole : ((1 + rate) ** whole - 1) / rate
+  return perYear * (wholeSum + frac * (1 + rate) ** whole)
+}
 
-  const icePer100 = km > 0 ? (iceCost / km) * 100 : 0
-  const evPer100 = km > 0 ? (electricCost / km) * 100 : 0
-  const savedPer100 = icePer100 - evPer100
+export function projectFuelSavings(input: FuelSavingsInput): FuelSavings {
+  const {
+    annualKm,
+    iceConsumption,
+    pricePerL,
+    evConsumption,
+    pricePerKwh,
+    fuelRise = 0,
+    electricityRise = 0,
+  } = input
+
+  // Charging is lossy, so the meter reads more than the pack stores. Billing
+  // the pack figure would flatter the electric car.
+  const kwhPerKm = evConsumption / 100 / AVERAGE_CHARGING_EFFICIENCY
+  const litresPerKm = iceConsumption / 100
+
+  const annualLitres = litresPerKm * annualKm
+  const annualKwh = kwhPerKm * annualKm
+
+  const iceCostPerYear = annualLitres * pricePerL
+  const evCostPerYear = annualKwh * pricePerKwh
+  const savedPerYear = iceCostPerYear - evCostPerYear
+
+  const icePer100 = annualKm > 0 ? (iceCostPerYear / annualKm) * 100 : 0
+  const evPer100 = annualKm > 0 ? (evCostPerYear / annualKm) * 100 : 0
+
+  const horizons = SAVINGS_HORIZONS.map((h) => {
+    const iceCost = accumulate(iceCostPerYear, fuelRise, h.years)
+    const evCost = accumulate(evCostPerYear, electricityRise, h.years)
+    return {
+      ...h,
+      km: annualKm * h.years,
+      litres: annualLitres * h.years,
+      kwh: annualKwh * h.years,
+      iceCost,
+      evCost,
+      saved: iceCost - evCost,
+    }
+  })
 
   return {
-    litres,
-    iceCost,
-    saved,
-    savedShare: iceCost > 0 ? saved / iceCost : 0,
+    annualLitres,
+    annualKwh,
+    iceCostPerYear,
+    evCostPerYear,
+    savedPerYear,
+    savedShare: iceCostPerYear > 0 ? savedPerYear / iceCostPerYear : 0,
     icePer100,
     evPer100,
-    savedPer100,
-    savedPerYear: (savedPer100 * REFERENCE_ANNUAL_KM) / 100,
+    savedPer100: icePer100 - evPer100,
+    horizons,
   }
 }
