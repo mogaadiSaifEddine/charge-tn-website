@@ -216,6 +216,24 @@ export const translations = {
     simStegNote:
       "Prices follow the STEG low-voltage tariff of 1 May 2022, plus VAT and the levies billed per kWh. STEG applies one rate to the whole month based on total consumption, so the cost shown is the difference this session makes to your bill.",
 
+    // Fuel comparison inside the charging simulator
+    simFuelTitle: "The combustion car this replaces",
+    simFuelGrade: "Fuel at the pump",
+    simFuelUnleaded: "Unleaded petrol",
+    simFuelDiesel: "Ordinary diesel",
+    simFuelDiesel50: "Diesel 50 (low sulphur)",
+    simFuelConsumption: "Its consumption (L/100 km)",
+    simFuelPrice: "Pump price (TND/L)",
+    simFuelSavedTitle: "Saved against fuel",
+    simFuelWorseTitle: "Costlier than fuel",
+    simFuelSavedLine:
+      "The {km} km added here cost {ev} TND of electricity. The same distance burns {litres} L of {fuel}, or {ice} TND at the pump.",
+    simFuelWorseLine:
+      "The {km} km added here cost {ev} TND of electricity, against {ice} TND of {fuel} for the same distance. At this price the combustion car is the cheaper one to run.",
+    simFuelPer100: "{saved} TND saved per 100 km — about {annual} TND a year at {km} km.",
+    simFuelNote:
+      "Pump prices are the Tunisian regulated tariff of {date}: unleaded {unleaded}, ordinary diesel {diesel}, diesel 50 {diesel50} TND/L. They are editable, as is the combustion consumption — estimated 15% below the petrol figure when a diesel is selected.",
+
     // CO2 Simulator
     co2Nav: "CO₂ saved",
     co2Badge: "CO₂ simulator",
@@ -495,6 +513,24 @@ export const translations = {
       "هذه الجلسة تنقل استهلاكك الشهري من شريحة {from} ك.و.س إلى {to}. عندها تعيد الستاغ تسعير كل كيلوواط ساعة في الشهر بـ {rate} مليم، فتصبح كلفة هذه الشحنة {price} دينار/ك.و.س بدل {normal}. الشحن لدى مضيف يُبقي فاتورتك داخل شريحتها.",
     simStegNote:
       "الأسعار وفق تعريفة الستاغ للجهد المنخفض بتاريخ 1 ماي 2022، مع الأداء على القيمة المضافة والمعاليم المحتسبة لكل كيلوواط ساعة. تطبّق الستاغ سعراً واحداً على كامل الشهر حسب الاستهلاك الجملي، لذلك تمثّل الكلفة المعروضة الفارق الذي تُحدثه هذه الجلسة في فاتورتك.",
+
+    // Fuel comparison inside the charging simulator
+    simFuelTitle: "السيارة الحرارية التي تعوّضها",
+    simFuelGrade: "الوقود في المحطة",
+    simFuelUnleaded: "بنزين بدون رصاص",
+    simFuelDiesel: "غازوال عادي",
+    simFuelDiesel50: "غازوال 50 (بدون كبريت)",
+    simFuelConsumption: "استهلاكها (لتر/100 كم)",
+    simFuelPrice: "سعر اللتر (دينار/لتر)",
+    simFuelSavedTitle: "التوفير مقابل الوقود",
+    simFuelWorseTitle: "أغلى من الوقود",
+    simFuelSavedLine:
+      "الـ {km} كم المضافة هنا كلّفت {ev} دينار من الكهرباء. نفس المسافة تستهلك {litres} لتر من {fuel}، أي {ice} دينار في المحطة.",
+    simFuelWorseLine:
+      "الـ {km} كم المضافة هنا كلّفت {ev} دينار من الكهرباء، مقابل {ice} دينار من {fuel} لنفس المسافة. بهذا السعر تبقى السيارة الحرارية أقل كلفة في الاستعمال.",
+    simFuelPer100: "توفير {saved} دينار لكل 100 كم — حوالي {annual} دينار في السنة عند {km} كم.",
+    simFuelNote:
+      "أسعار الوقود هي التعريفة التونسية المنظّمة بتاريخ {date}: بنزين بدون رصاص {unleaded}، غازوال عادي {diesel}، غازوال 50 بـ {diesel50} دينار/لتر. يمكن تعديلها، مثل استهلاك السيارة الحرارية الذي يُقدَّر أقل بـ 15٪ من قيمة البنزين عند اختيار الغازوال.",
 
     // CO2 Simulator
     co2Nav: "توفير الكربون",
@@ -786,6 +822,24 @@ export const translations = {
     simStegNote:
       "Prix issus du tarif STEG basse tension du 1er mai 2022, TVA et taxes au kWh comprises. La STEG applique un seul prix à tout le mois selon la consommation totale : le coût affiché est donc la différence que cette session fait sur votre facture.",
 
+    // Fuel comparison inside the charging simulator
+    simFuelTitle: "La voiture thermique remplacée",
+    simFuelGrade: "Carburant à la pompe",
+    simFuelUnleaded: "Essence sans plomb",
+    simFuelDiesel: "Gasoil ordinaire",
+    simFuelDiesel50: "Gasoil 50 (sans soufre)",
+    simFuelConsumption: "Sa consommation (L/100 km)",
+    simFuelPrice: "Prix à la pompe (TND/L)",
+    simFuelSavedTitle: "Économie face au carburant",
+    simFuelWorseTitle: "Plus cher que le carburant",
+    simFuelSavedLine:
+      "Les {km} km ajoutés ici coûtent {ev} TND d'électricité. La même distance brûle {litres} L de {fuel}, soit {ice} TND à la pompe.",
+    simFuelWorseLine:
+      "Les {km} km ajoutés ici coûtent {ev} TND d'électricité, contre {ice} TND de {fuel} pour la même distance. À ce prix, la thermique reste moins chère à l'usage.",
+    simFuelPer100: "{saved} TND économisés aux 100 km — environ {annual} TND par an pour {km} km.",
+    simFuelNote:
+      "Les prix à la pompe correspondent au tarif réglementé tunisien du {date} : sans plomb {unleaded}, gasoil ordinaire {diesel}, gasoil 50 {diesel50} TND/L. Ils sont modifiables, tout comme la consommation thermique, estimée 15 % sous la valeur essence lorsqu'un gasoil est choisi.",
+
     // CO2 Simulator
     co2Nav: "CO₂ évité",
     co2Badge: "Simulateur CO₂",
@@ -1071,6 +1125,24 @@ export const translations = {
       "Esta sesión lleva tu mes del tramo {from} kWh al {to}. STEG vuelve a facturar cada kWh del mes a {rate} milésimas, así que esta carga cuesta en realidad {price} TND/kWh en vez de {normal}. Cargar en casa de un anfitrión mantiene tu factura en su tramo.",
     simStegNote:
       "Precios según la tarifa STEG de baja tensión del 1 de mayo de 2022, con IVA y tasas por kWh. STEG aplica un único precio a todo el mes según el consumo total: el coste mostrado es la diferencia que esta sesión provoca en tu factura.",
+
+    // Fuel comparison inside the charging simulator
+    simFuelTitle: "El coche de combustión al que sustituye",
+    simFuelGrade: "Carburante en el surtidor",
+    simFuelUnleaded: "Gasolina sin plomo",
+    simFuelDiesel: "Gasóleo ordinario",
+    simFuelDiesel50: "Gasóleo 50 (sin azufre)",
+    simFuelConsumption: "Su consumo (L/100 km)",
+    simFuelPrice: "Precio en el surtidor (TND/L)",
+    simFuelSavedTitle: "Ahorro frente al carburante",
+    simFuelWorseTitle: "Más caro que el carburante",
+    simFuelSavedLine:
+      "Los {km} km añadidos aquí cuestan {ev} TND de electricidad. La misma distancia consume {litres} L de {fuel}, es decir {ice} TND en el surtidor.",
+    simFuelWorseLine:
+      "Los {km} km añadidos aquí cuestan {ev} TND de electricidad, frente a {ice} TND de {fuel} para la misma distancia. A este precio, el coche de combustión sale más barato de usar.",
+    simFuelPer100: "{saved} TND ahorrados cada 100 km — unos {annual} TND al año con {km} km.",
+    simFuelNote:
+      "Los precios corresponden a la tarifa regulada tunecina del {date}: sin plomo {unleaded}, gasóleo ordinario {diesel}, gasóleo 50 {diesel50} TND/L. Son editables, igual que el consumo de combustión, estimado un 15 % por debajo del valor de gasolina cuando se elige un gasóleo.",
 
     // CO2 Simulator
     co2Nav: "CO₂ evitado",
@@ -1363,6 +1435,24 @@ export const translations = {
       "Diese Ladung hebt Ihren Monat von der Stufe {from} kWh auf {to}. STEG berechnet dann jede kWh des Monats mit {rate} Millimes — die Ladung kostet damit real {price} TND/kWh statt {normal}. Laden bei einem Gastgeber hält Ihre Rechnung in ihrer Stufe.",
     simStegNote:
       "Preise nach dem STEG-Niederspannungstarif vom 1. Mai 2022, samt MwSt. und den je kWh abgerechneten Abgaben. STEG wendet je nach Gesamtverbrauch einen einzigen Preis auf den ganzen Monat an: Die angezeigten Kosten sind die Differenz, die diese Ladung auf Ihrer Rechnung ausmacht.",
+
+    // Fuel comparison inside the charging simulator
+    simFuelTitle: "Der Verbrenner, den er ersetzt",
+    simFuelGrade: "Kraftstoff an der Zapfsäule",
+    simFuelUnleaded: "Benzin bleifrei",
+    simFuelDiesel: "Normaler Diesel",
+    simFuelDiesel50: "Diesel 50 (schwefelfrei)",
+    simFuelConsumption: "Sein Verbrauch (L/100 km)",
+    simFuelPrice: "Preis an der Zapfsäule (TND/L)",
+    simFuelSavedTitle: "Ersparnis gegenüber Kraftstoff",
+    simFuelWorseTitle: "Teurer als Kraftstoff",
+    simFuelSavedLine:
+      "Die hier gewonnenen {km} km kosten {ev} TND Strom. Dieselbe Strecke verbrennt {litres} L {fuel}, also {ice} TND an der Zapfsäule.",
+    simFuelWorseLine:
+      "Die hier gewonnenen {km} km kosten {ev} TND Strom gegenüber {ice} TND {fuel} für dieselbe Strecke. Zu diesem Preis fährt der Verbrenner günstiger.",
+    simFuelPer100: "{saved} TND Ersparnis je 100 km — rund {annual} TND im Jahr bei {km} km.",
+    simFuelNote:
+      "Die Kraftstoffpreise entsprechen dem tunesischen Regeltarif vom {date}: bleifrei {unleaded}, normaler Diesel {diesel}, Diesel 50 {diesel50} TND/L. Sie sind ebenso editierbar wie der Verbrauch des Verbrenners, der bei Dieselwahl 15 % unter dem Benzinwert angesetzt wird.",
 
     // CO2 Simulator
     co2Nav: "CO₂-Ersparnis",
