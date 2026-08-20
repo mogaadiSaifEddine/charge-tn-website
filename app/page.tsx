@@ -313,11 +313,11 @@ export default function PowerMapsLanding() {
                   style={{ boxShadow: GOOGLE_ELEVATION.level3 }}
                 >
                   <Image
-                    src="/hero.jpeg"
+                    src="/powermaps.png"
                     alt="PowerMaps P2P charging network"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto"
+                    width={200}
+                    height={300}
+                    className="w-auto h-auto"
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
